@@ -1,1 +1,1163 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 
+    <meta name="theme-color" content="#2c7be5">
+
+    <title>La mia Dispensa</title>
+
+    <!-- Libreria per la scansione barcode -->
+    <script src="https://unpkg.com/html5-qrcode"></script>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            background: #f5f6f8;
+            color: #222;
+        }
+
+        header {
+            background: #2c7be5;
+            color: white;
+            padding: 22px 18px;
+            padding-top: calc(22px + env(safe-area-inset-top));
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 28px;
+        }
+
+        header p {
+            margin: 5px 0 0;
+            opacity: .9;
+        }
+
+        main {
+            max-width: 900px;
+            margin: auto;
+            padding: 18px;
+            padding-bottom: 40px;
+        }
+
+        .azioni {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        button {
+            border: 0;
+            border-radius: 14px;
+            padding: 15px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: #2c7be5;
+            color: white;
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #222;
+            border: 1px solid #ddd;
+        }
+
+        .btn-danger {
+            background: #dc3545;
+            color: white;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .stat {
+            background: white;
+            border-radius: 14px;
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,.05);
+        }
+
+        .stat-number {
+            font-size: 25px;
+            font-weight: 700;
+        }
+
+        .stat-label {
+            font-size: 13px;
+            color: #777;
+            margin-top: 3px;
+        }
+
+        .search {
+            margin-bottom: 15px;
+        }
+
+        .search input {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            font-size: 16px;
+            background: white;
+        }
+
+        .prodotti {
+            display: grid;
+            gap: 12px;
+        }
+
+        .prodotto {
+            background: white;
+            border-radius: 16px;
+            padding: 14px;
+            display: flex;
+            gap: 14px;
+            align-items: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,.05);
+        }
+
+        .prodotto img {
+            width: 75px;
+            height: 75px;
+            object-fit: contain;
+            border-radius: 10px;
+            background: #f2f2f2;
+            flex-shrink: 0;
+        }
+
+        .prodotto-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .prodotto-marca {
+            font-size: 13px;
+            color: #777;
+        }
+
+        .prodotto-nome {
+            font-size: 17px;
+            font-weight: 650;
+            margin: 2px 0;
+        }
+
+        .prodotto-dettagli {
+            font-size: 13px;
+            color: #777;
+        }
+
+        .quantita {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 8px;
+        }
+
+        .quantita button {
+            width: 34px;
+            height: 34px;
+            padding: 0;
+            border-radius: 10px;
+            font-size: 20px;
+            background: #eef2f7;
+        }
+
+        .numero-quantita {
+            min-width: 25px;
+            text-align: center;
+            font-weight: 700;
+        }
+
+        .elimina {
+            background: transparent;
+            color: #dc3545;
+            padding: 8px;
+            font-size: 20px;
+        }
+
+        .vuoto {
+            background: white;
+            border-radius: 16px;
+            padding: 35px 20px;
+            text-align: center;
+            color: #777;
+        }
+
+        /* MODALI */
+
+        .modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,.55);
+            display: none;
+            align-items: flex-end;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            width: 100%;
+            max-width: 600px;
+            max-height: 92vh;
+            overflow-y: auto;
+            background: white;
+            border-radius: 22px 22px 0 0;
+            padding: 22px;
+            padding-bottom: calc(22px + env(safe-area-inset-bottom));
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 18px;
+        }
+
+        .modal-header h2 {
+            margin: 0;
+        }
+
+        .chiudi {
+            background: #eee;
+            border-radius: 50%;
+            width: 38px;
+            height: 38px;
+            padding: 0;
+        }
+
+        #reader {
+            width: 100%;
+            overflow: hidden;
+            border-radius: 15px;
+            background: #111;
+        }
+
+        .barcode-risultato {
+            margin-top: 15px;
+            padding: 14px;
+            border-radius: 12px;
+            background: #eef6ff;
+            text-align: center;
+            display: none;
+        }
+
+        .campo {
+            margin-bottom: 14px;
+        }
+
+        .campo label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        .campo input,
+        .campo select {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            font-size: 16px;
+        }
+
+        .form-buttons {
+            display: grid;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .caricamento {
+            text-align: center;
+            padding: 20px;
+            color: #777;
+        }
+
+        @media (max-width: 500px) {
+            .azioni {
+                grid-template-columns: 1fr;
+            }
+
+            .stats {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .stat {
+                padding: 12px 5px;
+            }
+
+            .stat-number {
+                font-size: 21px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>🥫 La mia Dispensa</h1>
+    <p>Gestisci facilmente i prodotti di casa</p>
+</header>
+
+<main>
+
+    <section class="azioni">
+        <button class="btn-primary" onclick="apriScanner()">
+            📷 Scansiona barcode
+        </button>
+
+        <button class="btn-secondary" onclick="apriAggiungi()">
+            ➕ Aggiungi prodotto
+        </button>
+    </section>
+
+    <section class="stats">
+        <div class="stat">
+            <div class="stat-number" id="totaleProdotti">0</div>
+            <div class="stat-label">Prodotti</div>
+        </div>
+
+        <div class="stat">
+            <div class="stat-number" id="totalePezzi">0</div>
+            <div class="stat-label">Pezzi</div>
+        </div>
+
+        <div class="stat">
+            <div class="stat-number" id="scorteBasse">0</div>
+            <div class="stat-label">Scorte basse</div>
+        </div>
+    </section>
+
+    <section class="search">
+        <input
+            type="search"
+            id="ricerca"
+            placeholder="🔍 Cerca prodotto..."
+            oninput="mostraProdotti()"
+        >
+    </section>
+
+    <section id="listaProdotti" class="prodotti"></section>
+
+</main>
+
+
+<!-- ========================= -->
+<!-- MODALE SCANNER -->
+<!-- ========================= -->
+
+<div class="modal" id="scannerModal">
+
+    <div class="modal-content">
+
+        <div class="modal-header">
+            <h2>Scansiona barcode</h2>
+
+            <button class="chiudi" onclick="chiudiScanner()">
+                ✕
+            </button>
+        </div>
+
+        <div id="reader"></div>
+
+        <div id="barcodeRisultato" class="barcode-risultato"></div>
+
+    </div>
+
+</div>
+
+
+<!-- ========================= -->
+<!-- MODALE PRODOTTO -->
+<!-- ========================= -->
+
+<div class="modal" id="prodottoModal">
+
+    <div class="modal-content">
+
+        <div class="modal-header">
+            <h2 id="titoloProdotto">Nuovo prodotto</h2>
+
+            <button class="chiudi" onclick="chiudiProdotto()">
+                ✕
+            </button>
+        </div>
+
+        <div class="campo">
+            <label>Barcode</label>
+
+            <input
+                type="text"
+                id="barcode"
+                placeholder="Barcode"
+            >
+        </div>
+
+        <div class="campo">
+            <label>Marca</label>
+
+            <input
+                type="text"
+                id="marca"
+                placeholder="es. Barilla"
+            >
+        </div>
+
+        <div class="campo">
+            <label>Nome prodotto</label>
+
+            <input
+                type="text"
+                id="nome"
+                placeholder="es. Spaghetti n.5"
+            >
+        </div>
+
+        <div class="campo">
+            <label>Categoria</label>
+
+            <select id="categoria">
+                <option value="Pasta">Pasta</option>
+                <option value="Riso">Riso</option>
+                <option value="Conserve">Conserve</option>
+                <option value="Bevande">Bevande</option>
+                <option value="Colazione">Colazione</option>
+                <option value="Snack">Snack</option>
+                <option value="Dolci">Dolci</option>
+                <option value="Condimenti">Condimenti</option>
+                <option value="Latticini">Latticini</option>
+                <option value="Carne">Carne</option>
+                <option value="Pesce">Pesce</option>
+                <option value="Surgelati">Surgelati</option>
+                <option value="Altro">Altro</option>
+            </select>
+        </div>
+
+        <div class="campo">
+            <label>Formato</label>
+
+            <input
+                type="text"
+                id="formato"
+                placeholder="es. 500 g"
+            >
+        </div>
+
+        <div class="campo">
+            <label>Quantità</label>
+
+            <input
+                type="number"
+                id="quantita"
+                min="0"
+                value="1"
+            >
+        </div>
+
+        <div class="campo">
+            <label>Immagine</label>
+
+            <input
+                type="text"
+                id="immagine"
+                placeholder="URL immagine"
+            >
+        </div>
+
+        <div class="form-buttons">
+
+            <button class="btn-primary" onclick="salvaProdotto()">
+                💾 Salva prodotto
+            </button>
+
+            <button class="btn-secondary" onclick="chiudiProdotto()">
+                Annulla
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/*
+==========================================================
+DATI TEMPORANEI
+==========================================================
+
+Per ora usiamo un array in memoria.
+
+NON usiamo localStorage.
+
+Nel prossimo passaggio questo array verrà sostituito
+con i dati provenienti da Google Sheets.
+==========================================================
+*/
+
+let prodotti = [];
+
+let scanner = null;
+
+
+/*
+==========================================================
+INIZIALIZZAZIONE
+==========================================================
+*/
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    mostraProdotti();
+
+});
+
+
+/*
+==========================================================
+VISUALIZZAZIONE PRODOTTI
+==========================================================
+*/
+
+function mostraProdotti() {
+
+    const contenitore = document.getElementById("listaProdotti");
+
+    const ricerca = document
+        .getElementById("ricerca")
+        .value
+        .toLowerCase()
+        .trim();
+
+    let filtrati = prodotti.filter(function (prodotto) {
+
+        return (
+            prodotto.nome.toLowerCase().includes(ricerca) ||
+            prodotto.marca.toLowerCase().includes(ricerca) ||
+            prodotto.categoria.toLowerCase().includes(ricerca)
+        );
+
+    });
+
+
+    if (filtrati.length === 0) {
+
+        contenitore.innerHTML = `
+            <div class="vuoto">
+                <div style="font-size:40px;">🥫</div>
+                <h3>Nessun prodotto</h3>
+                <p>Aggiungi il primo prodotto alla tua dispensa.</p>
+            </div>
+        `;
+
+    } else {
+
+        contenitore.innerHTML = filtrati.map(function (prodotto) {
+
+            const immagine =
+                prodotto.immagine ||
+                "https://via.placeholder.com/150?text=Prodotto";
+
+
+            return `
+                <div class="prodotto">
+
+                    <img
+                        src="${immagine}"
+                        alt=""
+                        onerror="this.src='https://via.placeholder.com/150?text=Prodotto'"
+                    >
+
+                    <div class="prodotto-info">
+
+                        <div class="prodotto-marca">
+                            ${prodotto.marca || ""}
+                        </div>
+
+                        <div class="prodotto-nome">
+                            ${prodotto.nome}
+                        </div>
+
+                        <div class="prodotto-dettagli">
+                            ${prodotto.categoria || ""}
+                            ${prodotto.formato ? " • " + prodotto.formato : ""}
+                        </div>
+
+                        <div class="quantita">
+
+                            <button onclick="modificaQuantita('${prodotto.barcode}', -1)">
+                                −
+                            </button>
+
+                            <span class="numero-quantita">
+                                ${prodotto.quantita}
+                            </span>
+
+                            <button onclick="modificaQuantita('${prodotto.barcode}', 1)">
+                                +
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                    <button
+                        class="elimina"
+                        onclick="eliminaProdotto('${prodotto.barcode}')"
+                        title="Elimina"
+                    >
+                        🗑️
+                    </button>
+
+                </div>
+            `;
+
+        }).join("");
+
+    }
+
+    aggiornaStatistiche();
+
+}
+
+
+/*
+==========================================================
+STATISTICHE
+==========================================================
+*/
+
+function aggiornaStatistiche() {
+
+    const totaleProdotti = prodotti.length;
+
+    const totalePezzi = prodotti.reduce(function (totale, prodotto) {
+
+        return totale + Number(prodotto.quantita || 0);
+
+    }, 0);
+
+
+    const scorteBasse = prodotti.filter(function (prodotto) {
+
+        return Number(prodotto.quantita || 0) <= 1;
+
+    }).length;
+
+
+    document.getElementById("totaleProdotti").textContent =
+        totaleProdotti;
+
+    document.getElementById("totalePezzi").textContent =
+        totalePezzi;
+
+    document.getElementById("scorteBasse").textContent =
+        scorteBasse;
+
+}
+
+
+/*
+==========================================================
+MODIFICA QUANTITÀ
+==========================================================
+*/
+
+function modificaQuantita(barcode, variazione) {
+
+    const prodotto = prodotti.find(function (p) {
+
+        return p.barcode === barcode;
+
+    });
+
+
+    if (!prodotto) {
+        return;
+    }
+
+
+    prodotto.quantita =
+        Math.max(0, Number(prodotto.quantita) + variazione);
+
+
+    mostraProdotti();
+
+}
+
+
+/*
+==========================================================
+ELIMINA PRODOTTO
+==========================================================
+*/
+
+function eliminaProdotto(barcode) {
+
+    const prodotto = prodotti.find(function (p) {
+
+        return p.barcode === barcode;
+
+    });
+
+
+    if (!prodotto) {
+        return;
+    }
+
+
+    if (!confirm(
+        `Eliminare "${prodotto.nome}" dalla dispensa?`
+    )) {
+
+        return;
+
+    }
+
+
+    prodotti = prodotti.filter(function (p) {
+
+        return p.barcode !== barcode;
+
+    });
+
+
+    mostraProdotti();
+
+}
+
+
+/*
+==========================================================
+APRI FORM PRODOTTO
+==========================================================
+*/
+
+function apriAggiungi() {
+
+    document.getElementById("titoloProdotto").textContent =
+        "Nuovo prodotto";
+
+
+    document.getElementById("barcode").value = "";
+    document.getElementById("marca").value = "";
+    document.getElementById("nome").value = "";
+    document.getElementById("categoria").value = "Altro";
+    document.getElementById("formato").value = "";
+    document.getElementById("quantita").value = 1;
+    document.getElementById("immagine").value = "";
+
+
+    document
+        .getElementById("prodottoModal")
+        .classList.add("active");
+
+}
+
+
+/*
+==========================================================
+CHIUDI FORM PRODOTTO
+==========================================================
+*/
+
+function chiudiProdotto() {
+
+    document
+        .getElementById("prodottoModal")
+        .classList.remove("active");
+
+}
+
+
+/*
+==========================================================
+SALVA PRODOTTO
+==========================================================
+*/
+
+function salvaProdotto() {
+
+    const barcode =
+        document.getElementById("barcode").value.trim();
+
+    const marca =
+        document.getElementById("marca").value.trim();
+
+    const nome =
+        document.getElementById("nome").value.trim();
+
+    const categoria =
+        document.getElementById("categoria").value;
+
+    const formato =
+        document.getElementById("formato").value.trim();
+
+    const quantita =
+        Number(document.getElementById("quantita").value);
+
+    const immagine =
+        document.getElementById("immagine").value.trim();
+
+
+    if (!nome) {
+
+        alert("Inserisci il nome del prodotto.");
+
+        return;
+
+    }
+
+
+    /*
+    Se esiste già lo stesso barcode,
+    aggiorniamo il prodotto.
+    */
+
+    const esistente = prodotti.find(function (p) {
+
+        return barcode && p.barcode === barcode;
+
+    });
+
+
+    if (esistente) {
+
+        esistente.marca = marca;
+        esistente.nome = nome;
+        esistente.categoria = categoria;
+        esistente.formato = formato;
+        esistente.quantita = quantita;
+        esistente.immagine = immagine;
+
+    } else {
+
+        prodotti.push({
+
+            barcode:
+                barcode || "manuale-" + Date.now(),
+
+            marca,
+            nome,
+            categoria,
+            formato,
+            quantita,
+            immagine
+
+        });
+
+    }
+
+
+    chiudiProdotto();
+
+    mostraProdotti();
+
+}
+
+
+/*
+==========================================================
+SCANNER
+==========================================================
+*/
+
+async function apriScanner() {
+
+    document
+        .getElementById("scannerModal")
+        .classList.add("active");
+
+
+    document
+        .getElementById("barcodeRisultato")
+        .style.display = "none";
+
+
+    scanner = new Html5Qrcode("reader");
+
+
+    try {
+
+        await scanner.start(
+
+            {
+                facingMode: "environment"
+            },
+
+            {
+                fps: 10,
+
+                qrbox: {
+                    width: 280,
+                    height: 140
+                }
+            },
+
+            barcodeScansionato,
+
+            function () {
+                // Ignoriamo gli errori di scansione
+            }
+
+        );
+
+    } catch (errore) {
+
+        console.error(errore);
+
+        alert(
+            "Impossibile accedere alla fotocamera. " +
+            "Controlla i permessi della fotocamera in Safari."
+        );
+
+    }
+
+}
+
+
+/*
+==========================================================
+BARCODE SCANSIONATO
+==========================================================
+*/
+
+async function barcodeScansionato(barcode) {
+
+    console.log("Barcode:", barcode);
+
+
+    const risultato =
+        document.getElementById("barcodeRisultato");
+
+
+    risultato.style.display = "block";
+
+    risultato.innerHTML =
+        `Barcode trovato: <strong>${barcode}</strong>`;
+
+
+    await fermaScanner();
+
+
+    /*
+    Controlliamo se il prodotto esiste già.
+    */
+
+    const esistente = prodotti.find(function (p) {
+
+        return p.barcode === barcode;
+
+    });
+
+
+    if (esistente) {
+
+        /*
+        Se esiste già, aumentiamo direttamente la quantità.
+        */
+
+        esistente.quantita =
+            Number(esistente.quantita) + 1;
+
+
+        chiudiScanner();
+
+        mostraProdotti();
+
+        return;
+
+    }
+
+
+    /*
+    Se non esiste, cerchiamo il prodotto
+    su Open Food Facts.
+    */
+
+    await cercaOpenFoodFacts(barcode);
+
+}
+
+
+/*
+==========================================================
+OPEN FOOD FACTS
+==========================================================
+*/
+
+async function cercaOpenFoodFacts(barcode) {
+
+    try {
+
+        const risposta = await fetch(
+            `https://world.openfoodfacts.org/api/v2/product/${barcode}.json`
+        );
+
+
+        const dati = await risposta.json();
+
+
+        if (
+            dati.status === 1 &&
+            dati.product
+        ) {
+
+            const prodotto = dati.product;
+
+
+            chiudiScanner();
+
+            document.getElementById("titoloProdotto").textContent =
+                "Prodotto trovato";
+
+
+            document.getElementById("barcode").value =
+                barcode;
+
+
+            document.getElementById("marca").value =
+                prodotto.brands || "";
+
+
+            document.getElementById("nome").value =
+                prodotto.product_name || "";
+
+
+            document.getElementById("formato").value =
+                prodotto.quantity || "";
+
+
+            document.getElementById("immagine").value =
+                prodotto.image_front_url || "";
+
+
+            document.getElementById("quantita").value =
+                1;
+
+
+            document
+                .getElementById("prodottoModal")
+                .classList.add("active");
+
+
+        } else {
+
+            /*
+            Barcode non trovato.
+            */
+
+            chiudiScanner();
+
+            apriAggiungi();
+
+            document.getElementById("barcode").value =
+                barcode;
+
+
+            alert(
+                "Prodotto non trovato su Open Food Facts. " +
+                "Inserisci manualmente i dati."
+            );
+
+        }
+
+    } catch (errore) {
+
+        console.error(errore);
+
+        chiudiScanner();
+
+        apriAggiungi();
+
+        document.getElementById("barcode").value =
+            barcode;
+
+
+        alert(
+            "Errore durante la ricerca del prodotto."
+        );
+
+    }
+
+}
+
+
+/*
+==========================================================
+FERMA SCANNER
+==========================================================
+*/
+
+async function fermaScanner() {
+
+    if (!scanner) {
+        return;
+    }
+
+
+    try {
+
+        await scanner.stop();
+
+    } catch (errore) {
+
+        console.log(
+            "Scanner già fermato."
+        );
+
+    }
+
+
+    scanner = null;
+
+}
+
+
+/*
+==========================================================
+CHIUDI SCANNER
+==========================================================
+*/
+
+async function chiudiScanner() {
+
+    await fermaScanner();
+
+
+    document
+        .getElementById("scannerModal")
+        .classList.remove("active");
+
+
+    document.getElementById("reader").innerHTML = "";
+
+}
+
+</script>
+
+</body>
+</html>
