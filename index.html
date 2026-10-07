@@ -3,39 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <meta name="theme-color" content="#f6f7f5">
-
+    <meta name="theme-color" content="#7bbf6a">
     <title>La Mia Dispensa</title>
-
-    <script src="https://unpkg.com/html5-qrcode" defer></script>
 
     <style>
         * {
             box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
+            margin: 0;
+            padding: 0;
         }
 
         html,
         body {
-            margin: 0;
-            padding: 0;
+            width: 100%;
             min-height: 100%;
-            font-family:
-                -apple-system,
-                BlinkMacSystemFont,
-                "Segoe UI",
-                Roboto,
-                Arial,
-                sans-serif;
-            background: #f6f7f5;
-            color: #222;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+            background: #f5f7f4;
+            color: #26342b;
         }
 
         body {
-            min-height: 100vh;
+            padding-top: 6px;
         }
 
         button,
@@ -46,66 +34,45 @@
 
         button {
             cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
         }
-
-        /* =====================================================
-           BARRA COLORATA SUPERIORE
-        ===================================================== */
 
         .top-color-bar {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
-
             height: 6px;
-
-            background:
-                linear-gradient(
-                    90deg,
-                    #7bbf6a,
-                    #a8d96d,
-                    #6fb7a8
-                );
-
+            background: linear-gradient(90deg, #7bbf6a, #a8d96d, #6fb7a8);
             z-index: 200;
         }
 
-        /* =====================================================
-           APP
-        ===================================================== */
-
         .app {
-            width: 100%;
-            max-width: 760px;
             min-height: 100vh;
-
-            margin: 0 auto;
-
-            padding:
-                max(24px, calc(env(safe-area-inset-top) + 12px))
-                18px
-                max(28px, env(safe-area-inset-bottom));
+            padding-bottom: 30px;
         }
 
         .screen {
             display: none;
+            width: 100%;
+            min-height: calc(100vh - 6px);
         }
 
         .screen.active {
             display: block;
         }
 
-        /* =====================================================
+        /* =========================
            HOME
-        ===================================================== */
+        ========================= */
 
-        .home-screen {
-            padding-top: 18px;
+        #homeScreen {
+            padding: 42px 20px 30px;
         }
 
         .home-title {
-            margin-bottom: 22px;
+            max-width: 760px;
+            margin: 0 auto 28px;
         }
 
         .home-heading {
@@ -114,714 +81,554 @@
             gap: 14px;
         }
 
-        /*
-         * ICONA CARRELLO
-         *
-         * Nessun riquadro bianco.
-         * Nessuno sfondo.
-         * Nessuna ombra.
-         */
-
-        .home-cart-icon {
-            width: 52px;
-            height: 52px;
-
-            flex-shrink: 0;
-
+        .logo-icon {
+            width: 58px;
+            height: 58px;
+            border-radius: 18px;
+            background: white;
+            box-shadow: 0 5px 18px rgba(40, 70, 50, 0.10);
             display: flex;
             align-items: center;
             justify-content: center;
-
-            color: #333;
+            font-size: 32px;
+            flex-shrink: 0;
         }
 
-        .home-cart-icon svg {
-            width: 42px;
-            height: 42px;
-
-            display: block;
+        .home-heading h2 {
+            font-size: 28px;
+            line-height: 1.15;
+            color: #26342b;
+            margin-bottom: 5px;
         }
 
-        .home-title h2 {
-            margin: 0 0 4px;
-
-            font-size: 30px;
-            line-height: 1.1;
-
-            letter-spacing: -0.5px;
+        .home-heading p {
+            color: #718076;
+            font-size: 15px;
         }
 
-        .home-title p {
-            margin: 0;
-
-            color: #777;
-
-            font-size: 16px;
-        }
-
-        /* =====================================================
-           CATEGORIE
-        ===================================================== */
-
-        .category-grid {
+        .categories {
+            width: 100%;
+            max-width: 760px;
+            margin: 0 auto;
             display: grid;
-            grid-template-columns: 1fr;
+            grid-template-columns: repeat(3, 1fr);
             gap: 16px;
         }
 
         .category-card {
-            width: 100%;
-            min-height: 125px;
-
-            border: 0;
+            min-height: 180px;
+            border: none;
             border-radius: 24px;
-
-            background: #fff;
-
+            background: white;
+            box-shadow: 0 7px 22px rgba(40, 70, 50, 0.09);
             display: flex;
+            flex-direction: column;
             align-items: center;
-
-            gap: 18px;
-
-            padding: 22px;
-
-            text-align: left;
-
-            box-shadow:
-                0 6px 22px rgba(0, 0, 0, 0.06);
-
-            color: #222;
-
-            transition:
-                transform 0.15s ease,
-                box-shadow 0.15s ease;
+            justify-content: center;
+            gap: 14px;
+            padding: 22px 14px;
+            color: #26342b;
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
         }
 
         .category-card:active {
-            transform: scale(0.98);
+            transform: scale(0.97);
+        }
 
-            box-shadow:
-                0 3px 12px rgba(0, 0, 0, 0.07);
+        .category-card:hover {
+            box-shadow: 0 10px 28px rgba(40, 70, 50, 0.13);
         }
 
         .category-icon {
-            width: 66px;
-            height: 66px;
-
-            flex-shrink: 0;
-
-            border-radius: 20px;
-
+            width: 76px;
+            height: 76px;
+            border-radius: 22px;
+            background: #f1f7ee;
             display: flex;
             align-items: center;
             justify-content: center;
-
-            font-size: 34px;
-
-            background: #f3f4f2;
+            font-size: 42px;
         }
 
-        .category-card h3 {
-            margin: 0;
-
-            font-size: 22px;
+        .category-name {
+            font-size: 18px;
             font-weight: 700;
+            text-align: center;
         }
 
-        /* =====================================================
-           SCHERMATA CATEGORIA
-        ===================================================== */
+        /* =========================
+           CATEGORY SCREEN
+        ========================= */
 
-        .category-screen {
-            padding-top: 4px;
+        #categoryScreen {
+            padding: 18px 16px 30px;
         }
 
-        .category-top {
+        .category-container {
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .category-header {
             display: flex;
             align-items: center;
-
             gap: 12px;
-
             margin-bottom: 18px;
         }
 
         .back-button {
-            width: 46px;
-            height: 46px;
-
-            border: 0;
-            border-radius: 15px;
-
-            background: #fff;
-            color: #222;
-
-            font-size: 24px;
-
+            width: 44px;
+            height: 44px;
+            border: none;
+            border-radius: 14px;
+            background: white;
+            box-shadow: 0 4px 14px rgba(40, 70, 50, 0.08);
+            font-size: 23px;
             display: flex;
             align-items: center;
             justify-content: center;
-
-            box-shadow:
-                0 4px 15px rgba(0, 0, 0, 0.06);
+            color: #34443a;
         }
 
-        .category-heading {
-            min-width: 0;
+        .category-title {
+            flex: 1;
         }
 
-        .category-heading h2 {
-            margin: 0;
-
-            font-size: 27px;
-            line-height: 1.1;
+        .category-title h2 {
+            font-size: 24px;
+            line-height: 1.15;
         }
 
-        .category-heading p {
-            margin: 4px 0 0;
-
-            color: #777;
-
-            font-size: 14px;
+        .category-title p {
+            color: #7a877e;
+            font-size: 13px;
+            margin-top: 3px;
         }
 
-        /* =====================================================
-           RICERCA + SCANNER
-        ===================================================== */
-
-        .tools-row {
-            display: grid;
-
-            grid-template-columns: 1fr 54px;
-
+        .toolbar {
+            display: flex;
             gap: 10px;
-
-            margin-bottom: 12px;
+            margin-bottom: 14px;
         }
 
         .search-box {
-            height: 54px;
-
-            background: #fff;
-
-            border-radius: 17px;
-
-            display: flex;
-            align-items: center;
-
-            padding: 0 15px;
-
-            box-shadow:
-                0 4px 15px rgba(0, 0, 0, 0.05);
-        }
-
-        .search-box span {
-            font-size: 20px;
-            margin-right: 9px;
+            flex: 1;
+            position: relative;
         }
 
         .search-box input {
             width: 100%;
-
-            border: 0;
+            height: 48px;
+            border: 1px solid #dfe6df;
+            border-radius: 15px;
+            background: white;
+            padding: 0 16px 0 44px;
             outline: none;
-
-            background: transparent;
-
-            font-size: 16px;
-            color: #222;
+            color: #26342b;
         }
 
-        .scan-button {
-            height: 54px;
-
-            border: 0;
-            border-radius: 17px;
-
-            background: #222;
-            color: #fff;
-
-            font-size: 24px;
-
-            box-shadow:
-                0 4px 15px rgba(0, 0, 0, 0.10);
+        .search-box input:focus {
+            border-color: #9ac78e;
+            box-shadow: 0 0 0 3px rgba(123, 191, 106, 0.12);
         }
 
-        /* =====================================================
-           FILTRI
-        ===================================================== */
+        .search-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 18px;
+            color: #7d8b82;
+            pointer-events: none;
+        }
 
-        .filter-row {
+        .scanner-button {
+            width: 48px;
+            height: 48px;
+            border: none;
+            border-radius: 15px;
+            background: #7bbf6a;
+            color: white;
+            font-size: 23px;
+            box-shadow: 0 5px 14px rgba(123, 191, 106, 0.24);
+            flex-shrink: 0;
+        }
+
+        .filters {
             display: flex;
-
             gap: 8px;
-
-            margin-bottom: 16px;
+            margin-bottom: 18px;
+            overflow-x: auto;
+            padding-bottom: 2px;
         }
 
         .filter-button {
-            border: 0;
-            border-radius: 14px;
-
-            padding: 10px 14px;
-
-            background: #e8eae7;
-            color: #555;
-
+            border: 1px solid #dce5dc;
+            background: white;
+            color: #66746b;
+            border-radius: 999px;
+            padding: 9px 15px;
+            white-space: nowrap;
             font-size: 14px;
-            font-weight: 600;
         }
 
         .filter-button.active {
-            background: #222;
-            color: #fff;
+            background: #e8f4e4;
+            border-color: #b8dbaa;
+            color: #3d6935;
+            font-weight: 700;
         }
 
-        /* =====================================================
-           PRODOTTI
-        ===================================================== */
+        /* =========================
+           PRODUCTS
+        ========================= */
 
-        .products-list {
+        .products {
             display: flex;
             flex-direction: column;
-
-            gap: 11px;
+            gap: 12px;
         }
 
         .product-card {
-            background: #fff;
-
+            background: white;
             border-radius: 19px;
-
-            padding: 13px;
-
-            display: grid;
-
-            grid-template-columns:
-                62px
-                1fr
-                auto;
-
-            gap: 12px;
-
+            padding: 14px;
+            box-shadow: 0 5px 17px rgba(40, 70, 50, 0.07);
+            display: flex;
             align-items: center;
-
-            box-shadow:
-                0 4px 15px rgba(0, 0, 0, 0.05);
+            gap: 13px;
         }
 
         .product-image {
-            width: 62px;
-            height: 62px;
-
+            width: 74px;
+            height: 74px;
             border-radius: 15px;
-
-            background: #f1f2f0;
-
-            overflow: hidden;
-
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            font-size: 26px;
-        }
-
-        .product-image img {
-            width: 100%;
-            height: 100%;
-
+            background: #f1f4f0;
             object-fit: cover;
+            flex-shrink: 0;
         }
 
         .product-info {
+            flex: 1;
             min-width: 0;
+        }
 
-            cursor: pointer;
+        .product-brand {
+            font-size: 12px;
+            color: #8a968e;
+            margin-bottom: 3px;
         }
 
         .product-name {
+            font-size: 17px;
             font-weight: 700;
-
-            font-size: 16px;
-
-            margin-bottom: 3px;
-
-            white-space: nowrap;
-
-            overflow: hidden;
-
-            text-overflow: ellipsis;
+            color: #26342b;
+            margin-bottom: 4px;
+            word-break: break-word;
         }
 
-        .product-meta {
-            color: #777;
-
+        .product-format {
             font-size: 13px;
-
-            white-space: nowrap;
-
-            overflow: hidden;
-
-            text-overflow: ellipsis;
+            color: #78857d;
         }
 
         .low-stock {
-            margin-top: 5px;
-
-            color: #d34b4b;
-
-            font-size: 12px;
-
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            margin-top: 7px;
+            padding: 4px 8px;
+            border-radius: 999px;
+            background: #fff0ee;
+            color: #c34c42;
+            font-size: 11px;
             font-weight: 700;
         }
-
-        /* =====================================================
-           QUANTITÀ
-        ===================================================== */
 
         .quantity-control {
             display: flex;
             align-items: center;
-
-            gap: 5px;
+            gap: 7px;
+            flex-shrink: 0;
         }
 
-        .quantity-control button {
+        .quantity-button {
             width: 34px;
             height: 34px;
-
-            border: 0;
+            border: none;
             border-radius: 11px;
-
-            background: #f0f1ef;
-
-            color: #222;
-
+            background: #eef4eb;
+            color: #41613a;
             font-size: 20px;
-
-            line-height: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .quantity-value {
-            min-width: 28px;
-
+            min-width: 27px;
             text-align: center;
-
+            font-size: 17px;
             font-weight: 700;
+        }
 
+        .edit-button {
+            width: 34px;
+            height: 34px;
+            border: none;
+            border-radius: 11px;
+            background: #f3f5f3;
+            color: #69766e;
             font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 2px;
         }
 
-        /* =====================================================
-           NESSUN PRODOTTO
-        ===================================================== */
-
-        .empty-state {
+        .empty-products {
+            background: white;
+            border-radius: 20px;
+            padding: 40px 20px;
             text-align: center;
-
-            padding: 45px 20px;
-
-            color: #777;
+            color: #7b887f;
+            box-shadow: 0 5px 17px rgba(40, 70, 50, 0.06);
         }
 
-        .empty-state .empty-icon {
+        .empty-products-icon {
             font-size: 42px;
-
             margin-bottom: 10px;
         }
 
-        .empty-state h3 {
-            margin: 0 0 6px;
-
-            color: #333;
-        }
-
-        .empty-state p {
-            margin: 0;
-
-            font-size: 14px;
-        }
-
-        /* =====================================================
-           AGGIUNGI PRODOTTO
-        ===================================================== */
-
-        .add-button {
+        .add-product-button {
             width: 100%;
-
-            min-height: 56px;
-
-            margin-top: 18px;
-
-            border: 0;
-
-            border-radius: 18px;
-
-            background: #222;
-            color: #fff;
-
-            font-weight: 700;
-
+            height: 54px;
+            margin-top: 16px;
+            border: none;
+            border-radius: 17px;
+            background: #7bbf6a;
+            color: white;
             font-size: 16px;
-
-            box-shadow:
-                0 5px 18px rgba(0, 0, 0, 0.10);
+            font-weight: 700;
+            box-shadow: 0 6px 16px rgba(123, 191, 106, 0.22);
         }
 
-        /* =====================================================
-           MODALE
-        ===================================================== */
+        /* =========================
+           MODALS
+        ========================= */
 
-        .modal-overlay {
+        .modal {
             position: fixed;
-
             inset: 0;
-
-            background: rgba(0, 0, 0, 0.38);
-
+            background: rgba(25, 35, 28, 0.46);
             display: none;
-
             align-items: flex-end;
             justify-content: center;
-
-            z-index: 100;
-
-            padding: 0;
+            z-index: 500;
+            padding: 12px;
         }
 
-        .modal-overlay.active {
+        .modal.active {
             display: flex;
         }
 
-        .modal {
+        .modal-content {
             width: 100%;
-            max-width: 760px;
-
-            max-height: 92vh;
-
+            max-width: 620px;
+            max-height: calc(100vh - 24px);
             overflow-y: auto;
-
-            background: #f6f7f5;
-
-            border-radius: 26px 26px 0 0;
-
-            padding:
-                18px
-                18px
-                max(25px, env(safe-area-inset-bottom));
-
-            animation: slideUp 0.2s ease;
-        }
-
-        @keyframes slideUp {
-            from {
-                transform: translateY(30px);
-                opacity: 0.5;
-            }
-
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-
-        .modal-handle {
-            width: 42px;
-            height: 5px;
-
-            border-radius: 99px;
-
-            background: #d0d2cf;
-
-            margin:
-                0 auto 18px;
+            background: white;
+            border-radius: 25px;
+            padding: 20px;
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.20);
         }
 
         .modal-header {
             display: flex;
-
-            justify-content: space-between;
             align-items: center;
-
-            gap: 15px;
-
+            justify-content: space-between;
+            gap: 10px;
             margin-bottom: 18px;
         }
 
         .modal-header h3 {
-            margin: 0;
-
-            font-size: 23px;
+            font-size: 21px;
         }
 
         .close-button {
-            width: 42px;
-            height: 42px;
-
-            border: 0;
-
-            border-radius: 14px;
-
-            background: #fff;
-
-            font-size: 22px;
+            width: 38px;
+            height: 38px;
+            border: none;
+            border-radius: 12px;
+            background: #f1f4f1;
+            color: #56635b;
+            font-size: 20px;
         }
 
-        /* =====================================================
-           FORM
-        ===================================================== */
-
-        .form-grid {
-            display: grid;
-
-            gap: 13px;
+        .form-group {
+            margin-bottom: 14px;
         }
 
-        .form-field label {
+        .form-group label {
             display: block;
-
-            margin:
-                0 0 6px 3px;
-
-            color: #555;
-
             font-size: 13px;
-
-            font-weight: 600;
-        }
-
-        .form-field input,
-        .form-field select {
-            width: 100%;
-
-            height: 50px;
-
-            border: 1px solid #e1e3df;
-
-            border-radius: 15px;
-
-            padding: 0 14px;
-
-            background: #fff;
-
-            outline: none;
-
-            color: #222;
-        }
-
-        .form-field input:focus,
-        .form-field select:focus {
-            border-color: #999;
-        }
-
-        .form-two {
-            display: grid;
-
-            grid-template-columns:
-                1fr
-                1fr;
-
-            gap: 10px;
-        }
-
-        .save-button {
-            width: 100%;
-
-            height: 54px;
-
-            margin-top: 6px;
-
-            border: 0;
-
-            border-radius: 17px;
-
-            background: #222;
-            color: #fff;
-
             font-weight: 700;
-
-            font-size: 16px;
+            color: #536158;
+            margin-bottom: 6px;
         }
 
-        /* =====================================================
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            height: 46px;
+            border: 1px solid #dce4dc;
+            border-radius: 13px;
+            padding: 0 13px;
+            outline: none;
+            background: #fff;
+            color: #26342b;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            border-color: #9ac78e;
+            box-shadow: 0 0 0 3px rgba(123, 191, 106, 0.10);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 18px;
+        }
+
+        .modal-action {
+            flex: 1;
+            height: 48px;
+            border: none;
+            border-radius: 14px;
+            font-weight: 700;
+        }
+
+        .cancel-action {
+            background: #eef1ee;
+            color: #5f6c64;
+        }
+
+        .save-action {
+            background: #7bbf6a;
+            color: white;
+        }
+
+        .delete-action {
+            background: #fff0ee;
+            color: #c34c42;
+        }
+
+        /* =========================
            SCANNER
-        ===================================================== */
+        ========================= */
 
-        .scanner-modal {
+        #scannerModal {
             align-items: center;
-
-            padding: 18px;
         }
 
-        .scanner-modal .modal {
-            border-radius: 26px;
-
-            max-height: 90vh;
+        .scanner-content {
+            max-width: 560px;
+            text-align: center;
         }
 
         #reader {
             width: 100%;
-
             overflow: hidden;
-
-            border-radius: 18px;
-
-            background: #111;
-
-            min-height: 260px;
+            border-radius: 17px;
+            margin-bottom: 14px;
         }
 
         .scanner-help {
-            margin: 12px 0 0;
-
-            text-align: center;
-
-            color: #777;
-
+            color: #77847b;
             font-size: 13px;
+            line-height: 1.45;
+            margin-bottom: 14px;
         }
 
-        .scanner-actions {
-            margin-top: 15px;
-        }
+        /* =========================
+           RESPONSIVE
+        ========================= */
 
-        .secondary-button {
-            width: 100%;
-
-            height: 50px;
-
-            border: 0;
-
-            border-radius: 15px;
-
-            background: #e8eae7;
-
-            color: #333;
-
-            font-weight: 600;
-        }
-
-        /* =====================================================
-           TABLET / IPAD
-        ===================================================== */
-
-        @media (min-width: 600px) {
-
-            .app {
-                padding-left: 24px;
-                padding-right: 24px;
+        @media (max-width: 700px) {
+            .categories {
+                grid-template-columns: 1fr;
             }
 
+            .category-card {
+                min-height: 145px;
+                flex-direction: row;
+                justify-content: flex-start;
+                padding: 20px 24px;
+                gap: 18px;
+            }
+
+            .category-icon {
+                width: 68px;
+                height: 68px;
+                font-size: 37px;
+            }
+
+            .category-name {
+                font-size: 18px;
+            }
+
+            .product-card {
+                align-items: flex-start;
+            }
+
+            .quantity-control {
+                flex-wrap: wrap;
+                justify-content: flex-end;
+            }
+        }
+
+        @media (min-width: 701px) {
             .modal {
-                border-radius: 26px;
+                align-items: center;
+            }
+        }
 
-                margin-bottom: 20px;
+        @media (max-width: 430px) {
+            #homeScreen {
+                padding-left: 16px;
+                padding-right: 16px;
             }
 
-            .modal-overlay {
-                align-items: center;
+            .home-heading h2 {
+                font-size: 25px;
+            }
 
-                padding: 20px;
+            .product-card {
+                gap: 10px;
+                padding: 12px;
+            }
+
+            .product-image {
+                width: 64px;
+                height: 64px;
+            }
+
+            .product-name {
+                font-size: 15px;
+            }
+
+            .quantity-button,
+            .edit-button {
+                width: 31px;
+                height: 31px;
             }
         }
     </style>
@@ -829,238 +636,98 @@
 
 <body>
 
-    <!-- Barra colorata superiore -->
-    <div class="top-color-bar"></div>
+<div class="top-color-bar"></div>
+
+<div class="app">
+
+    <!-- =========================
+         HOME
+    ========================== -->
+    <main id="homeScreen" class="screen active">
+
+        <div class="home-title">
+            <div class="home-heading">
+
+                <div class="logo-icon">🛒</div>
+
+                <div>
+                    <h2>La Mia Dispensa</h2>
+                    <p>Scegli una categoria</p>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="categories">
+
+            <button class="category-card" onclick="openCategory('cibo')">
+                <div class="category-icon">🍎</div>
+                <div class="category-name">Cibo</div>
+            </button>
+
+            <button class="category-card" onclick="openCategory('bagno')">
+                <div class="category-icon">🧴</div>
+                <div class="category-name">Prodotti bagno</div>
+            </button>
+
+            <button class="category-card" onclick="openCategory('pulizia')">
+                <div class="category-icon">🧹</div>
+                <div class="category-name">Prodotti pulizia</div>
+            </button>
+
+        </div>
+
+    </main>
 
 
-    <div class="app">
+    <!-- =========================
+         CATEGORY
+    ========================== -->
+    <main id="categoryScreen" class="screen">
 
-        <!-- =================================================
-             HOME
-        ================================================= -->
+        <div class="category-container">
 
-        <section
-            id="homeScreen"
-            class="screen active home-screen"
-        >
+            <div class="category-header">
 
-            <div class="home-title">
+                <button class="back-button" onclick="goHome()">
+                    ←
+                </button>
 
-                <div class="home-heading">
-
-                    <!-- CARRELLO MINIMAL -->
-                    <div
-                        class="home-cart-icon"
-                        aria-hidden="true"
-                    >
-
-                        <svg
-                            viewBox="0 0 64 64"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                        >
-
-                            <!-- Manico e struttura -->
-                            <path
-                                d="M9 13H15L21 42H50L56 22H18"
-                                stroke="currentColor"
-                                stroke-width="4"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                            />
-
-                            <!-- Parte inferiore -->
-                            <path
-                                d="M21 42C19 42 17 44 17 46C17 48 19 50 21 50H49"
-                                stroke="currentColor"
-                                stroke-width="4"
-                                stroke-linecap="round"
-                            />
-
-                            <!-- Ruote -->
-                            <circle
-                                cx="25"
-                                cy="55"
-                                r="3.5"
-                                fill="currentColor"
-                            />
-
-                            <circle
-                                cx="46"
-                                cy="55"
-                                r="3.5"
-                                fill="currentColor"
-                            />
-
-                            <!-- Primo prodotto -->
-                            <path
-                                d="M27 20V13C27 11.3 28.3 10 30 10H34C35.7 10 37 11.3 37 13V20"
-                                stroke="currentColor"
-                                stroke-width="3.5"
-                                stroke-linecap="round"
-                            />
-
-                            <!-- Secondo prodotto -->
-                            <path
-                                d="M39 20V15C39 13.3 40.3 12 42 12H45C46.7 12 48 13.3 48 15V20"
-                                stroke="currentColor"
-                                stroke-width="3.5"
-                                stroke-linecap="round"
-                            />
-
-                        </svg>
-
-                    </div>
-
-
-                    <div>
-
-                        <h2>
-                            La tua dispensa
-                        </h2>
-
-                        <p>
-                            Scegli una categoria
-                        </p>
-
-                    </div>
-
+                <div class="category-title">
+                    <h2 id="categoryTitle">Cibo</h2>
+                    <p>Gestisci i prodotti della categoria</p>
                 </div>
 
             </div>
 
 
-            <!-- CATEGORIE -->
-
-            <div class="category-grid">
-
-                <button
-                    class="category-card"
-                    onclick="openCategory('cibo')"
-                >
-
-                    <div class="category-icon">
-                        🍎
-                    </div>
-
-                    <div>
-                        <h3>
-                            Cibo
-                        </h3>
-                    </div>
-
-                </button>
-
-
-                <button
-                    class="category-card"
-                    onclick="openCategory('bagno')"
-                >
-
-                    <div class="category-icon">
-                        🧴
-                    </div>
-
-                    <div>
-                        <h3>
-                            Prodotti bagno
-                        </h3>
-                    </div>
-
-                </button>
-
-
-                <button
-                    class="category-card"
-                    onclick="openCategory('pulizia')"
-                >
-
-                    <div class="category-icon">
-                        🧹
-                    </div>
-
-                    <div>
-                        <h3>
-                            Prodotti pulizia
-                        </h3>
-                    </div>
-
-                </button>
-
-            </div>
-
-        </section>
-
-
-        <!-- =================================================
-             CATEGORIA
-        ================================================= -->
-
-        <section
-            id="categoryScreen"
-            class="screen category-screen"
-        >
-
-            <div class="category-top">
-
-                <button
-                    class="back-button"
-                    onclick="goHome()"
-                    aria-label="Torna indietro"
-                >
-                    ‹
-                </button>
-
-
-                <div class="category-heading">
-
-                    <h2 id="categoryTitle">
-                        Cibo
-                    </h2>
-
-                    <p>
-                        Gestisci i tuoi prodotti
-                    </p>
-
-                </div>
-
-            </div>
-
-
-            <!-- RICERCA + SCANNER -->
-
-            <div class="tools-row">
+            <div class="toolbar">
 
                 <div class="search-box">
 
-                    <span>
-                        ⌕
-                    </span>
+                    <span class="search-icon">🔎</span>
 
                     <input
+                        type="text"
                         id="searchInput"
-                        type="search"
                         placeholder="Cerca prodotto..."
-                        oninput="renderProducts()"
+                        autocomplete="off"
                     >
 
                 </div>
 
-
                 <button
-                    class="scan-button"
+                    class="scanner-button"
                     onclick="openScanner()"
-                    aria-label="Scansiona barcode"
+                    title="Scansiona barcode"
                 >
-                    ▦
+                    ▣
                 </button>
 
             </div>
 
 
-            <!-- FILTRI -->
-
-            <div class="filter-row">
+            <div class="filters">
 
                 <button
                     id="filterAll"
@@ -1075,1190 +742,1202 @@
                     class="filter-button"
                     onclick="setFilter('low')"
                 >
-                    Scorte basse
+                    🔴 Scorte basse
                 </button>
 
             </div>
 
 
-            <!-- LISTA PRODOTTI -->
+            <div id="products" class="products"></div>
 
-            <div
-                id="productsList"
-                class="products-list"
-            ></div>
-
-
-            <!-- AGGIUNGI -->
 
             <button
-                class="add-button"
+                class="add-product-button"
                 onclick="openProductModal()"
             >
-                + Aggiungi prodotto
+                ＋ Aggiungi prodotto
             </button>
 
-        </section>
+        </div>
+
+    </main>
+
+</div>
+
+
+<!-- =========================
+     PRODUCT MODAL
+========================== -->
+
+<div id="productModal" class="modal">
+
+    <div class="modal-content">
+
+        <div class="modal-header">
+
+            <h3 id="productModalTitle">
+                Aggiungi prodotto
+            </h3>
+
+            <button
+                class="close-button"
+                onclick="closeProductModal()"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <input
+            type="hidden"
+            id="productId"
+        >
+
+
+        <div class="form-group">
+
+            <label for="productName">
+                Nome prodotto
+            </label>
+
+            <input
+                id="productName"
+                type="text"
+                placeholder="Es. Piselli"
+                autocomplete="off"
+            >
+
+        </div>
+
+
+        <div class="form-row">
+
+            <div class="form-group">
+
+                <label for="productBrand">
+                    Marca
+                </label>
+
+                <input
+                    id="productBrand"
+                    type="text"
+                    placeholder="Es. Findus"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="productFormat">
+                    Formato
+                </label>
+
+                <input
+                    id="productFormat"
+                    type="text"
+                    placeholder="Es. 450 g"
+                >
+
+            </div>
+
+        </div>
+
+
+        <div class="form-row">
+
+            <div class="form-group">
+
+                <label for="productQuantity">
+                    Quantità
+                </label>
+
+                <input
+                    id="productQuantity"
+                    type="number"
+                    min="0"
+                    step="1"
+                    value="1"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="productMinStock">
+                    Scorta minima
+                </label>
+
+                <input
+                    id="productMinStock"
+                    type="number"
+                    min="0"
+                    step="1"
+                    value="0"
+                >
+
+            </div>
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label for="productCategory">
+                Categoria
+            </label>
+
+            <select id="productCategory">
+
+                <option value="cibo">
+                    Cibo
+                </option>
+
+                <option value="bagno">
+                    Prodotti bagno
+                </option>
+
+                <option value="pulizia">
+                    Prodotti pulizia
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label for="productBarcode">
+                Barcode
+            </label>
+
+            <input
+                id="productBarcode"
+                type="text"
+                placeholder="Codice a barre"
+            >
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label for="productImage">
+                URL immagine
+            </label>
+
+            <input
+                id="productImage"
+                type="url"
+                placeholder="https://..."
+            >
+
+        </div>
+
+
+        <div class="modal-actions">
+
+            <button
+                id="deleteProductButton"
+                class="modal-action delete-action"
+                onclick="deleteProduct()"
+                style="display:none;"
+            >
+                Elimina
+            </button>
+
+            <button
+                class="modal-action cancel-action"
+                onclick="closeProductModal()"
+            >
+                Annulla
+            </button>
+
+            <button
+                class="modal-action save-action"
+                onclick="saveProduct()"
+            >
+                Salva
+            </button>
+
+        </div>
 
     </div>
 
-
-    <!-- =====================================================
-         MODALE PRODOTTO
-    ====================================================== -->
-
-    <div
-        id="productModal"
-        class="modal-overlay"
-        onclick="closeModalFromOverlay(event)"
-    >
-
-        <div class="modal">
-
-            <div class="modal-handle"></div>
+</div>
 
 
-            <div class="modal-header">
+<!-- =========================
+     SCANNER MODAL
+========================== -->
 
-                <h3 id="modalTitle">
-                    Aggiungi prodotto
-                </h3>
+<div id="scannerModal" class="modal">
 
-                <button
-                    class="close-button"
-                    onclick="closeProductModal()"
-                >
-                    ×
-                </button>
+    <div class="modal-content scanner-content">
 
-            </div>
+        <div class="modal-header">
 
+            <h3>
+                Scansiona prodotto
+            </h3>
 
-            <form
-                id="productForm"
-                onsubmit="saveProduct(event)"
+            <button
+                class="close-button"
+                onclick="closeScanner()"
             >
+                ×
+            </button>
 
-                <div class="form-grid">
+        </div>
 
-                    <div class="form-field">
 
-                        <label for="productName">
-                            Nome prodotto
-                        </label>
+        <div id="reader"></div>
 
-                        <input
-                            id="productName"
-                            type="text"
-                            required
-                        >
 
+        <p class="scanner-help">
+            Inquadra il codice a barre del prodotto.
+            La fotocamera verrà utilizzata per leggere automaticamente
+            il codice.
+        </p>
+
+
+        <button
+            class="modal-action cancel-action"
+            onclick="closeScanner()"
+            style="width:100%;"
+        >
+            Chiudi
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- =========================
+     HTML5 QR CODE
+========================== -->
+
+<script src="https://unpkg.com/html5-qrcode"></script>
+
+
+<script>
+
+    /* =========================================================
+       CONFIGURAZIONE
+    ========================================================= */
+
+    const STORAGE_KEY = "laMiaDispensaProdotti";
+
+    const categories = {
+
+        cibo: {
+            name: "Cibo",
+            icon: "🍎"
+        },
+
+        bagno: {
+            name: "Prodotti bagno",
+            icon: "🧴"
+        },
+
+        pulizia: {
+            name: "Prodotti pulizia",
+            icon: "🧹"
+        }
+
+    };
+
+
+    const productsWithMinStock5 = [
+
+        "piselli",
+        "ceci",
+        "fagioli",
+        "passata di pomodoro",
+        "pezzettoni di pomodoro"
+
+    ];
+
+
+    let products = [];
+
+    let currentCategory = "cibo";
+
+    let currentFilter = "all";
+
+    let editingProductId = null;
+
+    let html5QrCode = null;
+
+
+    /* =========================================================
+       SICUREZZA HTML
+    ========================================================= */
+
+    function escapeHtml(value) {
+
+        return String(value ?? "")
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+
+    }
+
+
+    /* =========================================================
+       LOCAL STORAGE
+    ========================================================= */
+
+    function loadProducts() {
+
+        try {
+
+            const saved = localStorage.getItem(STORAGE_KEY);
+
+            if (saved) {
+
+                products = JSON.parse(saved);
+
+            } else {
+
+                products = [
+
+                    {
+                        id: crypto.randomUUID(),
+                        name: "Piselli",
+                        brand: "Esempio",
+                        format: "450 g",
+                        quantity: 8,
+                        minStock: 5,
+                        category: "cibo",
+                        barcode: "",
+                        image: ""
+                    },
+
+                    {
+                        id: crypto.randomUUID(),
+                        name: "Ceci",
+                        brand: "Esempio",
+                        format: "400 g",
+                        quantity: 6,
+                        minStock: 5,
+                        category: "cibo",
+                        barcode: "",
+                        image: ""
+                    },
+
+                    {
+                        id: crypto.randomUUID(),
+                        name: "Fagioli",
+                        brand: "Esempio",
+                        format: "400 g",
+                        quantity: 4,
+                        minStock: 5,
+                        category: "cibo",
+                        barcode: "",
+                        image: ""
+                    },
+
+                    {
+                        id: crypto.randomUUID(),
+                        name: "Passata di pomodoro",
+                        brand: "Esempio",
+                        format: "700 ml",
+                        quantity: 7,
+                        minStock: 5,
+                        category: "cibo",
+                        barcode: "",
+                        image: ""
+                    },
+
+                    {
+                        id: crypto.randomUUID(),
+                        name: "Pezzettoni di pomodoro",
+                        brand: "Esempio",
+                        format: "400 g",
+                        quantity: 3,
+                        minStock: 5,
+                        category: "cibo",
+                        barcode: "",
+                        image: ""
+                    }
+
+                ];
+
+                saveProducts();
+
+            }
+
+        } catch (error) {
+
+            console.error(
+                "Errore caricamento prodotti:",
+                error
+            );
+
+            products = [];
+
+        }
+
+    }
+
+
+    function saveProducts() {
+
+        localStorage.setItem(
+            STORAGE_KEY,
+            JSON.stringify(products)
+        );
+
+    }
+
+
+    /* =========================================================
+       NAVIGAZIONE
+    ========================================================= */
+
+    function openCategory(category) {
+
+        if (!categories[category]) {
+            return;
+        }
+
+        currentCategory = category;
+
+        currentFilter = "all";
+
+        document
+            .getElementById("homeScreen")
+            .classList.remove("active");
+
+        document
+            .getElementById("categoryScreen")
+            .classList.add("active");
+
+
+        document.getElementById("categoryTitle").textContent =
+            categories[category].name;
+
+
+        document.getElementById("searchInput").value = "";
+
+
+        document
+            .getElementById("filterAll")
+            .classList.add("active");
+
+        document
+            .getElementById("filterLow")
+            .classList.remove("active");
+
+
+        document.getElementById("productCategory").value =
+            category;
+
+
+        renderProducts();
+
+    }
+
+
+    function goHome() {
+
+        document
+            .getElementById("categoryScreen")
+            .classList.remove("active");
+
+        document
+            .getElementById("homeScreen")
+            .classList.add("active");
+
+    }
+
+
+    /* =========================================================
+       FILTRI
+    ========================================================= */
+
+    function setFilter(filter) {
+
+        currentFilter = filter;
+
+
+        document
+            .getElementById("filterAll")
+            .classList.toggle(
+                "active",
+                filter === "all"
+            );
+
+
+        document
+            .getElementById("filterLow")
+            .classList.toggle(
+                "active",
+                filter === "low"
+            );
+
+
+        renderProducts();
+
+    }
+
+
+    /* =========================================================
+       SCORTE BASSE
+    ========================================================= */
+
+    function isLowStock(product) {
+
+        return Number(product.quantity) <=
+            Number(product.minStock);
+
+    }
+
+
+    /* =========================================================
+       RENDER PRODOTTI
+    ========================================================= */
+
+    function renderProducts() {
+
+        const container =
+            document.getElementById("products");
+
+        const search =
+            document
+                .getElementById("searchInput")
+                .value
+                .trim()
+                .toLowerCase();
+
+
+        let filteredProducts =
+            products.filter(product => {
+
+                if (
+                    product.category !==
+                    currentCategory
+                ) {
+                    return false;
+                }
+
+
+                if (
+                    search &&
+                    !String(product.name || "")
+                        .toLowerCase()
+                        .includes(search) &&
+                    !String(product.brand || "")
+                        .toLowerCase()
+                        .includes(search)
+                ) {
+                    return false;
+                }
+
+
+                if (
+                    currentFilter === "low" &&
+                    !isLowStock(product)
+                ) {
+                    return false;
+                }
+
+
+                return true;
+
+            });
+
+
+        filteredProducts.sort((a, b) =>
+            String(a.name || "").localeCompare(
+                String(b.name || ""),
+                "it"
+            )
+        );
+
+
+        if (filteredProducts.length === 0) {
+
+            container.innerHTML = `
+
+                <div class="empty-products">
+
+                    <div class="empty-products-icon">
+                        📦
+                    </div>
+
+                    <div>
+                        Nessun prodotto trovato.
+                    </div>
+
+                </div>
+
+            `;
+
+            return;
+
+        }
+
+
+        container.innerHTML =
+            filteredProducts
+                .map(createProductCard)
+                .join("");
+
+    }
+
+
+    /* =========================================================
+       CARD PRODOTTO
+    ========================================================= */
+
+    function createProductCard(product) {
+
+        const lowStock =
+            isLowStock(product);
+
+
+        const image = product.image
+            ? escapeHtml(product.image)
+            : "";
+
+
+        const imageHtml = image
+
+            ? `
+                <img
+                    class="product-image"
+                    src="${image}"
+                    alt="${escapeHtml(product.name)}"
+                    onerror="this.style.display='none';"
+                >
+              `
+
+            : `
+                <div
+                    class="product-image"
+                    style="
+                        display:flex;
+                        align-items:center;
+                        justify-content:center;
+                        font-size:30px;
+                    "
+                >
+                    ${categories[product.category]?.icon || "📦"}
+                </div>
+              `;
+
+
+        return `
+
+            <div class="product-card">
+
+                ${imageHtml}
+
+
+                <div class="product-info">
+
+                    ${
+                        product.brand
+                        ? `
+                            <div class="product-brand">
+                                ${escapeHtml(product.brand)}
+                            </div>
+                          `
+                        : ""
+                    }
+
+
+                    <div class="product-name">
+                        ${escapeHtml(product.name)}
                     </div>
 
 
-                    <div class="form-field">
-
-                        <label for="productBrand">
-                            Marca
-                        </label>
-
-                        <input
-                            id="productBrand"
-                            type="text"
-                        >
-
-                    </div>
+                    ${
+                        product.format
+                        ? `
+                            <div class="product-format">
+                                ${escapeHtml(product.format)}
+                            </div>
+                          `
+                        : ""
+                    }
 
 
-                    <div class="form-field">
+                    ${
+                        lowStock
+                        ? `
+                            <div class="low-stock">
+                                🔴 Scorta bassa
+                            </div>
+                          `
+                        : ""
+                    }
 
-                        <label for="productFormat">
-                            Formato
-                        </label>
-
-                        <input
-                            id="productFormat"
-                            type="text"
-                            placeholder="es. 400 g, 1 L, 12 pezzi"
-                        >
-
-                    </div>
+                </div>
 
 
-                    <div class="form-two">
+                <div class="quantity-control">
 
-                        <div class="form-field">
-
-                            <label for="productQuantity">
-                                Quantità
-                            </label>
-
-                            <input
-                                id="productQuantity"
-                                type="number"
-                                min="0"
-                                step="1"
-                                value="1"
-                                required
-                            >
-
-                        </div>
+                    <button
+                        class="quantity-button"
+                        onclick="changeQuantity('${product.id}', -1)"
+                    >
+                        −
+                    </button>
 
 
-                        <div class="form-field">
-
-                            <label for="productMinStock">
-                                Scorta minima
-                            </label>
-
-                            <input
-                                id="productMinStock"
-                                type="number"
-                                min="0"
-                                step="1"
-                                value="1"
-                                required
-                            >
-
-                        </div>
-
-                    </div>
-
-
-                    <div class="form-field">
-
-                        <label for="productBarcode">
-                            Barcode
-                        </label>
-
-                        <input
-                            id="productBarcode"
-                            type="text"
-                            inputmode="numeric"
-                        >
-
-                    </div>
-
-
-                    <div class="form-field">
-
-                        <label for="productImage">
-                            URL immagine
-                        </label>
-
-                        <input
-                            id="productImage"
-                            type="url"
-                            placeholder="https://..."
-                        >
-
-                    </div>
-
-
-                    <div class="form-field">
-
-                        <label for="productCategory">
-                            Categoria
-                        </label>
-
-                        <select id="productCategory">
-
-                            <option value="cibo">
-                                Cibo
-                            </option>
-
-                            <option value="bagno">
-                                Prodotti bagno
-                            </option>
-
-                            <option value="pulizia">
-                                Prodotti pulizia
-                            </option>
-
-                        </select>
-
+                    <div class="quantity-value">
+                        ${Number(product.quantity) || 0}
                     </div>
 
 
                     <button
-                        class="save-button"
-                        type="submit"
+                        class="quantity-button"
+                        onclick="changeQuantity('${product.id}', 1)"
                     >
-                        Salva prodotto
+                        +
+                    </button>
+
+
+                    <button
+                        class="edit-button"
+                        onclick="editProduct('${product.id}')"
+                        title="Modifica prodotto"
+                    >
+                        ✏️
                     </button>
 
                 </div>
 
-            </form>
-
-        </div>
-
-    </div>
-
-
-    <!-- =====================================================
-         SCANNER
-    ====================================================== -->
-
-    <div
-        id="scannerModal"
-        class="modal-overlay scanner-modal"
-    >
-
-        <div class="modal">
-
-            <div class="modal-handle"></div>
-
-
-            <div class="modal-header">
-
-                <h3>
-                    Scansiona barcode
-                </h3>
-
-                <button
-                    class="close-button"
-                    onclick="closeScanner()"
-                >
-                    ×
-                </button>
-
             </div>
 
+        `;
 
-            <div id="reader"></div>
+    }
 
 
-            <p class="scanner-help">
-                Inquadra il codice a barre del prodotto.
-            </p>
+    /* =========================================================
+       QUANTITÀ
+    ========================================================= */
 
+    function changeQuantity(id, amount) {
 
-            <div class="scanner-actions">
-
-                <button
-                    class="secondary-button"
-                    onclick="closeScanner()"
-                >
-                    Chiudi
-                </button>
-
-            </div>
-
-        </div>
-
-    </div>
-
-
-    <!-- =====================================================
-         JAVASCRIPT
-    ====================================================== -->
-
-    <script>
-
-        const STORAGE_KEY =
-            "laMiaDispensa_products";
-
-
-        const categories = {
-
-            cibo:
-                "Cibo",
-
-            bagno:
-                "Prodotti bagno",
-
-            pulizia:
-                "Prodotti pulizia"
-
-        };
-
-
-        /*
-         * Questi prodotti hanno automaticamente
-         * una scorta minima di 5.
-         */
-
-        const DEFAULT_MIN_STOCK_PRODUCTS = [
-
-            "piselli",
-
-            "ceci",
-
-            "fagioli",
-
-            "passata di pomodoro",
-
-            "pezzettoni di pomodoro"
-
-        ];
-
-
-        let currentCategory = "cibo";
-
-        let currentFilter = "all";
-
-        let editingProductId = null;
-
-        let html5QrCode = null;
-
-        let products = loadProducts();
-
-
-        /* =================================================
-           FUNZIONI GENERALI
-        ================================================= */
-
-        function normalizeText(value) {
-
-            return String(value || "")
-                .toLowerCase()
-                .trim()
-                .normalize("NFD")
-                .replace(/[\u0300-\u036f]/g, "");
-
-        }
-
-
-        function getDefaultMinStock(name) {
-
-            return DEFAULT_MIN_STOCK_PRODUCTS.some(
-                item =>
-                    normalizeText(name) ===
-                    normalizeText(item)
-            )
-                ? 5
-                : 1;
-
-        }
-
-
-        function createId() {
-
-            return (
-                Date.now().toString(36) +
-                Math.random().toString(36).slice(2)
-            );
-
-        }
-
-
-        /* =================================================
-           STORAGE
-        ================================================= */
-
-        function loadProducts() {
-
-            const saved =
-                localStorage.getItem(STORAGE_KEY);
-
-
-            if (saved) {
-
-                try {
-
-                    return JSON.parse(saved);
-
-                } catch (error) {
-
-                    console.error(
-                        "Errore nel caricamento:",
-                        error
-                    );
-
-                }
-
-            }
-
-
-            /*
-             * Prodotti demo iniziali
-             */
-
-            const demoProducts = [
-
-                {
-                    id: createId(),
-                    name: "Piselli",
-                    brand: "",
-                    format: "400 g",
-                    quantity: 3,
-                    minStock: 5,
-                    barcode: "",
-                    image: "",
-                    category: "cibo"
-                },
-
-                {
-                    id: createId(),
-                    name: "Ceci",
-                    brand: "",
-                    format: "400 g",
-                    quantity: 7,
-                    minStock: 5,
-                    barcode: "",
-                    image: "",
-                    category: "cibo"
-                },
-
-                {
-                    id: createId(),
-                    name: "Fagioli",
-                    brand: "",
-                    format: "400 g",
-                    quantity: 5,
-                    minStock: 5,
-                    barcode: "",
-                    image: "",
-                    category: "cibo"
-                },
-
-                {
-                    id: createId(),
-                    name: "Passata di pomodoro",
-                    brand: "",
-                    format: "700 ml",
-                    quantity: 2,
-                    minStock: 5,
-                    barcode: "",
-                    image: "",
-                    category: "cibo"
-                },
-
-                {
-                    id: createId(),
-                    name: "Pezzettoni di pomodoro",
-                    brand: "",
-                    format: "400 g",
-                    quantity: 6,
-                    minStock: 5,
-                    barcode: "",
-                    image: "",
-                    category: "cibo"
-                }
-
-            ];
-
-
-            localStorage.setItem(
-                STORAGE_KEY,
-                JSON.stringify(demoProducts)
+        const product =
+            products.find(
+                item => item.id === id
             );
 
 
-            return demoProducts;
-
+        if (!product) {
+            return;
         }
 
 
-        function saveProductsToStorage() {
+        let quantity =
+            Number(product.quantity) || 0;
 
-            localStorage.setItem(
-                STORAGE_KEY,
-                JSON.stringify(products)
+
+        quantity += amount;
+
+
+        if (quantity < 0) {
+            quantity = 0;
+        }
+
+
+        product.quantity = quantity;
+
+
+        saveProducts();
+
+        renderProducts();
+
+    }
+
+
+    /* =========================================================
+       MODAL PRODOTTO
+    ========================================================= */
+
+    function openProductModal(product = null) {
+
+        editingProductId =
+            product ? product.id : null;
+
+
+        document
+            .getElementById("productModal")
+            .classList.add("active");
+
+
+        document.getElementById(
+            "productModalTitle"
+        ).textContent = product
+            ? "Modifica prodotto"
+            : "Aggiungi prodotto";
+
+
+        document.getElementById(
+            "deleteProductButton"
+        ).style.display =
+            product ? "block" : "none";
+
+
+        document.getElementById(
+            "productId"
+        ).value =
+            product?.id || "";
+
+
+        document.getElementById(
+            "productName"
+        ).value =
+            product?.name || "";
+
+
+        document.getElementById(
+            "productBrand"
+        ).value =
+            product?.brand || "";
+
+
+        document.getElementById(
+            "productFormat"
+        ).value =
+            product?.format || "";
+
+
+        document.getElementById(
+            "productQuantity"
+        ).value =
+            product?.quantity ?? 1;
+
+
+        document.getElementById(
+            "productMinStock"
+        ).value =
+            product?.minStock ?? 0;
+
+
+        document.getElementById(
+            "productCategory"
+        ).value =
+            product?.category || currentCategory;
+
+
+        document.getElementById(
+            "productBarcode"
+        ).value =
+            product?.barcode || "";
+
+
+        document.getElementById(
+            "productImage"
+        ).value =
+            product?.image || "";
+
+    }
+
+
+    function closeProductModal() {
+
+        document
+            .getElementById("productModal")
+            .classList.remove("active");
+
+
+        editingProductId = null;
+
+    }
+
+
+    /* =========================================================
+       SALVATAGGIO PRODOTTO
+    ========================================================= */
+
+    function saveProduct() {
+
+        const name =
+            document
+                .getElementById("productName")
+                .value
+                .trim();
+
+
+        if (!name) {
+
+            alert(
+                "Inserisci il nome del prodotto."
             );
 
-        }
-
-
-        /* =================================================
-           NAVIGAZIONE
-        ================================================= */
-
-        function openCategory(category) {
-
-            currentCategory = category;
-
-            currentFilter = "all";
-
-
-            document
-                .getElementById("homeScreen")
-                .classList
-                .remove("active");
-
-
-            document
-                .getElementById("categoryScreen")
-                .classList
-                .add("active");
-
-
-            document
-                .getElementById("categoryTitle")
-                .textContent =
-                categories[category];
-
-
-            document
-                .getElementById("searchInput")
-                .value = "";
-
-
-            updateFilterButtons();
-
-            renderProducts();
-
-
-            window.scrollTo({
-                top: 0,
-                behavior: "smooth"
-            });
+            return;
 
         }
 
 
-        function goHome() {
-
+        const brand =
             document
-                .getElementById("categoryScreen")
-                .classList
-                .remove("active");
+                .getElementById("productBrand")
+                .value
+                .trim();
 
 
+        const format =
             document
-                .getElementById("homeScreen")
-                .classList
-                .add("active");
+                .getElementById("productFormat")
+                .value
+                .trim();
 
 
-            window.scrollTo({
-                top: 0,
-                behavior: "smooth"
-            });
-
-        }
-
-
-        /* =================================================
-           FILTRI
-        ================================================= */
-
-        function setFilter(filter) {
-
-            currentFilter = filter;
-
-            updateFilterButtons();
-
-            renderProducts();
-
-        }
-
-
-        function updateFilterButtons() {
-
-            document
-                .getElementById("filterAll")
-                .classList
-                .toggle(
-                    "active",
-                    currentFilter === "all"
-                );
-
-
-            document
-                .getElementById("filterLow")
-                .classList
-                .toggle(
-                    "active",
-                    currentFilter === "low"
-                );
-
-        }
-
-
-        function isLowStock(product) {
-
-            return (
-                Number(product.quantity) <=
-                Number(product.minStock)
+        const quantity =
+            Math.max(
+                0,
+                Number(
+                    document
+                        .getElementById("productQuantity")
+                        .value
+                ) || 0
             );
 
-        }
 
+        const minStock =
+            Math.max(
+                0,
+                Number(
+                    document
+                        .getElementById("productMinStock")
+                        .value
+                ) || 0
+            );
 
-        /* =================================================
-           LISTA PRODOTTI
-        ================================================= */
 
-        function renderProducts() {
+        const category =
+            document
+                .getElementById("productCategory")
+                .value;
 
-            const list =
-                document.getElementById(
-                    "productsList"
-                );
 
+        const barcode =
+            document
+                .getElementById("productBarcode")
+                .value
+                .trim();
 
-            const search =
-                normalizeText(
-                    document.getElementById(
-                        "searchInput"
-                    ).value
-                );
 
+        const image =
+            document
+                .getElementById("productImage")
+                .value
+                .trim();
 
-            let filteredProducts =
-                products.filter(
-                    product =>
-                        product.category ===
-                        currentCategory
-                );
 
-
-            if (search) {
-
-                filteredProducts =
-                    filteredProducts.filter(
-                        product => {
-
-                            const searchable =
-                                normalizeText(
-                                    [
-                                        product.name,
-                                        product.brand,
-                                        product.format,
-                                        product.barcode
-                                    ].join(" ")
-                                );
-
-
-                            return searchable.includes(
-                                search
-                            );
-
-                        }
-                    );
-
-            }
-
-
-            if (currentFilter === "low") {
-
-                filteredProducts =
-                    filteredProducts.filter(
-                        isLowStock
-                    );
-
-            }
-
-
-            if (filteredProducts.length === 0) {
-
-                list.innerHTML = `
-
-                    <div class="empty-state">
-
-                        <div class="empty-icon">
-                            📦
-                        </div>
-
-                        <h3>
-                            Nessun prodotto
-                        </h3>
-
-                        <p>
-                            Non ci sono prodotti che
-                            corrispondono alla ricerca.
-                        </p>
-
-                    </div>
-
-                `;
-
-                return;
-
-            }
-
-
-            list.innerHTML =
-                filteredProducts
-                    .map(product => {
-
-                        const lowStock =
-                            isLowStock(product);
-
-
-                        const imageHtml =
-                            product.image
-
-                                ? `
-                                    <img
-                                        src="${escapeHtml(product.image)}"
-                                        alt=""
-                                        onerror="
-                                            this.parentElement.innerHTML='📦'
-                                        "
-                                    >
-                                  `
-
-                                : "📦";
-
-
-                        const meta =
-                            [
-                                product.brand,
-                                product.format
-                            ]
-                                .filter(Boolean)
-                                .join(" · ") ||
-                            "Nessun dettaglio";
-
-
-                        return `
-
-                            <div class="product-card">
-
-                                <div class="product-image">
-
-                                    ${imageHtml}
-
-                                </div>
-
-
-                                <div
-                                    class="product-info"
-                                    onclick="
-                                        openProductModal('${product.id}')
-                                    "
-                                >
-
-                                    <div class="product-name">
-
-                                        ${escapeHtml(
-                                            product.name
-                                        )}
-
-                                    </div>
-
-
-                                    <div class="product-meta">
-
-                                        ${escapeHtml(
-                                            meta
-                                        )}
-
-                                    </div>
-
-
-                                    ${
-                                        lowStock
-                                            ? `
-                                                <div class="low-stock">
-                                                    🔴 Scorta bassa · minimo ${product.minStock}
-                                                </div>
-                                              `
-                                            : ""
-                                    }
-
-                                </div>
-
-
-                                <div class="quantity-control">
-
-                                    <button
-                                        onclick="
-                                            changeQuantity(
-                                                '${product.id}',
-                                                -1
-                                            )
-                                        "
-                                        aria-label="Diminuisci quantità"
-                                    >
-                                        −
-                                    </button>
-
-
-                                    <div class="quantity-value">
-
-                                        ${product.quantity}
-
-                                    </div>
-
-
-                                    <button
-                                        onclick="
-                                            changeQuantity(
-                                                '${product.id}',
-                                                1
-                                            )
-                                        "
-                                        aria-label="Aumenta quantità"
-                                    >
-                                        +
-                                    </button>
-
-                                </div>
-
-                            </div>
-
-                        `;
-
-                    })
-                    .join("");
-
-        }
-
-
-        /* =================================================
-           QUANTITÀ
-        ================================================= */
-
-        function changeQuantity(
-            productId,
-            amount
-        ) {
+        if (editingProductId) {
 
             const product =
                 products.find(
                     item =>
-                        item.id === productId
+                        item.id ===
+                        editingProductId
                 );
 
 
-            if (!product) {
-                return;
-            }
+            if (product) {
 
-
-            product.quantity =
-                Math.max(
-                    0,
-                    Number(product.quantity) +
-                    Number(amount)
-                );
-
-
-            saveProductsToStorage();
-
-            renderProducts();
-
-        }
-
-
-        /* =================================================
-           MODALE PRODOTTO
-        ================================================= */
-
-        function openProductModal(
-            productId = null
-        ) {
-
-            editingProductId = productId;
-
-
-            const modal =
-                document.getElementById(
-                    "productModal"
-                );
-
-
-            const title =
-                document.getElementById(
-                    "modalTitle"
-                );
-
-
-            document
-                .getElementById("productForm")
-                .reset();
-
-
-            if (productId) {
-
-                const product =
-                    products.find(
-                        item =>
-                            item.id === productId
-                    );
-
-
-                if (!product) {
-                    return;
-                }
-
-
-                title.textContent =
-                    "Modifica prodotto";
-
-
-                document.getElementById(
-                    "productName"
-                ).value =
-                    product.name || "";
-
-
-                document.getElementById(
-                    "productBrand"
-                ).value =
-                    product.brand || "";
-
-
-                document.getElementById(
-                    "productFormat"
-                ).value =
-                    product.format || "";
-
-
-                document.getElementById(
-                    "productQuantity"
-                ).value =
-                    product.quantity ?? 0;
-
-
-                document.getElementById(
-                    "productMinStock"
-                ).value =
-                    product.minStock ?? 1;
-
-
-                document.getElementById(
-                    "productBarcode"
-                ).value =
-                    product.barcode || "";
-
-
-                document.getElementById(
-                    "productImage"
-                ).value =
-                    product.image || "";
-
-
-                document.getElementById(
-                    "productCategory"
-                ).value =
-                    product.category ||
-                    currentCategory;
+                product.name = name;
+                product.brand = brand;
+                product.format = format;
+                product.quantity = quantity;
+                product.minStock = minStock;
+                product.category = category;
+                product.barcode = barcode;
+                product.image = image;
 
             }
 
-            else {
+        } else {
 
-                title.textContent =
-                    "Aggiungi prodotto";
+            products.push({
 
-
-                document.getElementById(
-                    "productQuantity"
-                ).value = 1;
-
-
-                document.getElementById(
-                    "productMinStock"
-                ).value = 1;
-
-
-                document.getElementById(
-                    "productCategory"
-                ).value =
-                    currentCategory;
-
-            }
-
-
-            modal.classList.add("active");
-
-        }
-
-
-        function closeProductModal() {
-
-            document
-                .getElementById("productModal")
-                .classList
-                .remove("active");
-
-
-            editingProductId = null;
-
-        }
-
-
-        function closeModalFromOverlay(event) {
-
-            if (
-                event.target ===
-                event.currentTarget
-            ) {
-
-                closeProductModal();
-
-            }
-
-        }
-
-
-        /* =================================================
-           SALVATAGGIO
-        ================================================= */
-
-        function saveProduct(event) {
-
-            event.preventDefault();
-
-
-            const name =
-                document
-                    .getElementById("productName")
-                    .value
-                    .trim();
-
-
-            if (!name) {
-                return;
-            }
-
-
-            let minStock =
-                Number(
-                    document.getElementById(
-                        "productMinStock"
-                    ).value
-                );
-
-
-            if (
-                !Number.isFinite(minStock) ||
-                minStock < 0
-            ) {
-
-                minStock =
-                    getDefaultMinStock(name);
-
-            }
-
-
-            const productData = {
+                id: crypto.randomUUID(),
 
                 name,
 
-                brand:
-                    document
-                        .getElementById(
-                            "productBrand"
-                        )
-                        .value
-                        .trim(),
+                brand,
 
-                format:
-                    document
-                        .getElementById(
-                            "productFormat"
-                        )
-                        .value
-                        .trim(),
+                format,
 
-                quantity:
-                    Math.max(
-                        0,
-                        Number(
-                            document.getElementById(
-                                "productQuantity"
-                            ).value
-                        ) || 0
-                    ),
+                quantity,
 
                 minStock,
 
-                barcode:
-                    document
-                        .getElementById(
-                            "productBarcode"
-                        )
-                        .value
-                        .trim(),
+                category,
 
-                image:
-                    document
-                        .getElementById(
-                            "productImage"
-                        )
-                        .value
-                        .trim(),
+                barcode,
 
-                category:
-                    document.getElementById(
-                        "productCategory"
-                    ).value
+                image
 
-            };
-
-
-            if (editingProductId) {
-
-                const index =
-                    products.findIndex(
-                        product =>
-                            product.id ===
-                            editingProductId
-                    );
-
-
-                if (index !== -1) {
-
-                    products[index] = {
-
-                        ...products[index],
-
-                        ...productData
-
-                    };
-
-                }
-
-            }
-
-            else {
-
-                products.push({
-
-                    id: createId(),
-
-                    ...productData
-
-                });
-
-            }
-
-
-            saveProductsToStorage();
-
-            closeProductModal();
-
-
-            currentCategory =
-                productData.category;
-
-
-            document.getElementById(
-                "categoryTitle"
-            ).textContent =
-                categories[currentCategory];
-
-
-            renderProducts();
+            });
 
         }
 
 
-        /* =================================================
-           SCANNER
-        ================================================= */
+        saveProducts();
 
-        async function openScanner() {
+        closeProductModal();
 
-            document
-                .getElementById("scannerModal")
-                .classList
-                .add("active");
+        renderProducts();
+
+    }
 
 
-            await new Promise(
-                resolve =>
-                    setTimeout(
-                        resolve,
-                        150
-                    )
+    /* =========================================================
+       MODIFICA PRODOTTO
+    ========================================================= */
+
+    function editProduct(id) {
+
+        const product =
+            products.find(
+                item => item.id === id
             );
+
+
+        if (!product) {
+            return;
+        }
+
+
+        openProductModal(product);
+
+    }
+
+
+    /* =========================================================
+       ELIMINA PRODOTTO
+    ========================================================= */
+
+    function deleteProduct() {
+
+        if (!editingProductId) {
+            return;
+        }
+
+
+        const product =
+            products.find(
+                item =>
+                    item.id ===
+                    editingProductId
+            );
+
+
+        if (!product) {
+            return;
+        }
+
+
+        const confirmed =
+            confirm(
+                `Vuoi eliminare "${product.name}"?`
+            );
+
+
+        if (!confirmed) {
+            return;
+        }
+
+
+        products =
+            products.filter(
+                item =>
+                    item.id !==
+                    editingProductId
+            );
+
+
+        saveProducts();
+
+        closeProductModal();
+
+        renderProducts();
+
+    }
+
+
+    /* =========================================================
+       SCORTA MINIMA AUTOMATICA
+    ========================================================= */
+
+    document
+        .getElementById("productName")
+        .addEventListener(
+            "input",
+            function () {
+
+                const normalized =
+                    this.value
+                        .trim()
+                        .toLowerCase();
+
+
+                if (
+                    productsWithMinStock5
+                        .includes(normalized)
+                ) {
+
+                    document.getElementById(
+                        "productMinStock"
+                    ).value = 5;
+
+                }
+
+            }
+        );
+
+
+    /* =========================================================
+       SCANNER
+    ========================================================= */
+
+    function openScanner() {
+
+        document
+            .getElementById("scannerModal")
+            .classList.add("active");
+
+
+        startScanner();
+
+    }
+
+
+    function closeScanner() {
+
+        stopScanner();
+
+
+        document
+            .getElementById("scannerModal")
+            .classList.remove("active");
+
+    }
+
+
+    async function startScanner() {
+
+        try {
+
+            if (html5QrCode) {
+                return;
+            }
 
 
             if (
@@ -2267,7 +1946,7 @@
             ) {
 
                 alert(
-                    "Il lettore barcode non è ancora disponibile. Controlla la connessione a Internet."
+                    "Il lettore barcode non è disponibile. Controlla la connessione Internet."
                 );
 
                 return;
@@ -2275,131 +1954,233 @@
             }
 
 
-            try {
-
-                html5QrCode =
-                    new Html5Qrcode(
-                        "reader"
-                    );
+            html5QrCode =
+                new Html5Qrcode("reader");
 
 
-                await html5QrCode.start(
-
-                    {
-                        facingMode:
-                            "environment"
-                    },
-
-                    {
-                        fps: 10,
-
-                        qrbox: {
-                            width: 280,
-                            height: 160
-                        }
-                    },
-
-                    onBarcodeScanned,
-
-                    () => {}
-
-                );
-
-            }
-
-            catch (error) {
-
-                console.error(
-                    "Errore scanner:",
-                    error
-                );
-
-
-                alert(
-                    "Non è stato possibile avviare la fotocamera. Controlla il permesso della fotocamera in Safari."
-                );
-
-            }
-
-        }
-
-
-        async function onBarcodeScanned(
-            decodedText
-        ) {
-
-            await closeScanner();
+            const formats = [];
 
 
             if (
-                !document
-                    .getElementById(
-                        "productModal"
-                    )
-                    .classList
-                    .contains("active")
+                typeof Html5QrcodeSupportedFormats !==
+                "undefined"
             ) {
 
-                openProductModal();
+                formats.push(
+                    Html5QrcodeSupportedFormats.EAN_13
+                );
+
+                formats.push(
+                    Html5QrcodeSupportedFormats.EAN_8
+                );
+
+                formats.push(
+                    Html5QrcodeSupportedFormats.UPC_A
+                );
+
+                formats.push(
+                    Html5QrcodeSupportedFormats.UPC_E
+                );
 
             }
 
 
-            document.getElementById(
-                "productBarcode"
-            ).value =
-                decodedText;
+            const config = {
+
+                fps: 10,
+
+                qrbox: {
+                    width: 280,
+                    height: 160
+                }
+
+            };
 
 
-            await lookupOpenFoodFacts(
-                decodedText
+            if (formats.length > 0) {
+
+                config.formatsToSupport =
+                    formats;
+
+            }
+
+
+            await html5QrCode.start(
+
+                {
+                    facingMode: "environment"
+                },
+
+                config,
+
+                barcode => {
+
+                    handleBarcode(barcode);
+
+                },
+
+                errorMessage => {
+
+                    // Gli errori di scansione
+                    // temporanei vengono ignorati.
+
+                }
+
+            );
+
+        } catch (error) {
+
+            console.error(
+                "Errore scanner:",
+                error
+            );
+
+
+            alert(
+                "Non è possibile accedere alla fotocamera. Controlla i permessi del browser."
+            );
+
+
+            html5QrCode = null;
+
+        }
+
+    }
+
+
+    async function stopScanner() {
+
+        if (!html5QrCode) {
+            return;
+        }
+
+
+        try {
+
+            await html5QrCode.stop();
+
+        } catch (error) {
+
+            console.warn(
+                "Errore arresto scanner:",
+                error
             );
 
         }
 
 
-        /* =================================================
-           OPEN FOOD FACTS
-        ================================================= */
+        try {
 
-        async function lookupOpenFoodFacts(
-            barcode
-        ) {
+            html5QrCode.clear();
 
-            try {
+        } catch (error) {
 
-                const response =
-                    await fetch(
-                        `https://world.openfoodfacts.org/api/v2/product/${encodeURIComponent(barcode)}.json`
-                    );
+            // Ignora eventuale errore di pulizia.
+
+        }
 
 
-                if (!response.ok) {
-                    return;
-                }
+        html5QrCode = null;
+
+    }
 
 
-                const data =
-                    await response.json();
+    /* =========================================================
+       GESTIONE BARCODE
+    ========================================================= */
+
+    async function handleBarcode(barcode) {
+
+        if (!barcode) {
+            return;
+        }
 
 
-                if (
-                    data.status !== 1 ||
-                    !data.product
-                ) {
+        const cleanBarcode =
+            String(barcode).trim();
 
-                    return;
 
-                }
+        if (!cleanBarcode) {
+            return;
+        }
 
+
+        await stopScanner();
+
+
+        document
+            .getElementById("scannerModal")
+            .classList.remove("active");
+
+
+        /* -----------------------------------------
+           PRODOTTO GIÀ PRESENTE
+        ----------------------------------------- */
+
+        const existingProduct =
+            products.find(
+                product =>
+                    String(product.barcode || "") ===
+                    cleanBarcode
+            );
+
+
+        if (existingProduct) {
+
+            existingProduct.quantity =
+                (Number(existingProduct.quantity) || 0) + 1;
+
+
+            saveProducts();
+
+            renderProducts();
+
+
+            alert(
+                `${existingProduct.name} aggiunto. Quantità: ${existingProduct.quantity}`
+            );
+
+
+            return;
+
+        }
+
+
+        /* -----------------------------------------
+           RICERCA OPEN FOOD FACTS
+        ----------------------------------------- */
+
+        try {
+
+            const response =
+                await fetch(
+                    `https://world.openfoodfacts.org/api/v2/product/${encodeURIComponent(cleanBarcode)}.json`
+                );
+
+
+            if (!response.ok) {
+                throw new Error(
+                    "Errore richiesta Open Food Facts"
+                );
+            }
+
+
+            const data =
+                await response.json();
+
+
+            if (
+                data.status === 1 &&
+                data.product
+            ) {
 
                 const product =
                     data.product;
 
 
-                const name =
-                    product.product_name_it ||
+                const productName =
                     product.product_name ||
+                    product.product_name_it ||
                     "";
 
 
@@ -2419,165 +2200,171 @@
                     "";
 
 
-                if (name) {
+                openProductModal();
 
-                    document.getElementById(
-                        "productName"
-                    ).value =
-                        name;
 
+                document.getElementById(
+                    "productName"
+                ).value =
+                    productName;
+
+
+                document.getElementById(
+                    "productBrand"
+                ).value =
+                    brand;
+
+
+                document.getElementById(
+                    "productFormat"
+                ).value =
+                    format;
+
+
+                document.getElementById(
+                    "productQuantity"
+                ).value = 1;
+
+
+                document.getElementById(
+                    "productBarcode"
+                ).value =
+                    cleanBarcode;
+
+
+                document.getElementById(
+                    "productImage"
+                ).value =
+                    image;
+
+
+                document.getElementById(
+                    "productCategory"
+                ).value =
+                    currentCategory;
+
+
+                const normalizedName =
+                    productName
+                        .trim()
+                        .toLowerCase();
+
+
+                if (
+                    productsWithMinStock5
+                        .includes(normalizedName)
+                ) {
 
                     document.getElementById(
                         "productMinStock"
-                    ).value =
-                        getDefaultMinStock(
-                            name
-                        );
+                    ).value = 5;
 
                 }
 
 
-                if (brand) {
-
-                    document.getElementById(
-                        "productBrand"
-                    ).value =
-                        brand;
-
-                }
-
-
-                if (format) {
-
-                    document.getElementById(
-                        "productFormat"
-                    ).value =
-                        format;
-
-                }
-
-
-                if (image) {
-
-                    document.getElementById(
-                        "productImage"
-                    ).value =
-                        image;
-
-                }
+                return;
 
             }
 
-            catch (error) {
 
-                console.error(
-                    "Errore Open Food Facts:",
-                    error
-                );
+            /* -----------------------------------------
+               BARCODE NON TROVATO
+            ----------------------------------------- */
+
+            openProductModal();
+
+
+            document.getElementById(
+                "productBarcode"
+            ).value =
+                cleanBarcode;
+
+
+            document.getElementById(
+                "productCategory"
+            ).value =
+                currentCategory;
+
+
+            alert(
+                "Prodotto non trovato. Inserisci manualmente i dati."
+            );
+
+        } catch (error) {
+
+            console.error(
+                "Errore Open Food Facts:",
+                error
+            );
+
+
+            openProductModal();
+
+
+            document.getElementById(
+                "productBarcode"
+            ).value =
+                cleanBarcode;
+
+
+            document.getElementById(
+                "productCategory"
+            ).value =
+                currentCategory;
+
+
+            alert(
+                "Non è stato possibile recuperare automaticamente i dati del prodotto. Puoi inserirli manualmente."
+            );
+
+        }
+
+    }
+
+
+    /* =========================================================
+       RICERCA
+    ========================================================= */
+
+    document
+        .getElementById("searchInput")
+        .addEventListener(
+            "input",
+            function () {
+
+                renderProducts();
 
             }
-
-        }
-
-
-        /* =================================================
-           CHIUSURA SCANNER
-        ================================================= */
-
-        async function closeScanner() {
-
-            document
-                .getElementById(
-                    "scannerModal"
-                )
-                .classList
-                .remove("active");
+        );
 
 
-            if (html5QrCode) {
+    /* =========================================================
+       CHIUSURA MODAL CLICCANDO FUORI
+    ========================================================= */
 
-                try {
+    document
+        .getElementById("productModal")
+        .addEventListener(
+            "click",
+            function (event) {
 
-                    if (
-                        html5QrCode.isScanning
-                    ) {
-
-                        await html5QrCode.stop();
-
-                    }
-
-                }
-
-                catch (error) {
-
-                    console.error(
-                        "Errore chiusura scanner:",
-                        error
-                    );
-
-                }
-
-
-                try {
-
-                    html5QrCode.clear();
-
-                }
-
-                catch (error) {}
-
-
-                html5QrCode = null;
-
-            }
-
-        }
-
-
-        /* =================================================
-           SICUREZZA HTML
-        ================================================= */
-
-        function escapeHtml(value) {
-
-            return String(value ?? "")
-                .replace(
-                    /&/g,
-                    "&amp;"
-                )
-                .replace(
-                    /</g,
-                    "&lt;"
-                )
-                .replace(
-                    />/g,
-                    "&gt;"
-                )
-                .replace(
-                    /"/g,
-                    "&quot;"
-                )
-                .replace(
-                    /'/g,
-                    "&#039;"
-                );
-
-        }
-
-
-        /* =================================================
-           TASTO ESC
-        ================================================= */
-
-        document.addEventListener(
-            "keydown",
-            event => {
-
-                if (
-                    event.key === "Escape"
-                ) {
+                if (event.target === this) {
 
                     closeProductModal();
+
+                }
+
+            }
+        );
+
+
+    document
+        .getElementById("scannerModal")
+        .addEventListener(
+            "click",
+            function (event) {
+
+                if (event.target === this) {
 
                     closeScanner();
 
@@ -2587,13 +2374,15 @@
         );
 
 
-        /* =================================================
-           AVVIO
-        ================================================= */
+    /* =========================================================
+       AVVIO APP
+    ========================================================= */
 
-        renderProducts();
+    loadProducts();
 
-    </script>
+    renderProducts();
+
+</script>
 
 </body>
 </html>
