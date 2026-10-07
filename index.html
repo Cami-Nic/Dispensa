@@ -243,17 +243,95 @@
             pointer-events: none;
         }
 
-        .scanner-button {
-            width: 48px;
-            height: 48px;
-            border: none;
-            border-radius: 15px;
-            background: #7bbf6a;
-            color: white;
-            font-size: 23px;
-            box-shadow: 0 5px 14px rgba(123, 191, 106, 0.24);
-            flex-shrink: 0;
-        }
+.scanner-button {
+    width: 48px;
+    height: 48px;
+
+    border: 1px solid #dfe6df;
+    border-radius: 15px;
+
+    background: #ffffff;
+
+    box-shadow: 0 4px 14px rgba(40, 70, 50, 0.07);
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0;
+}
+
+
+/* Corpo della fotocamera */
+.camera-icon {
+    position: relative;
+
+    width: 28px;
+    height: 21px;
+
+    background: #4f5d54;
+
+    border-radius: 5px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+/* Obiettivo */
+.camera-lens {
+    width: 10px;
+    height: 10px;
+
+    border: 3px solid white;
+    border-radius: 50%;
+
+    display: block;
+}
+
+
+/* Parte superiore della fotocamera */
+.camera-icon::before {
+    content: "";
+
+    position: absolute;
+
+    width: 10px;
+    height: 4px;
+
+    top: -4px;
+    left: 5px;
+
+    background: #4f5d54;
+
+    border-radius: 3px 3px 0 0;
+}
+
+
+/* Piccolo flash */
+.camera-icon::after {
+    content: "";
+
+    position: absolute;
+
+    width: 4px;
+    height: 4px;
+
+    top: 4px;
+    right: 4px;
+
+    background: white;
+
+    border-radius: 50%;
+}
+
+
+.scanner-button:active {
+    transform: scale(0.96);
+}
 
         .filters {
             display: flex;
@@ -291,14 +369,20 @@
         }
 
         .product-card {
-            background: white;
-            border-radius: 19px;
-            padding: 14px;
-            box-shadow: 0 5px 17px rgba(40, 70, 50, 0.07);
-            display: flex;
-            align-items: center;
-            gap: 13px;
-        }
+    background: white;
+    border: 2px solid transparent;
+    border-radius: 19px;
+    padding: 14px;
+    box-shadow: 0 5px 17px rgba(40, 70, 50, 0.07);
+    display: flex;
+    align-items: center;
+    gap: 13px;
+}
+
+/* Bordo rosso quando la scorta è inferiore a 5 */
+.product-card.low-stock-border {
+    border-color: #e57368;
+}
 
         .product-image {
             width: 74px;
@@ -716,13 +800,16 @@
 
                 </div>
 
-                <button
-                    class="scanner-button"
-                    onclick="openScanner()"
-                    title="Scansiona barcode"
-                >
-                   📷
-                </button>
+         <button
+    class="scanner-button"
+    onclick="openScanner()"
+    title="Scansiona barcode"
+    aria-label="Scansiona barcode"
+>
+    <span class="camera-icon">
+        <span class="camera-lens"></span>
+    </span>
+</button>
 
             </div>
 
@@ -1394,135 +1481,147 @@
     }
 
 
-    /* =========================================================
-       CARD PRODOTTO
-    ========================================================= */
 
-    function createProductCard(product) {
+/* =========================================================
+CARD PRODOTTO
+========================================================= */
 
-        const lowStock =
-            isLowStock(product);
+function createProductCard(product) {
+
+    const quantity =
+        Number(product.quantity) || 0;
 
 
-        const image = product.image
+    /* Bordo rosso quando quantità < 5 */
+    const stockClass =
+        quantity < 5
+            ? "low-stock-border"
+            : "";
+
+
+    const lowStock =
+        isLowStock(product);
+
+
+    const image =
+        product.image
             ? escapeHtml(product.image)
             : "";
 
 
-        const imageHtml = image
+    const imageHtml = image
 
-            ? `
-                <img
-                    class="product-image"
-                    src="${image}"
-                    alt="${escapeHtml(product.name)}"
-                    onerror="this.style.display='none';"
-                >
-              `
+        ? `
+            <img
+                class="product-image"
+                src="${image}"
+                alt="${escapeHtml(product.name)}"
+                onerror="this.style.display='none';"
+            >
+          `
 
-            : `
-                <div
-                    class="product-image"
-                    style="
-                        display:flex;
-                        align-items:center;
-                        justify-content:center;
-                        font-size:30px;
-                    "
-                >
-                    ${categories[product.category]?.icon || "📦"}
-                </div>
-              `;
-
-
-        return `
-
-            <div class="product-card">
-
-                ${imageHtml}
+        : `
+            <div
+                class="product-image"
+                style="
+                    display:flex;
+                    align-items:center;
+                    justify-content:center;
+                    font-size:30px;
+                "
+            >
+                ${categories[product.category]?.icon || "📦"}
+            </div>
+          `;
 
 
-                <div class="product-info">
+    return `
 
-                    ${
-                        product.brand
-                        ? `
-                            <div class="product-brand">
-                                ${escapeHtml(product.brand)}
-                            </div>
-                          `
-                        : ""
-                    }
+        <div class="product-card ${stockClass}">
+
+            ${imageHtml}
 
 
-                    <div class="product-name">
-                        ${escapeHtml(product.name)}
-                    </div>
+            <div class="product-info">
+
+                ${
+                    product.brand
+                    ? `
+                        <div class="product-brand">
+                            ${escapeHtml(product.brand)}
+                        </div>
+                      `
+                    : ""
+                }
 
 
-                    ${
-                        product.format
-                        ? `
-                            <div class="product-format">
-                                ${escapeHtml(product.format)}
-                            </div>
-                          `
-                        : ""
-                    }
-
-
-                    ${
-                        lowStock
-                        ? `
-                            <div class="low-stock">
-                                🔴 Scorta bassa
-                            </div>
-                          `
-                        : ""
-                    }
-
+                <div class="product-name">
+                    ${escapeHtml(product.name)}
                 </div>
 
 
-                <div class="quantity-control">
-
-                    <button
-                        class="quantity-button"
-                        onclick="changeQuantity('${product.id}', -1)"
-                    >
-                        −
-                    </button>
-
-
-                    <div class="quantity-value">
-                        ${Number(product.quantity) || 0}
-                    </div>
+                ${
+                    product.format
+                    ? `
+                        <div class="product-format">
+                            ${escapeHtml(product.format)}
+                        </div>
+                      `
+                    : ""
+                }
 
 
-                    <button
-                        class="quantity-button"
-                        onclick="changeQuantity('${product.id}', 1)"
-                    >
-                        +
-                    </button>
-
-
-                    <button
-                        class="edit-button"
-                        onclick="editProduct('${product.id}')"
-                        title="Modifica prodotto"
-                    >
-                        ✏️
-                    </button>
-
-                </div>
+                ${
+                    lowStock
+                    ? `
+                        <div class="low-stock">
+                            🔴 Scorta bassa
+                        </div>
+                      `
+                    : ""
+                }
 
             </div>
 
-        `;
 
-    }
+            <div class="quantity-control">
 
+                <button
+                    class="quantity-button"
+                    onclick="changeQuantity('${product.id}', -1)"
+                >
+                    −
+                </button>
+
+
+                <div class="quantity-value">
+                    ${quantity}
+                </div>
+
+
+                <button
+                    class="quantity-button"
+                    onclick="changeQuantity('${product.id}', 1)"
+                >
+                    +
+                </button>
+
+
+                <button
+                    class="edit-button"
+                    onclick="editProduct('${product.id}')"
+                    title="Modifica prodotto"
+                >
+                    ✏️
+                </button>
+
+            </div>
+
+        </div>
+
+    `;
+
+}
 
     /* =========================================================
        QUANTITÀ
