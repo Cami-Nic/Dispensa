@@ -1,1301 +1,90 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="theme-color" content="#f5f5f7">
+    <meta charset="UTF-8">
 
-<title>La Mia Dispensa</title>
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    >
 
-<script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="La Mia Dispensa">
 
-<style>
+    <title>La Mia Dispensa</title>
 
-* {
-    box-sizing: border-box;
-    -webkit-tap-highlight-color: transparent;
-}
+    <link rel="stylesheet" href="style.css">
 
-html,
-body {
-    margin: 0;
-    padding: 0;
-    min-height: 100%;
-    font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
-    background: #f5f5f7;
-    color: #1d1d1f;
-}
-
-body {
-    min-height: 100vh;
-}
-
-button,
-input,
-select {
-    font-family: inherit;
-}
-
-button {
-    cursor: pointer;
-}
-
-.app {
-    width: 100%;
-    max-width: 760px;
-    margin: 0 auto;
-    padding: 20px 20px 40px;
-}
-
-
-/* =========================
-   HEADER
-   ========================= */
-
-.top-header {
-    text-align: center;
-    padding: 20px 10px 30px;
-}
-
-.logo {
-    width: 74px;
-    height: 74px;
-    margin: 0 auto 15px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    border-radius: 23px;
-    background: #ffffff;
-
-    font-size: 43px;
-
-    box-shadow:
-        0 8px 25px rgba(0, 0, 0, 0.08);
-}
-
-.top-header h1 {
-    margin: 0;
-
-    font-size: 36px;
-    line-height: 1.1;
-    font-weight: 800;
-    letter-spacing: -1px;
-}
-
-.top-header p {
-    margin: 10px 0 0;
-
-    font-size: 17px;
-
-    color: #6e6e73;
-}
-
-
-/* =========================
-   SCREENS
-   ========================= */
-
-.screen {
-    display: none;
-}
-
-.screen.active {
-    display: block;
-}
-
-
-/* =========================
-   HOME
-   ========================= */
-
-.home-cards {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-
-.dispensa-card {
-    position: relative;
-
-    width: 100%;
-    min-height: 165px;
-
-    border: 0;
-    border-radius: 26px;
-
-    padding: 20px 45px;
-
-    color: #ffffff;
-
-    text-align: center;
-
-    overflow: hidden;
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-
-    box-shadow:
-        0 12px 28px rgba(0, 0, 0, 0.14);
-
-    transition:
-        transform 0.15s ease,
-        box-shadow 0.15s ease;
-}
-
-.dispensa-card:active {
-    transform: scale(0.98);
-
-    box-shadow:
-        0 8px 20px rgba(0, 0, 0, 0.12);
-}
-
-.dispensa-card.casa {
-    background:
-        linear-gradient(
-            135deg,
-            #007aff,
-            #34aadc
-        );
-}
-
-.dispensa-card.cantina {
-    background:
-        linear-gradient(
-            135deg,
-            #5856d6,
-            #af52de
-        );
-}
-
-.dispensa-card-icon {
-    position: relative;
-    z-index: 2;
-
-    width: 58px;
-    height: 58px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    margin: 0 auto 10px;
-
-    border-radius: 18px;
-
-    font-size: 35px;
-
-    background:
-        rgba(255,255,255,0.18);
-
-    box-shadow:
-        inset 0 1px 0
-        rgba(255,255,255,0.20);
-}
-
-.dispensa-card h2 {
-    position: relative;
-    z-index: 2;
-
-    margin: 0;
-
-    font-size: 24px;
-    line-height: 1.1;
-
-    font-weight: 800;
-
-    letter-spacing: -0.3px;
-}
-
-.dispensa-card p {
-    position: relative;
-    z-index: 2;
-
-    margin: 6px 0 0;
-
-    font-size: 14px;
-    line-height: 1.3;
-
-    opacity: 0.92;
-}
-
-.dispensa-card-arrow {
-    position: absolute;
-    z-index: 3;
-
-    right: 22px;
-    bottom: 18px;
-
-    margin: 0;
-
-    font-size: 30px;
-    line-height: 1;
-
-    font-weight: 300;
-
-    opacity: 0.95;
-
-    animation:
-        arrowMoveRight
-        1.5s
-        ease-in-out
-        infinite;
-}
-
-@keyframes arrowMoveRight {
-
-    0%,
-    100% {
-        transform: translateX(0);
-    }
-
-    50% {
-        transform: translateX(7px);
-    }
-}
-
-
-/* =========================
-   INNER HEADER
-   ========================= */
-
-.page-header {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-
-    margin-bottom: 25px;
-}
-
-.back-button {
-    flex: 0 0 auto;
-
-    width: 48px;
-    height: 48px;
-
-    border: 0;
-    border-radius: 15px;
-
-    background: #ffffff;
-
-    color: #1d1d1f;
-
-    font-size: 28px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    box-shadow:
-        0 5px 15px rgba(0, 0, 0, 0.07);
-}
-
-.page-title {
-    flex: 1;
-    min-width: 0;
-}
-
-.page-title h1 {
-    margin: 0;
-
-    font-size: 29px;
-    line-height: 1.1;
-
-    font-weight: 800;
-
-    letter-spacing: -0.5px;
-}
-
-.page-title p {
-    margin: 5px 0 0;
-
-    font-size: 15px;
-
-    color: #6e6e73;
-}
-
-
-/* =========================
-   CATEGORY LIST
-   ========================= */
-
-.category-list {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-
-
-/* =========================
-   CATEGORY CARD
-   ========================= */
-
-.category-card {
-    position: relative;
-
-    width: 100%;
-    min-height: 165px;
-
-    border: 0;
-    border-radius: 26px;
-
-    padding: 20px 45px;
-
-    color: #ffffff;
-
-    text-align: center;
-
-    overflow: hidden;
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-
-    box-shadow:
-        0 12px 28px rgba(0, 0, 0, 0.14);
-
-    transition:
-        transform 0.15s ease,
-        box-shadow 0.15s ease;
-}
-
-.category-card:active {
-    transform: scale(0.98);
-
-    box-shadow:
-        0 8px 20px rgba(0, 0, 0, 0.12);
-}
-
-
-/* =========================
-   COLORI CATEGORIE
-   ========================= */
-
-.category-card.cibo {
-    background:
-        linear-gradient(
-            135deg,
-        #ff9500,
-        #ffb340
-        );
-}
-
-.category-card.bagno {
-    background:
-        linear-gradient(
-            135deg,
-             #34c759,
-        #63d97a
-        );
-}
-
-.category-card.pulizia {
-    background:
-        linear-gradient(
-            135deg,
-            #34c759,
-           #003dcf,
-        );
-}
-#003dcf
-
-/* =========================
-   ICONA CATEGORIA
-   ========================= */
-
-.category-icon {
-    position: relative;
-    z-index: 2;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-.category-icon {
-    width: 68px;
-    height: 68px;
-
-    margin: 0 auto 11px;
-
-    border-radius: 20px;
-
-    font-size: 44px;
-}
-    line-height: 1;
-
-    background:
-        rgba(255,255,255,0.18);
-
-    box-shadow:
-        inset 0 1px 0
-        rgba(255,255,255,0.20);
-}
-
-
-/* =========================
-   TESTO CATEGORIA
-   ========================= */
-
-.category-info {
-    position: relative;
-    z-index: 2;
-
-    flex: none;
-
-    min-width: 0;
-
-    text-align: center;
-}
-
-.category-info h2 {
-    margin: 0;
-
-    font-size: 24px;
-    line-height: 1.1;
-
-    font-weight: 800;
-
-    letter-spacing: -0.3px;
-
-    color: #ffffff;
-}
-
-.category-info p {
-    margin: 6px 0 0;
-
-    font-size: 14px;
-    line-height: 1.3;
-
-    color: #ffffff;
-
-    opacity: 0.92;
-}
-
-
-/* =========================
-   FRECCIA CATEGORIA
-   ========================= */
-
-.category-arrow {
-    position: absolute;
-    z-index: 3;
-
-    right: 22px;
-    bottom: 18px;
-
-    font-size: 30px;
-    line-height: 1;
-
-    font-weight: 300;
-
-    color: #ffffff;
-
-    opacity: 0.95;
-
-    animation:
-        categoryArrowMoveRight
-        1.5s
-        ease-in-out
-        infinite;
-}
-
-@keyframes categoryArrowMoveRight {
-
-    0%,
-    100% {
-        transform: translateX(0);
-    }
-
-    50% {
-        transform: translateX(7px);
-    }
-}
-
-
-/* =========================
-   CATEGORY TOOLBAR
-   ========================= */
-
-.toolbar {
-    display: flex;
-    gap: 10px;
-
-    margin-bottom: 15px;
-}
-
-.toolbar-button {
-    flex: 1;
-
-    min-height: 50px;
-
-    border: 0;
-    border-radius: 16px;
-
-    background: #ffffff;
-
-    color: #1d1d1f;
-
-    font-size: 16px;
-    font-weight: 650;
-
-    box-shadow:
-        0 5px 15px rgba(0, 0, 0, 0.06);
-}
-
-.toolbar-button.primary {
-    background: #007aff;
-    color: #ffffff;
-}
-
-
-/* =========================
-   SEARCH
-   ========================= */
-
-.search-box {
-    position: relative;
-    margin-bottom: 15px;
-}
-
-.search-box input {
-    width: 100%;
-
-    height: 50px;
-
-    border: 0;
-    border-radius: 16px;
-
-    padding: 0 18px;
-
-    background: #ffffff;
-
-    color: #1d1d1f;
-
-    font-size: 17px;
-
-    outline: none;
-
-    box-shadow:
-        0 5px 15px rgba(0, 0, 0, 0.05);
-}
-
-.search-box input:focus {
-    box-shadow:
-        0 0 0 3px rgba(0,122,255,0.18);
-}
-
-
-/* =========================
-   FILTERS
-   ========================= */
-
-.filters {
-    display: flex;
-    gap: 8px;
-
-    margin-bottom: 20px;
-
-    overflow-x: auto;
-    padding-bottom: 3px;
-}
-
-.filter-button {
-    flex: 0 0 auto;
-
-    border: 0;
-    border-radius: 13px;
-
-    padding: 10px 16px;
-
-    background: #e5e5ea;
-
-    color: #3a3a3c;
-
-    font-size: 15px;
-    font-weight: 650;
-}
-
-.filter-button.active {
-    background: #1d1d1f;
-    color: #ffffff;
-}
-
-
-/* =========================
-   PRODUCTS
-   ========================= */
-
-.products-list {
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-}
-
-.product-card {
-    position: relative;
-
-    display: flex;
-    align-items: center;
-
-    min-height: 120px;
-
-    padding: 16px;
-    padding-right: 58px;
-
-    border-radius: 22px;
-
-    background: #ffffff;
-
-    box-shadow:
-        0 8px 24px rgba(0, 0, 0, 0.07);
-}
-
-.product-image {
-    width: 82px;
-    height: 82px;
-
-    flex: 0 0 auto;
-
-    border-radius: 18px;
-
-    background: #f5f5f7;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    overflow: hidden;
-
-    margin-right: 15px;
-}
-
-.product-image img {
-    width: 100%;
-    height: 100%;
-
-    object-fit: contain;
-}
-
-.product-fallback {
-    font-size: 39px;
-}
-
-.product-info {
-    flex: 1;
-    min-width: 0;
-}
-
-.product-name {
-    margin: 0;
-
-    font-size: 20px;
-    font-weight: 750;
-
-    line-height: 1.15;
-}
-
-.product-brand {
-    margin-top: 4px;
-
-    font-size: 15px;
-
-    color: #6e6e73;
-}
-
-.product-format {
-    margin-top: 3px;
-
-    font-size: 14px;
-
-    color: #8e8e93;
-}
-
-.low-stock {
-    display: inline-block;
-
-    margin-top: 7px;
-
-    padding: 4px 8px;
-
-    border-radius: 8px;
-
-    background: #fff2cc;
-
-    color: #8a5a00;
-
-    font-size: 12px;
-    font-weight: 700;
-}
-
-.quantity-control {
-    display: flex;
-    align-items: center;
-
-    gap: 7px;
-
-    margin-top: 10px;
-}
-
-.quantity-button {
-    width: 34px;
-    height: 34px;
-
-    border: 0;
-    border-radius: 10px;
-
-    background: #f2f2f7;
-
-    font-size: 22px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.quantity-value {
-    min-width: 28px;
-
-    text-align: center;
-
-    font-size: 17px;
-    font-weight: 700;
-}
-
-
-/* =========================
-   MATITA
-   ========================= */
-
-.edit-product-button {
-    position: absolute;
-
-    right: 12px;
-    top: 12px;
-
-    width: 39px;
-    height: 39px;
-
-    border: 0;
-    border-radius: 12px;
-
-    background: #eeeeef;
-
-    font-size: 20px;
-
-    color: #0a84ff;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-
-/* =========================
-   EMPTY STATE
-   ========================= */
-
-.empty-state {
-    text-align: center;
-
-    padding: 45px 20px;
-
-    color: #6e6e73;
-}
-
-.empty-state-icon {
-    font-size: 48px;
-    margin-bottom: 10px;
-}
-
-.empty-state h3 {
-    margin: 0;
-
-    font-size: 21px;
-
-    color: #1d1d1f;
-}
-
-.empty-state p {
-    margin: 8px 0 0;
-
-    font-size: 15px;
-}
-
-
-/* =========================
-   MODAL
-   ========================= */
-
-.modal {
-    position: fixed;
-
-    inset: 0;
-
-    z-index: 1000;
-
-    display: none;
-
-    align-items: center;
-    justify-content: center;
-
-    padding: 20px;
-
-    background: rgba(0,0,0,0.38);
-}
-
-.modal.active {
-    display: flex;
-}
-
-.modal-content {
-    width: 100%;
-    max-width: 560px;
-    max-height: 92vh;
-
-    overflow-y: auto;
-
-    border-radius: 28px;
-
-    background: #ffffff;
-
-    padding: 25px;
-
-    box-shadow:
-        0 25px 70px rgba(0,0,0,0.25);
-}
-
-.modal-header {
-    display: flex;
-    align-items: center;
-
-    margin-bottom: 20px;
-}
-
-.modal-header h2 {
-    flex: 1;
-
-    margin: 0;
-
-    font-size: 26px;
-    font-weight: 800;
-}
-
-.close-button {
-    width: 40px;
-    height: 40px;
-
-    border: 0;
-    border-radius: 13px;
-
-    background: #eeeeef;
-
-    font-size: 28px;
-
-    color: #555;
-}
-
-
-/* =========================
-   FORM
-   ========================= */
-
-.form-group {
-    margin-bottom: 16px;
-}
-
-.form-group label {
-    display: block;
-
-    margin-bottom: 7px;
-
-    font-size: 14px;
-    font-weight: 700;
-
-    color: #555;
-}
-
-.form-group input,
-.form-group select {
-    width: 100%;
-
-    height: 50px;
-
-    border: 1px solid #d1d1d6;
-    border-radius: 14px;
-
-    padding: 0 14px;
-
-    background: #ffffff;
-
-    font-size: 17px;
-
-    color: #1d1d1f;
-
-    outline: none;
-}
-
-.form-group input:focus,
-.form-group select:focus {
-    border-color: #007aff;
-
-    box-shadow:
-        0 0 0 3px rgba(0,122,255,0.13);
-}
-
-.form-actions {
-    display: flex;
-    gap: 10px;
-
-    margin-top: 22px;
-}
-
-.form-button {
-    flex: 1;
-
-    height: 52px;
-
-    border: 0;
-    border-radius: 16px;
-
-    font-size: 16px;
-    font-weight: 700;
-}
-
-.form-button.primary {
-    background: #007aff;
-    color: #ffffff;
-}
-
-.form-button.secondary {
-    background: #e5e5ea;
-    color: #1d1d1f;
-}
-
-.form-button.danger {
-    background: #ff3b30;
-    color: #ffffff;
-}
-
-
-/* =========================
-   SCANNER
-   ========================= */
-
-.scanner-modal-content {
-    width: 100%;
-    max-width: 600px;
-
-    border-radius: 28px;
-
-    background: #ffffff;
-
-    padding: 20px;
-
-    box-shadow:
-        0 25px 70px rgba(0,0,0,0.25);
-}
-
-#reader {
-    width: 100%;
-
-    overflow: hidden;
-
-    border-radius: 20px;
-
-    background: #000000;
-}
-
-.scanner-message {
-    text-align: center;
-
-    margin: 15px 0 0;
-
-    color: #6e6e73;
-
-    font-size: 14px;
-    line-height: 1.4;
-}
-
-
-/* =========================
-   TOAST
-   ========================= */
-
-.toast {
-    position: fixed;
-
-    left: 50%;
-
-    bottom: 25px;
-
-    z-index: 2000;
-
-    transform: translate(-50%, 100px);
-
-    min-width: 220px;
-    max-width: 90%;
-
-    padding: 13px 18px;
-
-    border-radius: 15px;
-
-    background: rgba(29,29,31,0.94);
-
-    color: #ffffff;
-
-    text-align: center;
-
-    font-size: 15px;
-
-    opacity: 0;
-
-    transition:
-        transform 0.25s ease,
-        opacity 0.25s ease;
-}
-
-.toast.show {
-    transform: translate(-50%, 0);
-
-    opacity: 1;
-}
-
-
-/* =========================
-   MOBILE / IPAD MINI
-   ========================= */
-
-@media (max-width: 600px) {
-
-    .app {
-        padding: 15px 15px 30px;
-    }
-
-    .top-header {
-        padding: 15px 8px 25px;
-    }
-
-    .top-header h1 {
-        font-size: 31px;
-    }
-
-    .top-header p {
-        font-size: 16px;
-    }
-
-    .logo {
-        width: 68px;
-        height: 68px;
-
-        font-size: 39px;
-
-        border-radius: 21px;
-    }
-
-
-    /* HOME */
-
-    .dispensa-card {
-        min-height: 155px;
-
-        border-radius: 23px;
-
-        padding: 18px 40px;
-
-        text-align: center;
-    }
-
-    .dispensa-card-icon {
-        width: 54px;
-        height: 54px;
-
-        margin: 0 auto 9px;
-
-        font-size: 34px;
-    }
-
-    .dispensa-card h2 {
-        font-size: 23px;
-    }
-
-    .dispensa-card p {
-        font-size: 14px;
-    }
-
-    .dispensa-card-arrow {
-        right: 18px;
-        bottom: 15px;
-
-        margin: 0;
-
-        font-size: 27px;
-    }
-
-
-    /* INNER HEADER */
-
-    .page-title h1 {
-        font-size: 25px;
-    }
-
-    .page-title p {
-        font-size: 14px;
-    }
-
-
-    /* CATEGORY */
-
-    .category-card {
-        min-height: 155px;
-
-        border-radius: 23px;
-
-        padding: 18px 40px;
-
-        text-align: center;
-    }
-
-    .category-icon {
-    width: 72px !important;
-    height: 72px !important;
-    margin: 0 auto 11px !important;
-    font-size: 48px !important;
-}
-
-    .category-info h2 {
-        font-size: 23px;
-    }
-
-    .category-info p {
-        font-size: 14px;
-    }
-
-    .category-arrow {
-        right: 18px;
-        bottom: 15px;
-
-        font-size: 27px;
-    }
-
-
-    /* PRODUCTS */
-
-    .product-card {
-        padding: 14px;
-        padding-right: 54px;
-    }
-
-    .product-image {
-        width: 72px;
-        height: 72px;
-
-        margin-right: 12px;
-    }
-
-    .product-name {
-        font-size: 18px;
-    }
-
-    .product-brand {
-        font-size: 14px;
-    }
-
-
-    /* MODAL */
-
-    .modal {
-        padding: 10px;
-    }
-
-    .modal-content {
-        border-radius: 24px;
-        padding: 20px;
-    }
-
-}
-
-</style>
+    <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
 </head>
 
 <body>
 
-<div class="app">
-
-
     <!-- =========================
          HOME
-         ========================= -->
+    ========================= -->
 
     <section id="homeScreen" class="screen active">
 
-        <header class="top-header">
+        <div class="home-container">
 
-            <div class="logo">
-                🛒
-            </div>
+            <h1 class="app-title">
+                La Mia Dispensa
+            </h1>
 
-            <h1>La Mia Dispensa</h1>
-
-            <p>
+            <p class="app-subtitle">
                 Organizza tutto ciò che hai in casa
             </p>
 
-        </header>
+            <div class="home-cards">
+
+                <button
+                    type="button"
+                    class="home-card casa"
+                    onclick="openDispensa('casa')"
+                >
+                    <div class="home-card-icon">
+                        🏠
+                    </div>
+
+                    <div class="home-card-title">
+                        Dispensa Casa
+                    </div>
+
+                    <div class="home-card-subtitle">
+                        Cibo e prodotti bagno
+                    </div>
+
+                    <div class="home-card-arrow">
+                        →
+                    </div>
+                </button>
 
 
-        <div class="home-cards">
+                <button
+                    type="button"
+                    class="home-card cantina"
+                    onclick="openDispensa('cantina')"
+                >
+                    <div class="home-card-icon">
+                        🧹
+                    </div>
 
-            <button
-                type="button"
-                class="dispensa-card casa"
-                data-dispensa="casa">
+                    <div class="home-card-title">
+                        Dispensa Cantina
+                    </div>
 
-                <div class="dispensa-card-icon">
-                    🏠
-                </div>
+                    <div class="home-card-subtitle">
+                        Prodotti di pulizia
+                    </div>
 
-                <h2>
-                    Dispensa Casa
-                </h2>
+                    <div class="home-card-arrow">
+                        →
+                    </div>
+                </button>
 
-                <p>
-                    Cibo e prodotti bagno
-                </p>
-
-                <div class="dispensa-card-arrow">
-                    →
-                </div>
-
-            </button>
-
-
-            <button
-                type="button"
-                class="dispensa-card cantina"
-                data-dispensa="cantina">
-
-                <div class="dispensa-card-icon">
-                    🧹
-                </div>
-
-                <h2>
-                    Dispensa Cantina
-                </h2>
-
-                <p>
-                    Prodotti di pulizia
-                </p>
-
-                <div class="dispensa-card-arrow">
-                    →
-                </div>
-
-            </button>
+            </div>
 
         </div>
 
@@ -1304,37 +93,43 @@ button {
 
     <!-- =========================
          DISPENSA
-         ========================= -->
+    ========================= -->
 
     <section id="dispensaScreen" class="screen">
 
-        <div class="page-header">
+        <div class="screen-header">
 
             <button
                 type="button"
                 class="back-button"
-                id="backToHomeButton">
-                ←
+                onclick="goHome()"
+            >
+                ← Indietro
             </button>
 
-            <div class="page-title">
+            <h1
+                id="dispensaTitle"
+                class="screen-title"
+            >
+                Dispensa Casa
+            </h1>
 
-                <h1 id="dispensaTitle">
-                    Dispensa
-                </h1>
-
-                <p id="dispensaSubtitle">
-                    Categorie
-                </p>
-
-            </div>
+            <p
+                id="dispensaSubtitle"
+                class="screen-subtitle"
+            >
+                Cibo e prodotti bagno
+            </p>
 
         </div>
 
+        <div class="dispensa-container">
 
-        <div
-            id="dispensaCategories"
-            class="category-list">
+            <div
+                id="categoryCards"
+                class="dispensa-cards"
+            ></div>
+
         </div>
 
     </section>
@@ -1342,202 +137,255 @@ button {
 
     <!-- =========================
          CATEGORY
-         ========================= -->
+    ========================= -->
 
     <section id="categoryScreen" class="screen">
 
-        <div class="page-header">
+        <div class="screen-header">
 
             <button
                 type="button"
                 class="back-button"
-                id="backToDispensaButton">
-                ←
+                onclick="backToDispensa()"
+            >
+                ← Indietro
             </button>
 
-            <div class="page-title">
+            <h1
+                id="categoryTitle"
+                class="screen-title"
+            >
+                Cibo
+            </h1>
 
-                <h1 id="categoryTitle">
-                    Cibo
-                </h1>
+            <p
+                id="categorySubtitle"
+                class="screen-subtitle"
+            >
+                Dispensa e alimentari
+            </p>
 
-                <p id="categorySubtitle">
-                    Dispensa e alimentari
-                </p>
+        </div>
+
+
+        <div class="category-container">
+
+            <div class="category-toolbar">
+
+                <button
+                    type="button"
+                    class="primary-button"
+                    onclick="openProductModal()"
+                >
+                    ＋ Aggiungi
+                </button>
+
+                <button
+                    type="button"
+                    class="secondary-button"
+                    onclick="openScanner()"
+                >
+                    📷 Scanner
+                </button>
 
             </div>
 
-        </div>
+
+            <div class="search-wrapper">
+
+                <input
+                    id="searchInput"
+                    class="search-input"
+                    type="search"
+                    placeholder="Cerca prodotto..."
+                    autocomplete="off"
+                    oninput="renderProducts()"
+                >
+
+            </div>
 
 
-        <div class="toolbar">
+            <div class="filter-buttons">
 
-            <button
-                type="button"
-                class="toolbar-button primary"
-                id="addProductButton">
-                + Aggiungi
-            </button>
+                <button
+                    id="filterAll"
+                    type="button"
+                    class="filter-button active"
+                    onclick="setFilter('all')"
+                >
+                    Tutti
+                </button>
 
-            <button
-                type="button"
-                class="toolbar-button"
-                id="scannerButton">
-                📷 Scanner
-            </button>
+                <button
+                    id="filterLow"
+                    type="button"
+                    class="filter-button"
+                    onclick="setFilter('low')"
+                >
+                    Scorte basse
+                </button>
 
-        </div>
-
-
-        <div class="search-box">
-
-            <input
-                type="search"
-                id="searchInput"
-                placeholder="Cerca prodotto..."
-                autocomplete="off">
-
-        </div>
+            </div>
 
 
-        <div class="filters">
+            <div
+                id="productsList"
+                class="products-list"
+            ></div>
 
-            <button
-                type="button"
-                class="filter-button active"
-                data-filter="all">
-                Tutti
-            </button>
-
-            <button
-                type="button"
-                class="filter-button"
-                data-filter="low">
-                Scorte basse
-            </button>
-
-        </div>
-
-
-        <div
-            id="productsList"
-            class="products-list">
         </div>
 
     </section>
 
-</div>
 
+    <!-- =========================
+         PRODUCT MODAL
+    ========================= -->
 
-<!-- =========================
-     PRODUCT MODAL
-     ========================= -->
+    <div
+        id="productModal"
+        class="modal-overlay"
+        onclick="closeModalOutside(event, 'productModal')"
+    >
 
-<div
-    id="productModal"
-    class="modal">
+        <div class="modal">
 
-    <div class="modal-content">
+            <div class="modal-header">
 
-        <div class="modal-header">
+                <h2
+                    id="productModalTitle"
+                    class="modal-title"
+                >
+                    Nuovo prodotto
+                </h2>
 
-            <h2 id="productModalTitle">
-                Nuovo prodotto
-            </h2>
+                <button
+                    type="button"
+                    class="modal-close"
+                    onclick="closeProductModal()"
+                >
+                    ×
+                </button>
 
-            <button
-                type="button"
-                class="close-button"
-                id="closeProductModalButton">
-                ×
-            </button>
+            </div>
 
-        </div>
-
-
-        <form id="productForm">
 
             <div class="form-group">
 
-                <label for="productName">
+                <label
+                    class="form-label"
+                    for="productName"
+                >
                     Nome prodotto
                 </label>
 
                 <input
-                    type="text"
                     id="productName"
-                    required>
+                    class="form-input"
+                    type="text"
+                    placeholder="Es. Pasta"
+                >
 
             </div>
 
 
             <div class="form-group">
 
-                <label for="productBrand">
+                <label
+                    class="form-label"
+                    for="productBrand"
+                >
                     Marca
                 </label>
 
                 <input
+                    id="productBrand"
+                    class="form-input"
                     type="text"
-                    id="productBrand">
+                    placeholder="Es. Barilla"
+                >
+
+            </div>
+
+
+            <div class="form-row">
+
+                <div class="form-group">
+
+                    <label
+                        class="form-label"
+                        for="productFormat"
+                    >
+                        Formato
+                    </label>
+
+                    <input
+                        id="productFormat"
+                        class="form-input"
+                        type="text"
+                        placeholder="Es. 500 g"
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label
+                        class="form-label"
+                        for="productQuantity"
+                    >
+                        Quantità
+                    </label>
+
+                    <input
+                        id="productQuantity"
+                        class="form-input"
+                        type="number"
+                        min="0"
+                        step="1"
+                        value="1"
+                    >
+
+                </div>
 
             </div>
 
 
             <div class="form-group">
 
-                <label for="productFormat">
-                    Formato
-                </label>
-
-                <input
-                    type="text"
-                    id="productFormat"
-                    placeholder="es. 500 g">
-
-            </div>
-
-
-            <div class="form-group">
-
-                <label for="productQuantity">
-                    Quantità
-                </label>
-
-                <input
-                    type="number"
-                    id="productQuantity"
-                    min="0"
-                    step="1"
-                    value="0">
-
-            </div>
-
-
-            <div class="form-group">
-
-                <label for="productMinStock">
+                <label
+                    class="form-label"
+                    for="productMinStock"
+                >
                     Scorta minima
                 </label>
 
                 <input
-                    type="number"
                     id="productMinStock"
+                    class="form-input"
+                    type="number"
                     min="0"
                     step="1"
-                    value="1">
+                    value="1"
+                >
 
             </div>
 
 
             <div class="form-group">
 
-                <label for="productCategory">
+                <label
+                    class="form-label"
+                    for="productCategory"
+                >
                     Categoria
                 </label>
 
-                <select id="productCategory">
-
+                <select
+                    id="productCategory"
+                    class="form-select"
+                >
                     <option value="cibo">
                         Cibo
                     </option>
@@ -1549,7 +397,6 @@ button {
                     <option value="pulizia">
                         Prodotti pulizia
                     </option>
-
                 </select>
 
             </div>
@@ -1557,2073 +404,142 @@ button {
 
             <div class="form-group">
 
-                <label for="productBarcode">
+                <label
+                    class="form-label"
+                    for="productBarcode"
+                >
                     Codice a barre
                 </label>
 
                 <input
-                    type="text"
                     id="productBarcode"
-                    inputmode="numeric">
+                    class="form-input"
+                    type="text"
+                    placeholder="Codice EAN"
+                >
 
             </div>
 
 
             <div class="form-group">
 
-                <label for="productImage">
+                <label
+                    class="form-label"
+                    for="productImage"
+                >
                     URL immagine
                 </label>
 
                 <input
-                    type="url"
                     id="productImage"
-                    placeholder="https://...">
+                    class="form-input"
+                    type="url"
+                    placeholder="https://..."
+                >
 
             </div>
 
 
-            <div class="form-actions">
+            <div class="modal-actions">
 
                 <button
                     type="button"
-                    class="form-button secondary"
-                    id="cancelProductButton">
+                    class="secondary-button"
+                    onclick="closeProductModal()"
+                >
                     Annulla
                 </button>
 
                 <button
-                    type="submit"
-                    class="form-button primary">
+                    type="button"
+                    class="primary-button"
+                    onclick="saveProduct()"
+                >
                     Salva
                 </button>
 
             </div>
 
 
-            <div
-                id="deleteProductContainer"
-                style="display:none; margin-top:10px;">
-
-                <button
-                    type="button"
-                    class="form-button danger"
-                    id="deleteProductButton">
-                    Elimina prodotto
-                </button>
-
-            </div>
-
-        </form>
-
-    </div>
-
-</div>
-
-
-<!-- =========================
-     SCANNER MODAL
-     ========================= -->
-
-<div
-    id="scannerModal"
-    class="modal">
-
-    <div class="scanner-modal-content">
-
-        <div class="modal-header">
-
-            <h2>
-                Scanner
-            </h2>
-
             <button
+                id="deleteProductButton"
                 type="button"
-                class="close-button"
-                id="closeScannerButton">
-                ×
+                class="delete-button"
+                onclick="deleteProduct()"
+                style="display:none;"
+            >
+                Elimina prodotto
             </button>
 
         </div>
 
+    </div>
 
-        <div id="reader"></div>
+
+    <!-- =========================
+         SCANNER MODAL
+    ========================= -->
+
+    <div
+        id="scannerModal"
+        class="modal-overlay"
+        onclick="closeModalOutside(event, 'scannerModal')"
+    >
+
+        <div class="modal scanner-modal">
+
+            <div class="modal-header">
+
+                <h2 class="modal-title">
+                    Scansiona prodotto
+                </h2>
+
+                <button
+                    type="button"
+                    class="modal-close"
+                    onclick="closeScanner()"
+                >
+                    ×
+                </button>
+
+            </div>
 
 
-        <p class="scanner-message">
-            Inquadra il codice a barre del prodotto.
-        </p>
+            <div id="reader"></div>
+
+
+            <div
+                id="scannerStatus"
+                class="scanner-status"
+            >
+                Avvio fotocamera...
+            </div>
+
+
+            <button
+                type="button"
+                class="scanner-close-button"
+                onclick="closeScanner()"
+            >
+                Chiudi scanner
+            </button>
+
+        </div>
 
     </div>
 
-</div>
 
+    <!-- =========================
+         TOAST
+    ========================= -->
 
-<div
-    id="toast"
-    class="toast">
-</div>
+    <div
+        id="toast"
+        class="toast"
+    ></div>
 
 
-<script>
-
-"use strict";
-
-
-/* =========================
-   DATI
-   ========================= */
-
-var dispensaData = {
-
-    casa: {
-        title: "Dispensa Casa",
-        subtitle: "Cibo e prodotti bagno",
-        categories: [
-            "cibo",
-            "bagno"
-        ]
-    },
-
-    cantina: {
-        title: "Dispensa Cantina",
-        subtitle: "Prodotti di pulizia",
-        categories: [
-            "pulizia"
-        ]
-    }
-
-};
-
-
-var categoryData = {
-
-    cibo: {
-        title: "Cibo",
-        subtitle: "Dispensa e alimentari",
-        icon: "🍎"
-    },
-
-    bagno: {
-        title: "Prodotti bagno",
-        subtitle: "Cura personale",
-        icon: "🧴"
-    },
-
-    pulizia: {
-        title: "Prodotti pulizia",
-        subtitle: "Pulizia della casa",
-        icon: "🧹"
-    }
-
-};
-
-
-/* =========================
-   STATO
-   ========================= */
-
-var products = [];
-
-var currentCategory = "cibo";
-
-var currentFilter = "all";
-
-var currentDispensa = null;
-
-var editingProductId = null;
-
-var html5QrCode = null;
-
-var scannerStarting = false;
-
-var scannerRunning = false;
-
-var scannerLocked = false;
-
-var toastTimer = null;
-
-
-/* =========================
-   ELEMENTI
-   ========================= */
-
-var homeScreen =
-    document.getElementById("homeScreen");
-
-var dispensaScreen =
-    document.getElementById("dispensaScreen");
-
-var categoryScreen =
-    document.getElementById("categoryScreen");
-
-var productModal =
-    document.getElementById("productModal");
-
-var scannerModal =
-    document.getElementById("scannerModal");
-
-var dispensaTitle =
-    document.getElementById("dispensaTitle");
-
-var dispensaSubtitle =
-    document.getElementById("dispensaSubtitle");
-
-var dispensaCategories =
-    document.getElementById("dispensaCategories");
-
-var categoryTitle =
-    document.getElementById("categoryTitle");
-
-var categorySubtitle =
-    document.getElementById("categorySubtitle");
-
-var productsList =
-    document.getElementById("productsList");
-
-var searchInput =
-    document.getElementById("searchInput");
-
-var productForm =
-    document.getElementById("productForm");
-
-var productModalTitle =
-    document.getElementById("productModalTitle");
-
-var deleteProductContainer =
-    document.getElementById("deleteProductContainer");
-
-
-/* =========================
-   STORAGE
-   ========================= */
-
-var STORAGE_KEY =
-    "laMiaDispensaProdotti";
-
-
-/* =========================
-   INIT
-   ========================= */
-
-document.addEventListener(
-    "DOMContentLoaded",
-    function () {
-
-        loadProducts();
-
-        bindEvents();
-
-        showScreen("home");
-
-    }
-);
-
-
-/* =========================
-   EVENTI
-   ========================= */
-
-function bindEvents() {
-
-    var dispensaButtons =
-        document.querySelectorAll(
-            ".dispensa-card"
-        );
-
-    for (
-        var i = 0;
-        i < dispensaButtons.length;
-        i++
-    ) {
-
-        dispensaButtons[i].addEventListener(
-            "click",
-            function () {
-
-                openDispensa(
-                    this.getAttribute(
-                        "data-dispensa"
-                    )
-                );
-
-            }
-        );
-
-    }
-
-
-    document
-        .getElementById("backToHomeButton")
-        .addEventListener(
-            "click",
-            goHome
-        );
-
-
-    document
-        .getElementById("backToDispensaButton")
-        .addEventListener(
-            "click",
-            goBackFromCategory
-        );
-
-
-    document
-        .getElementById("addProductButton")
-        .addEventListener(
-            "click",
-            function () {
-                openProductModal();
-            }
-        );
-
-
-    document
-        .getElementById("scannerButton")
-        .addEventListener(
-            "click",
-            openScanner
-        );
-
-
-    document
-        .getElementById("closeProductModalButton")
-        .addEventListener(
-            "click",
-            closeProductModal
-        );
-
-
-    document
-        .getElementById("cancelProductButton")
-        .addEventListener(
-            "click",
-            closeProductModal
-        );
-
-
-    document
-        .getElementById("deleteProductButton")
-        .addEventListener(
-            "click",
-            deleteCurrentProduct
-        );
-
-
-    document
-        .getElementById("closeScannerButton")
-        .addEventListener(
-            "click",
-            closeScanner
-        );
-
-
-    productForm.addEventListener(
-        "submit",
-        function (event) {
-
-            event.preventDefault();
-
-            saveProductFromForm();
-
-        }
-    );
-
-
-    searchInput.addEventListener(
-        "input",
-        function () {
-
-            renderProducts();
-
-        }
-    );
-
-
-    var filterButtons =
-        document.querySelectorAll(
-            ".filter-button"
-        );
-
-    for (
-        var j = 0;
-        j < filterButtons.length;
-        j++
-    ) {
-
-        filterButtons[j].addEventListener(
-            "click",
-            function () {
-
-                var filter =
-                    this.getAttribute(
-                        "data-filter"
-                    );
-
-                currentFilter =
-                    filter;
-
-                for (
-                    var k = 0;
-                    k < filterButtons.length;
-                    k++
-                ) {
-
-                    filterButtons[k]
-                        .classList.remove(
-                            "active"
-                        );
-
-                }
-
-                this.classList.add(
-                    "active"
-                );
-
-                renderProducts();
-
-            }
-        );
-
-    }
-
-
-    document.addEventListener(
-        "keydown",
-        function (event) {
-
-            if (
-                event.key === "Escape"
-            ) {
-
-                closeProductModal();
-
-                closeScanner();
-
-            }
-
-        }
-    );
-
-}
-
-
-/* =========================
-   SCREEN
-   ========================= */
-
-function showScreen(name) {
-
-    homeScreen.classList.remove("active");
-    dispensaScreen.classList.remove("active");
-    categoryScreen.classList.remove("active");
-
-
-    if (name === "home") {
-        homeScreen.classList.add("active");
-    }
-
-    if (name === "dispensa") {
-        dispensaScreen.classList.add("active");
-    }
-
-    if (name === "category") {
-        categoryScreen.classList.add("active");
-    }
-
-
-    window.scrollTo(
-        0,
-        0
-    );
-
-}
-
-
-/* =========================
-   DISPENSA
-   ========================= */
-
-function openDispensa(dispensa) {
-
-    if (!dispensaData[dispensa]) {
-        return;
-    }
-
-    currentDispensa =
-        dispensa;
-
-    dispensaTitle.textContent =
-        dispensaData[dispensa].title;
-
-    dispensaSubtitle.textContent =
-        dispensaData[dispensa].subtitle;
-
-    renderDispensaCategories();
-
-    showScreen("dispensa");
-
-}
-
-
-function renderDispensaCategories() {
-
-    dispensaCategories.innerHTML = "";
-
-    var categories =
-        dispensaData[
-            currentDispensa
-        ].categories;
-
-
-    for (
-        var i = 0;
-        i < categories.length;
-        i++
-    ) {
-
-        var category =
-            categories[i];
-
-        var data =
-            categoryData[category];
-
-
-        var button =
-            document.createElement(
-                "button"
-            );
-
-        button.type =
-            "button";
-
-        /*
-         * IMPORTANTE:
-         * aggiunge automaticamente
-         * la classe cibo / bagno / pulizia
-         */
-
-        button.className =
-            "category-card " +
-            category;
-
-
-        button.innerHTML =
-
-            '<div class="category-icon">' +
-                escapeHtml(data.icon) +
-            '</div>' +
-
-            '<div class="category-info">' +
-
-                '<h2>' +
-                    escapeHtml(data.title) +
-                '</h2>' +
-
-                '<p>' +
-                    escapeHtml(data.subtitle) +
-                '</p>' +
-
-            '</div>' +
-
-            '<div class="category-arrow">' +
-                '→' +
-            '</div>';
-
-
-        button.addEventListener(
-            "click",
-            function (selectedCategory) {
-
-                return function () {
-
-                    openCategory(
-                        selectedCategory
-                    );
-
-                };
-
-            }(category)
-        );
-
-
-        dispensaCategories.appendChild(
-            button
-        );
-
-    }
-
-}
-
-
-/* =========================
-   HOME
-   ========================= */
-
-function goHome() {
-
-    currentDispensa =
-        null;
-
-    showScreen(
-        "home"
-    );
-
-}
-
-
-function goBackFromCategory() {
-
-    renderDispensaCategories();
-
-    showScreen(
-        "dispensa"
-    );
-
-}
-
-
-/* =========================
-   CATEGORY
-   ========================= */
-
-function openCategory(category) {
-
-    if (!categoryData[category]) {
-        return;
-    }
-
-    currentCategory =
-        category;
-
-    currentFilter =
-        "all";
-
-    searchInput.value =
-        "";
-
-    categoryTitle.textContent =
-        categoryData[category].title;
-
-    categorySubtitle.textContent =
-        categoryData[category].subtitle;
-
-
-    var filterButtons =
-        document.querySelectorAll(
-            ".filter-button"
-        );
-
-
-    for (
-        var i = 0;
-        i < filterButtons.length;
-        i++
-    ) {
-
-        filterButtons[i]
-            .classList.remove(
-                "active"
-            );
-
-    }
-
-
-    var allButton =
-        document.querySelector(
-            '.filter-button[data-filter="all"]'
-        );
-
-
-    if (allButton) {
-
-        allButton.classList.add(
-            "active"
-        );
-
-    }
-
-
-    renderProducts();
-
-    showScreen(
-        "category"
-    );
-
-}
-
-
-/* =========================
-   PRODUCTS
-   ========================= */
-
-function renderProducts() {
-
-    productsList.innerHTML =
-        "";
-
-
-    var query =
-        searchInput.value
-            .toLowerCase()
-            .trim();
-
-
-    var filtered = [];
-
-
-    for (
-        var i = 0;
-        i < products.length;
-        i++
-    ) {
-
-        var product =
-            products[i];
-
-
-        if (
-            product.category !==
-            currentCategory
-        ) {
-            continue;
-        }
-
-
-        if (
-            currentFilter === "low" &&
-            !isLowStock(product)
-        ) {
-            continue;
-        }
-
-
-        var searchable =
-            (
-                product.name +
-                " " +
-                product.brand +
-                " " +
-                product.format
-            )
-            .toLowerCase();
-
-
-        if (
-            query &&
-            searchable.indexOf(query) === -1
-        ) {
-            continue;
-        }
-
-
-        filtered.push(
-            product
-        );
-
-    }
-
-
-    if (filtered.length === 0) {
-
-        productsList.innerHTML =
-
-            '<div class="empty-state">' +
-
-                '<div class="empty-state-icon">' +
-                    '🛒' +
-                '</div>' +
-
-                '<h3>' +
-                    'Nessun prodotto' +
-                '</h3>' +
-
-                '<p>' +
-                    'Non ci sono prodotti da mostrare.' +
-                '</p>' +
-
-            '</div>';
-
-        return;
-    }
-
-
-    for (
-        var j = 0;
-        j < filtered.length;
-        j++
-    ) {
-
-        productsList.appendChild(
-            createProductCard(
-                filtered[j]
-            )
-        );
-
-    }
-
-}
-
-
-function createProductCard(product) {
-
-    var card =
-        document.createElement(
-            "div"
-        );
-
-    card.className =
-        "product-card";
-
-
-    var imageHtml =
-        "";
-
-
-    if (
-        product.image &&
-        product.image.trim() !== ""
-    ) {
-
-        imageHtml =
-
-            '<img src="' +
-                escapeAttribute(
-                    product.image
-                ) +
-                '" ' +
-                'alt="" ' +
-                'onerror="this.style.display=\'none\'; this.parentNode.innerHTML=\'<span class=&quot;product-fallback&quot;>🛒</span>\';">';
-
-    } else {
-
-        imageHtml =
-            '<span class="product-fallback">🛒</span>';
-
-    }
-
-
-    var lowStockHtml =
-        isLowStock(product)
-            ? '<span class="low-stock">Scorta bassa</span>'
-            : "";
-
-
-    card.innerHTML =
-
-        '<div class="product-image">' +
-            imageHtml +
-        '</div>' +
-
-        '<div class="product-info">' +
-
-            '<h3 class="product-name">' +
-                escapeHtml(
-                    product.name
-                ) +
-            '</h3>' +
-
-            (
-                product.brand
-                    ? '<div class="product-brand">' +
-                        escapeHtml(
-                            product.brand
-                        ) +
-                      '</div>'
-                    : ""
-            ) +
-
-            (
-                product.format
-                    ? '<div class="product-format">' +
-                        escapeHtml(
-                            product.format
-                        ) +
-                      '</div>'
-                    : ""
-            ) +
-
-            lowStockHtml +
-
-            '<div class="quantity-control">' +
-
-                '<button ' +
-                    'type="button" ' +
-                    'class="quantity-button quantity-minus">' +
-                    '−' +
-                '</button>' +
-
-                '<span class="quantity-value">' +
-                    escapeHtml(
-                        String(
-                            product.quantity
-                        )
-                    ) +
-                '</span>' +
-
-                '<button ' +
-                    'type="button" ' +
-                    'class="quantity-button quantity-plus">' +
-                    '+' +
-                '</button>' +
-
-            '</div>' +
-
-        '</div>' +
-
-        '<button ' +
-            'type="button" ' +
-            'class="edit-product-button" ' +
-            'aria-label="Modifica prodotto">' +
-            '✎' +
-        '</button>';
-
-
-    var minusButton =
-        card.querySelector(
-            ".quantity-minus"
-        );
-
-    var plusButton =
-        card.querySelector(
-            ".quantity-plus"
-        );
-
-    var editButton =
-        card.querySelector(
-            ".edit-product-button"
-        );
-
-
-    minusButton.addEventListener(
-        "click",
-        function () {
-
-            changeQuantity(
-                product.id,
-                -1
-            );
-
-        }
-    );
-
-
-    plusButton.addEventListener(
-        "click",
-        function () {
-
-            changeQuantity(
-                product.id,
-                1
-            );
-
-        }
-    );
-
-
-    editButton.addEventListener(
-        "click",
-        function () {
-
-            openProductModal(
-                product.id
-            );
-
-        }
-    );
-
-
-    return card;
-
-}
-
-
-/* =========================
-   STOCK
-   ========================= */
-
-function isLowStock(product) {
-
-    return Number(
-        product.quantity
-    ) <
-    Number(
-        product.minStock
-    );
-
-}
-
-
-function changeQuantity(
-    productId,
-    amount
-) {
-
-    var product =
-        findProductById(
-            productId
-        );
-
-
-    if (!product) {
-        return;
-    }
-
-
-    var newQuantity =
-        Number(product.quantity) +
-        Number(amount);
-
-
-    if (newQuantity < 0) {
-        newQuantity = 0;
-    }
-
-
-    product.quantity =
-        newQuantity;
-
-
-    saveProducts();
-
-    renderProducts();
-
-}
-
-
-/* =========================
-   PRODUCT MODAL
-   ========================= */
-
-function openProductModal(productId) {
-
-    editingProductId =
-        productId || null;
-
-
-    if (editingProductId) {
-
-        var product =
-            findProductById(
-                editingProductId
-            );
-
-
-        if (!product) {
-            return;
-        }
-
-
-        productModalTitle.textContent =
-            "Modifica prodotto";
-
-
-        document.getElementById(
-            "productName"
-        ).value =
-            product.name || "";
-
-
-        document.getElementById(
-            "productBrand"
-        ).value =
-            product.brand || "";
-
-
-        document.getElementById(
-            "productFormat"
-        ).value =
-            product.format || "";
-
-
-        document.getElementById(
-            "productQuantity"
-        ).value =
-            product.quantity || 0;
-
-
-        document.getElementById(
-            "productMinStock"
-        ).value =
-            product.minStock || 0;
-
-
-        document.getElementById(
-            "productCategory"
-        ).value =
-            product.category ||
-            currentCategory;
-
-
-        document.getElementById(
-            "productBarcode"
-        ).value =
-            product.barcode || "";
-
-
-        document.getElementById(
-            "productImage"
-        ).value =
-            product.image || "";
-
-
-        deleteProductContainer.style.display =
-            "block";
-
-
-    } else {
-
-        productModalTitle.textContent =
-            "Nuovo prodotto";
-
-
-        productForm.reset();
-
-
-        document.getElementById(
-            "productCategory"
-        ).value =
-            currentCategory;
-
-
-        document.getElementById(
-            "productQuantity"
-        ).value =
-            "0";
-
-
-        document.getElementById(
-            "productMinStock"
-        ).value =
-            "1";
-
-
-        deleteProductContainer.style.display =
-            "none";
-
-    }
-
-
-    productModal.classList.add(
-        "active"
-    );
-
-
-    setTimeout(
-        function () {
-
-            document.getElementById(
-                "productName"
-            ).focus();
-
-        },
-        100
-    );
-
-}
-
-
-function closeProductModal() {
-
-    productModal.classList.remove(
-        "active"
-    );
-
-    editingProductId =
-        null;
-
-}
-
-
-/* =========================
-   SAVE PRODUCT
-   ========================= */
-
-function saveProductFromForm() {
-
-    var name =
-        document.getElementById(
-            "productName"
-        ).value.trim();
-
-
-    if (!name) {
-
-        showToast(
-            "Inserisci il nome del prodotto."
-        );
-
-        return;
-    }
-
-
-    var productData = {
-
-        name:
-            name,
-
-        brand:
-            document.getElementById(
-                "productBrand"
-            ).value.trim(),
-
-        format:
-            document.getElementById(
-                "productFormat"
-            ).value.trim(),
-
-        quantity:
-            Number(
-                document.getElementById(
-                    "productQuantity"
-                ).value
-            ) || 0,
-
-        minStock:
-            Number(
-                document.getElementById(
-                    "productMinStock"
-                ).value
-            ) || 0,
-
-        category:
-            document.getElementById(
-                "productCategory"
-            ).value,
-
-        barcode:
-            document.getElementById(
-                "productBarcode"
-            ).value.trim(),
-
-        image:
-            document.getElementById(
-                "productImage"
-            ).value.trim()
-
-    };
-
-
-    if (editingProductId) {
-
-        var existing =
-            findProductById(
-                editingProductId
-            );
-
-
-        if (existing) {
-
-            existing.name =
-                productData.name;
-
-            existing.brand =
-                productData.brand;
-
-            existing.format =
-                productData.format;
-
-            existing.quantity =
-                productData.quantity;
-
-            existing.minStock =
-                productData.minStock;
-
-            existing.category =
-                productData.category;
-
-            existing.barcode =
-                productData.barcode;
-
-            existing.image =
-                productData.image;
-
-        }
-
-
-        showToast(
-            "Prodotto modificato."
-        );
-
-
-    } else {
-
-        productData.id =
-            createId();
-
-        products.push(
-            productData
-        );
-
-
-        showToast(
-            "Prodotto aggiunto."
-        );
-
-    }
-
-
-    saveProducts();
-
-    closeProductModal();
-
-    renderProducts();
-
-}
-
-
-/* =========================
-   DELETE
-   ========================= */
-
-function deleteCurrentProduct() {
-
-    if (!editingProductId) {
-        return;
-    }
-
-
-    var confirmed =
-        window.confirm(
-            "Vuoi eliminare questo prodotto?"
-        );
-
-
-    if (!confirmed) {
-        return;
-    }
-
-
-    var newProducts =
-        [];
-
-
-    for (
-        var i = 0;
-        i < products.length;
-        i++
-    ) {
-
-        if (
-            products[i].id !==
-            editingProductId
-        ) {
-
-            newProducts.push(
-                products[i]
-            );
-
-        }
-
-    }
-
-
-    products =
-        newProducts;
-
-
-    saveProducts();
-
-    closeProductModal();
-
-    renderProducts();
-
-    showToast(
-        "Prodotto eliminato."
-    );
-
-}
-
-
-/* =========================
-   FIND PRODUCT
-   ========================= */
-
-function findProductById(id) {
-
-    for (
-        var i = 0;
-        i < products.length;
-        i++
-    ) {
-
-        if (
-            products[i].id === id
-        ) {
-
-            return products[i];
-
-        }
-
-    }
-
-
-    return null;
-
-}
-
-
-/* =========================
-   STORAGE
-   ========================= */
-
-function loadProducts() {
-
-    try {
-
-        var stored =
-            localStorage.getItem(
-                STORAGE_KEY
-            );
-
-
-        if (stored) {
-
-            products =
-                JSON.parse(
-                    stored
-                );
-
-        }
-
-
-        if (
-            !Array.isArray(products) ||
-            products.length === 0
-        ) {
-
-            products = [
-
-                {
-                    id: createId(),
-                    name: "Pasta",
-                    brand: "Barilla",
-                    format: "500 g",
-                    quantity: 3,
-                    minStock: 2,
-                    category: "cibo",
-                    barcode: "",
-                    image: ""
-                },
-
-                {
-                    id: createId(),
-                    name: "Latte",
-                    brand: "Parmalat",
-                    format: "1 L",
-                    quantity: 1,
-                    minStock: 2,
-                    category: "cibo",
-                    barcode: "",
-                    image: ""
-                },
-
-                {
-                    id: createId(),
-                    name: "Shampoo",
-                    brand: "Pantene",
-                    format: "250 ml",
-                    quantity: 2,
-                    minStock: 1,
-                    category: "bagno",
-                    barcode: "",
-                    image: ""
-                },
-
-                {
-                    id: createId(),
-                    name: "Detersivo piatti",
-                    brand: "Nelsen",
-                    format: "900 ml",
-                    quantity: 1,
-                    minStock: 1,
-                    category: "pulizia",
-                    barcode: "",
-                    image: ""
-                }
-
-            ];
-
-
-            saveProducts();
-
-        }
-
-    } catch (error) {
-
-        products = [];
-
-    }
-
-}
-
-
-function saveProducts() {
-
-    try {
-
-        localStorage.setItem(
-            STORAGE_KEY,
-            JSON.stringify(
-                products
-            )
-        );
-
-    } catch (error) {
-
-        showToast(
-            "Impossibile salvare i dati."
-        );
-
-    }
-
-}
-
-
-/* =========================
-   SCANNER
-   ========================= */
-
-function openScanner() {
-
-    scannerLocked =
-        false;
-
-    scannerModal.classList.add(
-        "active"
-    );
-
-    startScanner();
-
-}
-
-
-function closeScanner() {
-
-    stopScanner();
-
-    scannerModal.classList.remove(
-        "active"
-    );
-
-}
-
-
-function startScanner() {
-
-    if (
-        scannerStarting ||
-        scannerRunning ||
-        scannerLocked
-    ) {
-        return;
-    }
-
-
-    scannerStarting =
-        true;
-
-
-    html5QrCode =
-        new Html5Qrcode(
-            "reader"
-        );
-
-
-    var config = {
-
-        fps: 10,
-
-        qrbox: {
-            width: 250,
-            height: 150
-        }
-
-    };
-
-
-    html5QrCode
-        .start(
-            {
-                facingMode: "user"
-            },
-            config,
-            handleBarcode,
-            function () {}
-        )
-        .then(
-            function () {
-
-                scannerStarting =
-                    false;
-
-                scannerRunning =
-                    true;
-
-            }
-        )
-        .catch(
-            function () {
-
-                scannerStarting =
-                    false;
-
-                tryFallbackCamera();
-
-            }
-        );
-
-}
-
-
-function tryFallbackCamera() {
-
-    if (scannerLocked) {
-        return;
-    }
-
-
-    Html5Qrcode
-        .getCameras()
-        .then(
-            function (devices) {
-
-                if (
-                    !devices ||
-                    devices.length === 0
-                ) {
-
-                    showToast(
-                        "Nessuna fotocamera disponibile."
-                    );
-
-                    return;
-                }
-
-
-                var selectedCamera =
-                    devices[0];
-
-
-                for (
-                    var i = 0;
-                    i < devices.length;
-                    i++
-                ) {
-
-                    var label =
-                        (
-                            devices[i].label ||
-                            ""
-                        ).toLowerCase();
-
-
-                    if (
-                        label.indexOf("front") !== -1 ||
-                        label.indexOf("facetime") !== -1 ||
-                        label.indexOf("user") !== -1
-                    ) {
-
-                        selectedCamera =
-                            devices[i];
-
-                        break;
-
-                    }
-
-                }
-
-
-                var config = {
-
-                    fps: 10,
-
-                    qrbox: {
-                        width: 250,
-                        height: 150
-                    }
-
-                };
-
-
-                html5QrCode =
-                    new Html5Qrcode(
-                        "reader"
-                    );
-
-
-                html5QrCode
-                    .start(
-                        selectedCamera.id,
-                        config,
-                        handleBarcode,
-                        function () {}
-                    )
-                    .then(
-                        function () {
-
-                            scannerRunning =
-                                true;
-
-                        }
-                    )
-                    .catch(
-                        function () {
-
-                            showToast(
-                                "Impossibile avviare la fotocamera."
-                            );
-
-                        }
-                    );
-
-            }
-        )
-        .catch(
-            function () {
-
-                showToast(
-                    "Accesso alla fotocamera non disponibile."
-                );
-
-            }
-        );
-
-}
-
-
-function stopScanner() {
-
-    scannerLocked =
-        true;
-
-
-    if (
-        html5QrCode &&
-        scannerRunning
-    ) {
-
-        html5QrCode
-            .stop()
-            .then(
-                function () {
-
-                    scannerRunning =
-                        false;
-
-                    html5QrCode =
-                        null;
-
-                }
-            )
-            .catch(
-                function () {
-
-                    scannerRunning =
-                        false;
-
-                    html5QrCode =
-                        null;
-
-                }
-            );
-
-    } else {
-
-        scannerRunning =
-            false;
-
-        html5QrCode =
-            null;
-
-    }
-
-}
-
-
-/* =========================
-   BARCODE
-   ========================= */
-
-function handleBarcode(decodedText) {
-
-    if (scannerLocked) {
-        return;
-    }
-
-
-    scannerLocked =
-        true;
-
-
-    var barcode =
-        String(decodedText)
-            .trim();
-
-
-    stopScanner();
-
-    closeScanner();
-
-
-    document.getElementById(
-        "productBarcode"
-    ).value =
-        barcode;
-
-
-    openProductModal();
-
-
-    lookupOpenFoodFacts(
-        barcode
-    );
-
-}
-
-
-/* =========================
-   OPEN FOOD FACTS
-   ========================= */
-
-function lookupOpenFoodFacts(
-    barcode
-) {
-
-    if (!barcode) {
-        return;
-    }
-
-
-    var url =
-        "https://world.openfoodfacts.org/api/v2/product/" +
-        encodeURIComponent(
-            barcode
-        ) +
-        ".json";
-
-
-    fetch(url)
-
-        .then(
-            function (response) {
-
-                if (!response.ok) {
-
-                    throw new Error(
-                        "HTTP error"
-                    );
-
-                }
-
-                return response.json();
-
-            }
-        )
-
-        .then(
-            function (data) {
-
-                if (
-                    !data ||
-                    data.status !== 1 ||
-                    !data.product
-                ) {
-
-                    showToast(
-                        "Prodotto non trovato."
-                    );
-
-                    return;
-                }
-
-
-                var product =
-                    data.product;
-
-
-                if (
-                    product.product_name
-                ) {
-
-                    document.getElementById(
-                        "productName"
-                    ).value =
-                        product.product_name;
-
-                }
-
-
-                if (
-                    product.brands
-                ) {
-
-                    document.getElementById(
-                        "productBrand"
-                    ).value =
-                        product.brands;
-
-                }
-
-
-                if (
-                    product.quantity
-                ) {
-
-                    document.getElementById(
-                        "productFormat"
-                    ).value =
-                        product.quantity;
-
-                }
-
-
-                var image =
-                    product.image_front_url ||
-                    product.image_url ||
-                    "";
-
-
-                if (image) {
-
-                    document.getElementById(
-                        "productImage"
-                    ).value =
-                        image;
-
-                }
-
-
-                showToast(
-                    "Dati del prodotto trovati."
-                );
-
-            }
-        )
-
-        .catch(
-            function () {
-
-                showToast(
-                    "Non è stato possibile recuperare i dati."
-                );
-
-            }
-        );
-
-}
-
-
-/* =========================
-   TOAST
-   ========================= */
-
-function showToast(message) {
-
-    var toast =
-        document.getElementById(
-            "toast"
-        );
-
-
-    toast.textContent =
-        message;
-
-
-    toast.classList.add(
-        "show"
-    );
-
-
-    if (toastTimer) {
-
-        clearTimeout(
-            toastTimer
-        );
-
-    }
-
-
-    toastTimer =
-        setTimeout(
-            function () {
-
-                toast.classList.remove(
-                    "show"
-                );
-
-            },
-            2500
-        );
-
-}
-
-
-/* =========================
-   ID
-   ========================= */
-
-function createId() {
-
-    return String(
-        Date.now()
-    ) +
-    "_" +
-    String(
-        Math.floor(
-            Math.random() * 100000
-        )
-    );
-
-}
-
-
-/* =========================
-   SECURITY
-   ========================= */
-
-function escapeHtml(value) {
-
-    return String(value)
-
-        .replace(
-            /&/g,
-            "&amp;"
-        )
-
-        .replace(
-            /</g,
-            "&lt;"
-        )
-
-        .replace(
-            />/g,
-            "&gt;"
-        )
-
-        .replace(
-            /"/g,
-            "&quot;"
-        )
-
-        .replace(
-            /'/g,
-            "&#039;"
-        );
-
-}
-
-
-function escapeAttribute(value) {
-
-    return escapeHtml(
-        value
-    );
-
-}
-
-</script>
+    <script src="script.js"></script>
 
 </body>
 </html>
