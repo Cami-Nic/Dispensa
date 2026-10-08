@@ -220,39 +220,24 @@ function goHome() {
 
 function openDispensa(type) {
 
-    currentDispensa =
-        type;
-
+    currentDispensa = type;
 
     var title =
         document.getElementById(
             "dispensaTitle"
         );
 
-    var subtitle =
-        document.getElementById(
-            "dispensaSubtitle"
-        );
-
-
     if (type === "casa") {
 
         title.textContent =
             "Dispensa Casa";
-
-        subtitle.textContent =
-            "Cibo e prodotti bagno";
 
     } else {
 
         title.textContent =
             "Dispensa Cantina";
 
-        subtitle.textContent =
-            "Prodotti di pulizia";
-
     }
-
 
     renderCategoryCards();
 
@@ -261,8 +246,6 @@ function openDispensa(type) {
     );
 
 }
-
-
 function backToDispensa() {
 
     showScreen(
