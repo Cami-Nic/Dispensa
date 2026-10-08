@@ -164,12 +164,9 @@ button {
     position: relative;
 }
 
-/* =========================
+/* =========================================================
    PULSANTE INDIETRO
-   ========================= */
-/* =========================
-   PULSANTE INDIETRO
-   ========================= */
+   ========================================================= */
 
 .back-button {
     display: inline-flex;
@@ -177,24 +174,24 @@ button {
     justify-content: center;
     gap: 10px;
 
-    min-height: 52px;
-    padding: 0 22px;
+    min-height: 60px;
+    padding: 0 20px;
 
-    margin-bottom: 28px;
+    margin-bottom: 40px;
 
     border: 0;
-    border-radius: 17px;
+    border-radius: 20px;
 
-    background: rgba(255, 255, 255, 0.96);
+    background: #ffffff;
     color: #1c1c1e;
 
-    font-size: 18px;
+    font-size: 20px;
     font-weight: 700;
     font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
 
     box-shadow:
-        0 5px 15px rgba(0, 0, 0, 0.12),
-        inset 0 1px 0 rgba(255, 255, 255, 0.95);
+        0 6px 20px rgba(0, 0, 0, 0.14),
+        0 1px 3px rgba(0, 0, 0, 0.08);
 
     cursor: pointer;
 
@@ -208,9 +205,9 @@ button {
         background 0.15s ease;
 }
 
-/* Freccia più grande */
+/* Freccia del pulsante */
 .back-button::first-letter {
-    font-size: 25px;
+    font-size: 28px;
     font-weight: 800;
 }
 
@@ -221,32 +218,83 @@ button {
     background: #f5f5f7;
 
     box-shadow:
-        0 2px 7px rgba(0, 0, 0, 0.09);
+        0 3px 8px rgba(0, 0, 0, 0.10);
 }
 
 /* Effetto hover */
 @media (hover: hover) {
     .back-button:hover {
-        transform: translateY(-1px);
+        transform: translateY(-2px);
 
         box-shadow:
-            0 7px 18px rgba(0, 0, 0, 0.14),
-            inset 0 1px 0 rgba(255, 255, 255, 0.95);
+            0 10px 20px rgba(0, 0, 0, 0.16);
     }
 }
-.screen-title {
-    margin: 0;
-    font-size: 32px;
-    font-weight: 700;
-    letter-spacing: -0.7px;
+
+
+/* =========================================================
+   ICONE DELLE CATEGORIE
+   ========================================================= */
+
+.category-icon {
+    position: relative;
+    z-index: 2;
+
+    width: 80px;
+    height: 80px;
+    flex: 0 0 80px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin: 0 auto 20px;
+
+    font-size: 60px !important;
+    line-height: 1 !important;
+
+    background: transparent;
+    box-shadow: none;
+
+    overflow: visible;
 }
 
-.screen-subtitle {
-    margin: 5px 0 0;
-    color: #8e8e93;
-    font-size: 15px;
-}
 
+/* =========================================================
+   VERSIONE IPAD / SCHERMI PICCOLI
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+    .back-button {
+        min-height: 60px;
+        padding: 0 20px;
+
+        margin-bottom: 40px;
+
+        border-radius: 20px;
+
+        font-size: 20px;
+    }
+
+    .back-button::first-letter {
+        font-size: 28px;
+    }
+
+    .category-icon {
+        width: 80px !important;
+        height: 80px !important;
+        flex-basis: 80px !important;
+
+        margin: 0 auto 20px !important;
+
+        font-size: 60px !important;
+        line-height: 1 !important;
+
+        background: transparent !important;
+        box-shadow: none !important;
+    }
+}
 
 /* =========================
    DISPENSA
