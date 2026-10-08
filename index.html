@@ -205,37 +205,42 @@
     /* Freccia sotto al centro */
 
     .dispensa-card-arrow {
-        position: relative;
-        z-index: 3;
+    position: absolute;
+    z-index: 3;
 
-        right: auto;
-        top: auto;
+    right: 22px;
+    bottom: 18px;
 
-        transform: none;
+    margin: 0;
 
-        margin-top: 15px;
+    font-size: 30px;
+    line-height: 1;
+    font-weight: 300;
 
-        font-size: 34px;
-        line-height: 1;
+    opacity: 0.95;
 
-        font-weight: 300;
+    animation: arrowMoveRight 1.5s ease-in-out infinite;
+}
 
-        opacity: 0.95;
-
-        animation: arrowBounce 1.5s ease-in-out infinite;
+@keyframes arrowMoveRight {
+    0%,
+    100% {
+        transform: translateX(0);
     }
 
-    @keyframes arrowBounce {
-        0%,
-        100% {
-            transform: translateY(0);
-        }
-
-        50% {
-            transform: translateY(7px);
-        }
+    50% {
+        transform: translateX(7px);
     }
+}
 
+@media (max-width: 600px) {
+
+    .dispensa-card-arrow {
+        right: 18px;
+        bottom: 15px;
+        font-size: 27px;
+    }
+}
     /* =========================
        INNER HEADER
        ========================= */
@@ -1068,7 +1073,7 @@
                 <p>Cibo e prodotti bagno</p>
 
                 <div class="dispensa-card-arrow">
-                    ↓
+                     →
                 </div>
 
             </button>
