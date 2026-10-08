@@ -3348,11 +3348,15 @@
             }
 
 
+            /*
+               Usa la fotocamera FRONTALE dell'iPad.
+               "user" = fotocamera anteriore.
+            */
             await html5QrCode.start(
 
                 {
                     facingMode:
-                        "environment"
+                        "user"
                 },
 
                 config,
