@@ -33,6 +33,7 @@ body {
     margin: 0;
     padding: 0;
     min-height: 100%;
+
     font-family:
         -apple-system,
         BlinkMacSystemFont,
@@ -40,8 +41,8 @@ body {
         Arial,
         sans-serif;
 
-    background: #f5f6f8;
-    color: #202124;
+    background: #f5f5f7;
+    color: #1d1d1f;
 }
 
 body {
@@ -58,6 +59,12 @@ button {
     cursor: pointer;
     -webkit-appearance: none;
     appearance: none;
+}
+
+button:focus,
+input:focus,
+select:focus {
+    outline: none;
 }
 
 
@@ -84,94 +91,104 @@ button {
         linear-gradient(
             180deg,
             #ffffff 0%,
-            #f5f6f8 55%,
-            #eef0f3 100%
+            #f7f7f9 48%,
+            #f1f1f4 100%
         );
 }
 
 .home-header {
     text-align: center;
-    padding: 42px 20px 10px;
+    padding: 42px 20px 8px;
 }
 
 .home-logo {
-    width: 82px;
-    height: 82px;
+    width: 78px;
+    height: 78px;
+
     margin: 0 auto;
-    border-radius: 25px;
+
+    border-radius: 24px;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
-    font-size: 48px;
+    font-size: 45px;
 
     background: #ffffff;
 
+    border: 1px solid #e8e8eb;
+
     box-shadow:
-        0 12px 30px rgba(0, 0, 0, 0.10);
+        0 10px 30px rgba(0,0,0,0.08);
 }
 
 .home-title {
-    margin: 18px 0 0;
+    margin: 17px 0 0;
 
-    font-size: 34px;
+    font-size: 32px;
     line-height: 1.1;
-    font-weight: 800;
-    letter-spacing: -0.8px;
 
-    color: #202124;
+    font-weight: 750;
+
+    letter-spacing: -0.9px;
+
+    color: #1d1d1f;
 }
 
 .home-subtitle {
     margin: 8px 0 0;
 
     font-size: 16px;
-    color: #7a7d82;
+
+    color: #6e6e73;
 }
 
 
 /* =========================================================
-   DISPENSE HOME
+   HOME - DISPENSE
    ========================================================= */
 
 .dispensa-grid {
     width: 100%;
-    max-width: 500px;
+    max-width: 760px;
 
-    min-height: calc(100vh - 180px);
+    min-height: calc(100vh - 175px);
 
     margin: 0 auto;
 
-    display: flex;
-    flex-direction: column;
+    padding: 28px 22px 55px;
+
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
 
     align-items: center;
-    justify-content: center;
 
-    gap: 55px;
-
-    padding: 25px 22px 55px;
+    gap: 24px;
 }
 
 .dispensa-card {
     position: relative;
 
     width: 100%;
-    min-height: 190px;
 
-    border: 0;
-    border-radius: 30px;
+    min-height: 285px;
 
-    padding: 28px 70px 28px 30px;
+    border: 1px solid rgba(0,0,0,0.06);
+
+    border-radius: 28px;
+
+    padding: 28px;
+
+    text-align: left;
 
     color: #ffffff;
-    text-align: left;
 
     overflow: hidden;
 
     box-shadow:
-        0 16px 35px rgba(0, 0, 0, 0.15);
+        0 14px 32px rgba(0,0,0,0.10);
 
     transition:
         transform 0.15s ease,
@@ -182,7 +199,42 @@ button {
     transform: scale(0.975);
 
     box-shadow:
-        0 8px 20px rgba(0, 0, 0, 0.15);
+        0 7px 18px rgba(0,0,0,0.10);
+}
+
+
+/* DECORAZIONE */
+
+.dispensa-card:after {
+    content: "";
+
+    position: absolute;
+
+    width: 190px;
+    height: 190px;
+
+    right: -80px;
+    bottom: -85px;
+
+    border-radius: 50%;
+
+    background: rgba(255,255,255,0.10);
+}
+
+.dispensa-card:before {
+    content: "";
+
+    position: absolute;
+
+    width: 110px;
+    height: 110px;
+
+    right: -40px;
+    top: -45px;
+
+    border-radius: 50%;
+
+    background: rgba(255,255,255,0.07);
 }
 
 
@@ -191,26 +243,10 @@ button {
 .dispensa-card.casa {
     background:
         linear-gradient(
-            135deg,
-            #49b86b 0%,
-            #23884a 100%
+            145deg,
+            #4fc477 0%,
+            #218a49 100%
         );
-}
-
-.dispensa-card.casa:after {
-    content: "";
-
-    position: absolute;
-
-    width: 150px;
-    height: 150px;
-
-    right: -55px;
-    bottom: -65px;
-
-    border-radius: 50%;
-
-    background: rgba(255,255,255,0.10);
 }
 
 
@@ -219,52 +255,36 @@ button {
 .dispensa-card.cantina {
     background:
         linear-gradient(
-            135deg,
-            #7c68d8 0%,
-            #4f3ca2 100%
+            145deg,
+            #8974e1 0%,
+            #5743a7 100%
         );
 }
 
-.dispensa-card.cantina:after {
-    content: "";
 
-    position: absolute;
-
-    width: 170px;
-    height: 170px;
-
-    right: -60px;
-    top: -75px;
-
-    border-radius: 50%;
-
-    background: rgba(255,255,255,0.09);
-}
-
-
-/* ICONE GRANDI */
+/* ICONA */
 
 .dispensa-card-icon {
     position: relative;
     z-index: 2;
 
-    width: 70px;
-    height: 70px;
+    width: 68px;
+    height: 68px;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
-    margin-bottom: 17px;
+    margin-bottom: 32px;
 
-    border-radius: 21px;
+    border-radius: 20px;
 
-    font-size: 43px;
+    font-size: 40px;
 
     background: rgba(255,255,255,0.18);
 
     box-shadow:
-        inset 0 1px 0 rgba(255,255,255,0.20);
+        inset 0 1px 0 rgba(255,255,255,0.18);
 }
 
 .dispensa-card h2 {
@@ -273,9 +293,10 @@ button {
 
     margin: 0;
 
-    font-size: 29px;
+    font-size: 26px;
     line-height: 1.1;
-    font-weight: 800;
+
+    font-weight: 750;
 
     letter-spacing: -0.4px;
 }
@@ -286,25 +307,35 @@ button {
 
     margin: 9px 0 0;
 
-    font-size: 16px;
+    font-size: 15px;
     line-height: 1.35;
 
-    opacity: 0.92;
+    opacity: 0.91;
+
+    max-width: 190px;
 }
 
 .dispensa-card-arrow {
     position: absolute;
+
     z-index: 3;
 
-    right: 27px;
-    top: 50%;
+    right: 25px;
+    bottom: 25px;
 
-    transform: translateY(-50%);
+    width: 42px;
+    height: 42px;
 
-    font-size: 42px;
-    font-weight: 300;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-    opacity: 0.9;
+    border-radius: 50%;
+
+    background: rgba(255,255,255,0.17);
+
+    font-size: 27px;
+    line-height: 1;
 }
 
 
@@ -314,7 +345,9 @@ button {
 
 .page-header {
     position: sticky;
+
     top: 0;
+
     z-index: 20;
 
     display: flex;
@@ -322,31 +355,31 @@ button {
 
     gap: 13px;
 
-    padding: 17px 18px 15px;
+    padding: 15px 18px;
 
-    background: rgba(255,255,255,0.97);
+    background: rgba(255,255,255,0.98);
 
     border-bottom:
-        1px solid #e5e6e8;
+        1px solid #e5e5ea;
 
     box-shadow:
-        0 3px 12px rgba(0,0,0,0.04);
+        0 3px 14px rgba(0,0,0,0.035);
 }
 
 .back-button {
-    width: 50px;
-    height: 50px;
+    width: 48px;
+    height: 48px;
 
-    flex: 0 0 50px;
+    flex: 0 0 48px;
 
     border: 0;
-    border-radius: 16px;
+    border-radius: 15px;
 
-    background: #f0f1f3;
+    background: #f2f2f7;
 
-    color: #303236;
+    color: #1d1d1f;
 
-    font-size: 29px;
+    font-size: 28px;
 
     display: flex;
     align-items: center;
@@ -354,7 +387,7 @@ button {
 }
 
 .back-button:active {
-    background: #e2e3e6;
+    background: #e5e5ea;
     transform: scale(0.96);
 }
 
@@ -365,10 +398,10 @@ button {
 .page-title {
     margin: 0;
 
-    font-size: 27px;
+    font-size: 26px;
     line-height: 1.1;
 
-    font-weight: 800;
+    font-weight: 750;
 
     letter-spacing: -0.4px;
 }
@@ -376,7 +409,7 @@ button {
 .page-subtitle {
     margin: 5px 0 0;
 
-    color: #7b7e83;
+    color: #6e6e73;
 
     font-size: 14px;
 }
@@ -395,9 +428,9 @@ button {
 
     grid-template-columns: 1fr;
 
-    gap: 18px;
+    gap: 16px;
 
-    max-width: 650px;
+    max-width: 700px;
 
     margin: 0 auto;
 }
@@ -405,21 +438,25 @@ button {
 .subcategory-card {
     position: relative;
 
-    min-height: 155px;
+    min-height: 145px;
 
     width: 100%;
 
-    border: 0;
-    border-radius: 25px;
+    border: 1px solid rgba(0,0,0,0.06);
 
-    padding: 25px 68px 25px 25px;
+    border-radius: 24px;
+
+    padding: 22px 70px 22px 23px;
 
     color: #ffffff;
 
     text-align: left;
 
     box-shadow:
-        0 12px 25px rgba(0,0,0,0.11);
+        0 10px 24px rgba(0,0,0,0.09);
+
+    transition:
+        transform 0.15s ease;
 }
 
 .subcategory-card:active {
@@ -429,17 +466,17 @@ button {
 .subcategory-card.cibo {
     background:
         linear-gradient(
-            135deg,
+            145deg,
             #ff9b69,
-            #ef7145
+            #ec7147
         );
 }
 
 .subcategory-card.bagno {
     background:
         linear-gradient(
-            135deg,
-            #63c4f4,
+            145deg,
+            #68c8f4,
             #3998d2
         );
 }
@@ -447,25 +484,25 @@ button {
 .subcategory-card.pulizia {
     background:
         linear-gradient(
-            135deg,
+            145deg,
             #a982ef,
             #7653c7
         );
 }
 
 .subcategory-icon {
-    width: 55px;
-    height: 55px;
+    width: 54px;
+    height: 54px;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
-    margin-bottom: 13px;
+    margin-bottom: 12px;
 
     border-radius: 17px;
 
-    font-size: 34px;
+    font-size: 33px;
 
     background: rgba(255,255,255,0.18);
 }
@@ -473,16 +510,16 @@ button {
 .subcategory-card h2 {
     margin: 0;
 
-    font-size: 25px;
+    font-size: 23px;
     line-height: 1.15;
 
-    font-weight: 800;
+    font-weight: 750;
 }
 
 .subcategory-card p {
-    margin: 7px 0 0;
+    margin: 6px 0 0;
 
-    font-size: 15px;
+    font-size: 14px;
 
     opacity: 0.92;
 }
@@ -490,12 +527,23 @@ button {
 .subcategory-arrow {
     position: absolute;
 
-    right: 23px;
+    right: 21px;
     top: 50%;
 
     transform: translateY(-50%);
 
-    font-size: 37px;
+    width: 40px;
+    height: 40px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: rgba(255,255,255,0.16);
+
+    font-size: 27px;
 }
 
 
@@ -512,18 +560,18 @@ button {
 }
 
 .category-actions {
-    display: flex;
+    display: grid;
 
-    gap: 10px;
+    grid-template-columns: 1fr 1fr;
+
+    gap: 11px;
 
     margin-bottom: 14px;
 }
 
 .add-button,
 .scanner-button {
-    flex: 1;
-
-    min-height: 60px;
+    min-height: 58px;
 
     border: 0;
 
@@ -534,45 +582,49 @@ button {
     font-weight: 700;
 
     box-shadow:
-        0 5px 14px rgba(0,0,0,0.08);
+        0 5px 14px rgba(0,0,0,0.07);
+
+    transition:
+        transform 0.12s ease;
 }
 
 .add-button {
-    background: #242629;
+    background: #1d1d1f;
+
     color: #ffffff;
 }
 
 .add-button:active {
-    background: #111214;
+    background: #000000;
     transform: scale(0.98);
 }
 
 
-/* SCANNER MOLTO EVIDENTE */
+/* SCANNER */
 
 .scanner-button {
-    background:
-        linear-gradient(
-            135deg,
-            #e8e9ec,
-            #dcdde1
-        );
+    background: #e9f2ff;
 
-    color: #242629;
+    color: #0877d1;
 
     display: flex;
+
     align-items: center;
     justify-content: center;
 
-    gap: 11px;
+    gap: 10px;
+
+    border: 1px solid #d7e9ff;
 }
 
 .scanner-button:active {
+    background: #dcecff;
+
     transform: scale(0.98);
 }
 
 .scanner-icon {
-    font-size: 34px;
+    font-size: 29px;
     line-height: 1;
 }
 
@@ -589,7 +641,8 @@ button {
     width: 100%;
     height: 54px;
 
-    border: 1px solid #dfe1e4;
+    border:
+        1px solid #dedee3;
 
     border-radius: 16px;
 
@@ -604,11 +657,13 @@ button {
     margin-bottom: 13px;
 
     box-shadow:
-        0 4px 12px rgba(0,0,0,0.04);
+        0 4px 12px rgba(0,0,0,0.035);
+
+    -webkit-appearance: none;
 }
 
 .search-box:focus {
-    border-color: #9ca0a6;
+    border-color: #9d9da3;
 }
 
 
@@ -639,9 +694,9 @@ button {
 
     border-radius: 22px;
 
-    background: #e6e7e9;
+    background: #e5e5ea;
 
-    color: #44474b;
+    color: #4a4a4f;
 
     font-size: 15px;
 
@@ -649,7 +704,8 @@ button {
 }
 
 .filter-button.active {
-    background: #242629;
+    background: #1d1d1f;
+
     color: #ffffff;
 }
 
@@ -676,12 +732,15 @@ button {
 
     background: #ffffff;
 
+    border:
+        1px solid #ececf0;
+
     border-radius: 21px;
 
-    padding: 16px;
+    padding: 15px;
 
     box-shadow:
-        0 7px 20px rgba(0,0,0,0.07);
+        0 7px 20px rgba(0,0,0,0.055);
 }
 
 .product-image {
@@ -694,9 +753,9 @@ button {
 
     background:
         linear-gradient(
-            135deg,
-            #f0f1f3,
-            #e6e7e9
+            145deg,
+            #f3f3f5,
+            #e7e7eb
         );
 
     display: flex;
@@ -705,7 +764,7 @@ button {
 
     overflow: hidden;
 
-    font-size: 38px;
+    font-size: 37px;
 }
 
 .product-image img {
@@ -717,9 +776,10 @@ button {
 
 .product-info {
     flex: 1;
+
     min-width: 0;
 
-    padding-right: 35px;
+    padding-right: 36px;
 }
 
 .product-name {
@@ -728,7 +788,9 @@ button {
     font-size: 20px;
     line-height: 1.2;
 
-    font-weight: 750;
+    font-weight: 700;
+
+    color: #1d1d1f;
 }
 
 .product-brand {
@@ -736,7 +798,7 @@ button {
 
     font-size: 14px;
 
-    color: #74777c;
+    color: #6e6e73;
 }
 
 .product-format {
@@ -744,7 +806,7 @@ button {
 
     font-size: 14px;
 
-    color: #74777c;
+    color: #6e6e73;
 }
 
 .low-stock {
@@ -756,13 +818,13 @@ button {
 
     border-radius: 10px;
 
-    background: #ffe2df;
+    background: #ffe5e3;
 
-    color: #c72f2f;
+    color: #d52f2f;
 
     font-size: 12px;
 
-    font-weight: 800;
+    font-weight: 700;
 }
 
 .quantity-area {
@@ -775,22 +837,27 @@ button {
 }
 
 .quantity-button {
-    width: 40px;
-    height: 40px;
+    width: 39px;
+    height: 39px;
 
     border: 0;
 
     border-radius: 12px;
 
-    background: #eeeeef;
+    background: #f2f2f7;
 
-    font-size: 25px;
+    font-size: 24px;
 
-    color: #222;
+    color: #1d1d1f;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .quantity-button:active {
-    background: #dedfe1;
+    background: #dedee3;
+
     transform: scale(0.94);
 }
 
@@ -801,8 +868,13 @@ button {
 
     font-size: 18px;
 
-    font-weight: 800;
+    font-weight: 750;
 }
+
+
+/* =========================================================
+   PULSANTE MATITA
+   ========================================================= */
 
 .edit-product-button {
     position: absolute;
@@ -810,22 +882,43 @@ button {
     right: 12px;
     top: 12px;
 
-    width: 39px;
-    height: 39px;
+    width: 40px;
+    height: 40px;
 
     border: 0;
 
-    border-radius: 12px;
+    border-radius: 13px;
 
-    background: #eeeeef;
+    background: #fff4d8;
 
-    font-size: 18px;
+    color: #f59e0b;
 
-    color: #45474a;
+    font-size: 22px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    box-shadow:
+        0 3px 8px rgba(245,158,11,0.12);
 }
 
 .edit-product-button:active {
-    transform: scale(0.94);
+    background: #ffe9b2;
+
+    transform: scale(0.92);
+}
+
+
+/* =========================================================
+   MATITA SVG
+   ========================================================= */
+
+.edit-pencil {
+    width: 21px;
+    height: 21px;
+
+    display: block;
 }
 
 
@@ -836,7 +929,7 @@ button {
 .empty-message {
     text-align: center;
 
-    color: #85888d;
+    color: #85858b;
 
     padding: 60px 20px;
 
@@ -862,7 +955,7 @@ button {
     height: 100%;
 
     background:
-        rgba(20,22,25,0.55);
+        rgba(20,22,25,0.48);
 
     padding: 18px;
 
@@ -885,7 +978,7 @@ button {
     padding: 23px;
 
     box-shadow:
-        0 20px 50px rgba(0,0,0,0.22);
+        0 20px 50px rgba(0,0,0,0.20);
 }
 
 .modal-header {
@@ -903,7 +996,7 @@ button {
 
     font-size: 24px;
 
-    font-weight: 800;
+    font-weight: 750;
 }
 
 .close-modal {
@@ -914,7 +1007,7 @@ button {
 
     border-radius: 13px;
 
-    background: #eeeeef;
+    background: #f2f2f7;
 
     font-size: 25px;
 
@@ -943,7 +1036,7 @@ button {
 
     height: 50px;
 
-    border: 1px solid #d7d9dc;
+    border: 1px solid #d7d7dc;
 
     border-radius: 13px;
 
@@ -954,11 +1047,13 @@ button {
     background: #ffffff;
 
     outline: none;
+
+    -webkit-appearance: none;
 }
 
 .form-group input:focus,
 .form-group select:focus {
-    border-color: #96999e;
+    border-color: #96969c;
 }
 
 .form-row {
@@ -989,21 +1084,21 @@ button {
 
     font-size: 16px;
 
-    font-weight: 800;
+    font-weight: 750;
 }
 
 .save-button {
     flex: 1;
 
-    background: #242629;
+    background: #1d1d1f;
 
     color: #ffffff;
 }
 
 .delete-button {
-    background: #ffe3e2;
+    background: #ffe5e3;
 
-    color: #c52d2d;
+    color: #d52f2f;
 
     padding: 0 18px;
 }
@@ -1057,7 +1152,7 @@ button {
 
     z-index: 200;
 
-    background: #242629;
+    background: #1d1d1f;
 
     color: #ffffff;
 
@@ -1120,47 +1215,58 @@ button {
         font-size: 15px;
     }
 
+
+    /* Su schermi stretti tornano verticali */
+
     .dispensa-grid {
         min-height: calc(100vh - 160px);
 
-        gap: 45px;
+        grid-template-columns: 1fr;
+
+        gap: 24px;
 
         padding:
-            20px 18px 45px;
+            22px 18px 45px;
     }
 
     .dispensa-card {
-        min-height: 175px;
+        min-height: 185px;
 
         border-radius: 25px;
 
         padding:
-            25px 65px 25px 25px;
+            24px 65px 24px 25px;
     }
 
     .dispensa-card-icon {
         width: 62px;
         height: 62px;
 
+        margin-bottom: 20px;
+
         font-size: 39px;
     }
 
     .dispensa-card h2 {
-        font-size: 26px;
+        font-size: 25px;
     }
 
     .dispensa-card p {
         font-size: 15px;
     }
 
+
     .category-actions {
-        flex-direction: column;
+        grid-template-columns: 1fr;
+
+        gap: 9px;
     }
 
     .scanner-button,
     .add-button {
         min-height: 58px;
     }
+
 
     .product-card {
         align-items: flex-start;
@@ -1204,7 +1310,7 @@ button {
     }
 
     .dispensa-grid {
-        gap: 30px;
+        gap: 20px;
     }
 
     .dispensa-card {
@@ -2841,7 +2947,25 @@ function createProductCard(
             ) +
             '" ' +
             'aria-label="Modifica prodotto">' +
-            '✎' +
+
+                '<svg ' +
+                'class="edit-pencil" ' +
+                'viewBox="0 0 24 24" ' +
+                'fill="none" ' +
+                'xmlns="http://www.w3.org/2000/svg">' +
+
+                    '<path ' +
+                    'd="M4 20L4.8 16.2L16.9 4.1C17.7 3.3 19 3.3 19.8 4.1L19.9 4.2C20.7 5 20.7 6.3 19.9 7.1L7.8 19.2L4 20Z" ' +
+                    'fill="currentColor"/>' +
+
+                    '<path ' +
+                    'd="M14.8 6.2L17.8 9.2" ' +
+                    'stroke="#FFFFFF" ' +
+                    'stroke-width="1.6" ' +
+                    'stroke-linecap="round"/>' +
+
+                '</svg>' +
+
             '</button>' +
 
         '</article>'
