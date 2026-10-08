@@ -2,13 +2,27 @@
 <html lang="it">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<meta
+    name="apple-mobile-web-app-capable"
+    content="yes">
+
+<meta
+    name="apple-mobile-web-app-status-bar-style"
+    content="default">
 
 <title>La Mia Dispensa</title>
 
 <style>
+
+/* =========================================================
+   BASE
+   ========================================================= */
+
 * {
     box-sizing: border-box;
     -webkit-tap-highlight-color: transparent;
@@ -19,9 +33,15 @@ body {
     margin: 0;
     padding: 0;
     min-height: 100%;
-    font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
-    background: #f4f5f7;
-    color: #222;
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Helvetica Neue",
+        Arial,
+        sans-serif;
+
+    background: #f5f6f8;
+    color: #202124;
 }
 
 body {
@@ -36,7 +56,10 @@ select {
 
 button {
     cursor: pointer;
+    -webkit-appearance: none;
+    appearance: none;
 }
+
 
 /* =========================================================
    SCHERMATE
@@ -51,120 +74,288 @@ button {
     display: block;
 }
 
+
 /* =========================================================
    HOME
    ========================================================= */
 
+#homeScreen {
+    background:
+        linear-gradient(
+            180deg,
+            #ffffff 0%,
+            #f5f6f8 55%,
+            #eef0f3 100%
+        );
+}
+
 .home-header {
     text-align: center;
-    padding: 28px 20px 10px;
+    padding: 42px 20px 10px;
 }
 
 .home-logo {
+    width: 82px;
+    height: 82px;
+    margin: 0 auto;
+    border-radius: 25px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
     font-size: 48px;
-    line-height: 1;
+
+    background: #ffffff;
+
+    box-shadow:
+        0 12px 30px rgba(0, 0, 0, 0.10);
 }
 
 .home-title {
-    margin: 10px 0 0;
-    font-size: 32px;
-    line-height: 1.15;
-    color: #222;
+    margin: 18px 0 0;
+
+    font-size: 34px;
+    line-height: 1.1;
+    font-weight: 800;
+    letter-spacing: -0.8px;
+
+    color: #202124;
 }
 
-/* Due pulsanti verticali centrati */
+.home-subtitle {
+    margin: 8px 0 0;
+
+    font-size: 16px;
+    color: #7a7d82;
+}
+
+
+/* =========================================================
+   DISPENSE HOME
+   ========================================================= */
 
 .dispensa-grid {
-    min-height: calc(100vh - 150px);
+    width: 100%;
+    max-width: 500px;
+
+    min-height: calc(100vh - 180px);
+
+    margin: 0 auto;
+
     display: flex;
     flex-direction: column;
+
     align-items: center;
     justify-content: center;
-    gap: 80px;
-    padding: 24px 20px 40px;
+
+    gap: 55px;
+
+    padding: 25px 22px 55px;
 }
 
 .dispensa-card {
     position: relative;
+
     width: 100%;
-    max-width: 440px;
-    min-height: 175px;
+    min-height: 190px;
+
     border: 0;
-    border-radius: 26px;
+    border-radius: 30px;
+
     padding: 28px 70px 28px 30px;
+
     color: #ffffff;
     text-align: left;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.14);
-    -webkit-appearance: none;
-    appearance: none;
+
+    overflow: hidden;
+
+    box-shadow:
+        0 16px 35px rgba(0, 0, 0, 0.15);
+
+    transition:
+        transform 0.15s ease,
+        box-shadow 0.15s ease;
 }
 
 .dispensa-card:active {
-    transform: scale(0.98);
+    transform: scale(0.975);
+
+    box-shadow:
+        0 8px 20px rgba(0, 0, 0, 0.15);
 }
+
+
+/* CASA */
 
 .dispensa-card.casa {
-    background: linear-gradient(135deg, #4caf50, #2e7d32);
+    background:
+        linear-gradient(
+            135deg,
+            #49b86b 0%,
+            #23884a 100%
+        );
 }
+
+.dispensa-card.casa:after {
+    content: "";
+
+    position: absolute;
+
+    width: 150px;
+    height: 150px;
+
+    right: -55px;
+    bottom: -65px;
+
+    border-radius: 50%;
+
+    background: rgba(255,255,255,0.10);
+}
+
+
+/* CANTINA */
 
 .dispensa-card.cantina {
-    background: linear-gradient(135deg, #7e57c2, #512da8);
+    background:
+        linear-gradient(
+            135deg,
+            #7c68d8 0%,
+            #4f3ca2 100%
+        );
 }
 
+.dispensa-card.cantina:after {
+    content: "";
+
+    position: absolute;
+
+    width: 170px;
+    height: 170px;
+
+    right: -60px;
+    top: -75px;
+
+    border-radius: 50%;
+
+    background: rgba(255,255,255,0.09);
+}
+
+
+/* ICONE GRANDI */
+
 .dispensa-card-icon {
-    font-size: 44px;
-    line-height: 1;
-    margin-bottom: 15px;
+    position: relative;
+    z-index: 2;
+
+    width: 70px;
+    height: 70px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-bottom: 17px;
+
+    border-radius: 21px;
+
+    font-size: 43px;
+
+    background: rgba(255,255,255,0.18);
+
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.20);
 }
 
 .dispensa-card h2 {
+    position: relative;
+    z-index: 2;
+
     margin: 0;
+
     font-size: 29px;
-    line-height: 1.15;
-    font-weight: 700;
+    line-height: 1.1;
+    font-weight: 800;
+
+    letter-spacing: -0.4px;
 }
 
 .dispensa-card p {
-    margin: 8px 0 0;
-    font-size: 17px;
-    line-height: 1.3;
-    opacity: 0.94;
+    position: relative;
+    z-index: 2;
+
+    margin: 9px 0 0;
+
+    font-size: 16px;
+    line-height: 1.35;
+
+    opacity: 0.92;
 }
 
 .dispensa-card-arrow {
     position: absolute;
-    right: 25px;
+    z-index: 3;
+
+    right: 27px;
     top: 50%;
+
     transform: translateY(-50%);
-    font-size: 40px;
+
+    font-size: 42px;
     font-weight: 300;
+
+    opacity: 0.9;
 }
 
+
 /* =========================================================
-   HEADER SCHERMATE INTERNE
+   HEADER PAGINE INTERNE
    ========================================================= */
 
 .page-header {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 18px 18px 14px;
-    background: #ffffff;
-    border-bottom: 1px solid #e4e4e4;
     position: sticky;
     top: 0;
-    z-index: 10;
+    z-index: 20;
+
+    display: flex;
+    align-items: center;
+
+    gap: 13px;
+
+    padding: 17px 18px 15px;
+
+    background: rgba(255,255,255,0.97);
+
+    border-bottom:
+        1px solid #e5e6e8;
+
+    box-shadow:
+        0 3px 12px rgba(0,0,0,0.04);
 }
 
 .back-button {
-    width: 48px;
-    height: 48px;
-    flex: 0 0 48px;
+    width: 50px;
+    height: 50px;
+
+    flex: 0 0 50px;
+
     border: 0;
-    border-radius: 14px;
-    background: #eeeeee;
-    font-size: 27px;
-    color: #333;
+    border-radius: 16px;
+
+    background: #f0f1f3;
+
+    color: #303236;
+
+    font-size: 29px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.back-button:active {
+    background: #e2e3e6;
+    transform: scale(0.96);
 }
 
 .page-header-text {
@@ -173,44 +364,62 @@ button {
 
 .page-title {
     margin: 0;
-    font-size: 26px;
-    line-height: 1.15;
+
+    font-size: 27px;
+    line-height: 1.1;
+
+    font-weight: 800;
+
+    letter-spacing: -0.4px;
 }
 
 .page-subtitle {
-    margin: 4px 0 0;
-    color: #777;
+    margin: 5px 0 0;
+
+    color: #7b7e83;
+
     font-size: 14px;
 }
 
+
 /* =========================================================
-   CATEGORIE DELLA DISPENSA
+   CATEGORIE DISPENSA
    ========================================================= */
 
 .dispensa-content {
-    padding: 24px 20px 40px;
+    padding: 26px 20px 45px;
 }
 
 .subcategory-grid {
     display: grid;
+
     grid-template-columns: 1fr;
+
     gap: 18px;
-    max-width: 700px;
+
+    max-width: 650px;
+
     margin: 0 auto;
 }
 
 .subcategory-card {
     position: relative;
-    min-height: 145px;
+
+    min-height: 155px;
+
     width: 100%;
+
     border: 0;
-    border-radius: 22px;
-    padding: 24px 65px 24px 25px;
+    border-radius: 25px;
+
+    padding: 25px 68px 25px 25px;
+
     color: #ffffff;
+
     text-align: left;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
-    -webkit-appearance: none;
-    appearance: none;
+
+    box-shadow:
+        0 12px 25px rgba(0,0,0,0.11);
 }
 
 .subcategory-card:active {
@@ -218,113 +427,232 @@ button {
 }
 
 .subcategory-card.cibo {
-    background: #ff8b5c;
+    background:
+        linear-gradient(
+            135deg,
+            #ff9b69,
+            #ef7145
+        );
 }
 
 .subcategory-card.bagno {
-    background: #58b9ff;
+    background:
+        linear-gradient(
+            135deg,
+            #63c4f4,
+            #3998d2
+        );
 }
 
 .subcategory-card.pulizia {
-    background: #a77bff;
+    background:
+        linear-gradient(
+            135deg,
+            #a982ef,
+            #7653c7
+        );
 }
 
 .subcategory-icon {
-    font-size: 38px;
-    line-height: 1;
-    margin-bottom: 12px;
+    width: 55px;
+    height: 55px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-bottom: 13px;
+
+    border-radius: 17px;
+
+    font-size: 34px;
+
+    background: rgba(255,255,255,0.18);
 }
 
 .subcategory-card h2 {
     margin: 0;
+
     font-size: 25px;
+    line-height: 1.15;
+
+    font-weight: 800;
 }
 
 .subcategory-card p {
     margin: 7px 0 0;
+
     font-size: 15px;
-    opacity: 0.94;
+
+    opacity: 0.92;
 }
 
 .subcategory-arrow {
     position: absolute;
-    right: 22px;
+
+    right: 23px;
     top: 50%;
+
     transform: translateY(-50%);
-    font-size: 36px;
+
+    font-size: 37px;
 }
 
+
 /* =========================================================
-   SCHERMATA CATEGORIA PRODOTTI
+   CATEGORIA PRODOTTI
    ========================================================= */
 
 .category-content {
-    padding: 16px 16px 40px;
+    padding: 18px 16px 45px;
+
     max-width: 900px;
+
     margin: 0 auto;
 }
 
 .category-actions {
     display: flex;
+
     gap: 10px;
+
     margin-bottom: 14px;
 }
 
 .add-button,
 .scanner-button {
     flex: 1;
-    min-height: 52px;
+
+    min-height: 60px;
+
     border: 0;
-    border-radius: 14px;
-    font-size: 17px;
-    font-weight: 600;
+
+    border-radius: 17px;
+
+    font-size: 16px;
+
+    font-weight: 700;
+
+    box-shadow:
+        0 5px 14px rgba(0,0,0,0.08);
 }
 
 .add-button {
-    background: #222;
-    color: #fff;
+    background: #242629;
+    color: #ffffff;
 }
 
-.scanner-button {
-    background: #e8e8e8;
-    color: #222;
+.add-button:active {
+    background: #111214;
+    transform: scale(0.98);
 }
+
+
+/* SCANNER MOLTO EVIDENTE */
+
+.scanner-button {
+    background:
+        linear-gradient(
+            135deg,
+            #e8e9ec,
+            #dcdde1
+        );
+
+    color: #242629;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 11px;
+}
+
+.scanner-button:active {
+    transform: scale(0.98);
+}
+
+.scanner-icon {
+    font-size: 34px;
+    line-height: 1;
+}
+
+.scanner-text {
+    font-size: 16px;
+}
+
+
+/* =========================================================
+   RICERCA
+   ========================================================= */
 
 .search-box {
     width: 100%;
-    height: 50px;
-    border: 1px solid #d5d5d5;
-    border-radius: 14px;
+    height: 54px;
+
+    border: 1px solid #dfe1e4;
+
+    border-radius: 16px;
+
     background: #ffffff;
-    padding: 0 15px;
+
+    padding: 0 16px;
+
     font-size: 17px;
+
     outline: none;
-    margin-bottom: 12px;
+
+    margin-bottom: 13px;
+
+    box-shadow:
+        0 4px 12px rgba(0,0,0,0.04);
 }
+
+.search-box:focus {
+    border-color: #9ca0a6;
+}
+
+
+/* =========================================================
+   FILTRI
+   ========================================================= */
 
 .filter-buttons {
     display: flex;
+
     gap: 8px;
+
     overflow-x: auto;
-    padding-bottom: 4px;
+
+    padding-bottom: 5px;
+
     margin-bottom: 18px;
 }
 
 .filter-button {
     flex: 0 0 auto;
-    min-height: 42px;
-    padding: 0 15px;
+
+    min-height: 43px;
+
+    padding: 0 17px;
+
     border: 0;
-    border-radius: 20px;
-    background: #e8e8e8;
-    color: #333;
+
+    border-radius: 22px;
+
+    background: #e6e7e9;
+
+    color: #44474b;
+
     font-size: 15px;
+
+    font-weight: 600;
 }
 
 .filter-button.active {
-    background: #222;
-    color: #fff;
+    background: #242629;
+    color: #ffffff;
 }
+
 
 /* =========================================================
    PRODOTTI
@@ -332,116 +660,189 @@ button {
 
 .products-list {
     display: grid;
+
     grid-template-columns: 1fr;
-    gap: 14px;
+
+    gap: 13px;
 }
 
 .product-card {
     position: relative;
+
     display: flex;
     align-items: center;
+
     gap: 15px;
+
     background: #ffffff;
-    border-radius: 18px;
-    padding: 15px;
-    box-shadow: 0 5px 16px rgba(0, 0, 0, 0.08);
+
+    border-radius: 21px;
+
+    padding: 16px;
+
+    box-shadow:
+        0 7px 20px rgba(0,0,0,0.07);
 }
 
 .product-image {
     width: 82px;
     height: 82px;
+
     flex: 0 0 82px;
-    border-radius: 14px;
-    background: #f0f0f0;
+
+    border-radius: 17px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #f0f1f3,
+            #e6e7e9
+        );
+
     display: flex;
     align-items: center;
     justify-content: center;
+
     overflow: hidden;
+
     font-size: 38px;
 }
 
 .product-image img {
     width: 100%;
     height: 100%;
+
     object-fit: cover;
 }
 
 .product-info {
     flex: 1;
     min-width: 0;
+
+    padding-right: 35px;
 }
 
 .product-name {
     margin: 0;
+
     font-size: 20px;
     line-height: 1.2;
+
+    font-weight: 750;
 }
 
 .product-brand {
-    margin: 4px 0 0;
+    margin: 5px 0 0;
+
     font-size: 14px;
-    color: #777;
+
+    color: #74777c;
 }
 
 .product-format {
     margin: 3px 0 0;
+
     font-size: 14px;
-    color: #777;
+
+    color: #74777c;
 }
 
 .low-stock {
     display: inline-block;
+
     margin-top: 7px;
-    padding: 4px 8px;
+
+    padding: 5px 9px;
+
     border-radius: 10px;
-    background: #ffe0df;
-    color: #c62828;
+
+    background: #ffe2df;
+
+    color: #c72f2f;
+
     font-size: 12px;
-    font-weight: 700;
+
+    font-weight: 800;
 }
 
 .quantity-area {
     display: flex;
     align-items: center;
-    gap: 6px;
-    margin-top: 10px;
+
+    gap: 7px;
+
+    margin-top: 11px;
 }
 
 .quantity-button {
-    width: 38px;
-    height: 38px;
+    width: 40px;
+    height: 40px;
+
     border: 0;
-    border-radius: 11px;
-    background: #eeeeee;
-    font-size: 24px;
+
+    border-radius: 12px;
+
+    background: #eeeeef;
+
+    font-size: 25px;
+
     color: #222;
+}
+
+.quantity-button:active {
+    background: #dedfe1;
+    transform: scale(0.94);
 }
 
 .quantity-value {
     min-width: 32px;
+
     text-align: center;
+
     font-size: 18px;
-    font-weight: 700;
+
+    font-weight: 800;
 }
 
 .edit-product-button {
     position: absolute;
+
     right: 12px;
     top: 12px;
-    width: 38px;
-    height: 38px;
+
+    width: 39px;
+    height: 39px;
+
     border: 0;
-    border-radius: 11px;
-    background: #eeeeee;
+
+    border-radius: 12px;
+
+    background: #eeeeef;
+
     font-size: 18px;
+
+    color: #45474a;
 }
+
+.edit-product-button:active {
+    transform: scale(0.94);
+}
+
+
+/* =========================================================
+   NESSUN PRODOTTO
+   ========================================================= */
 
 .empty-message {
     text-align: center;
-    color: #777;
-    padding: 50px 20px;
+
+    color: #85888d;
+
+    padding: 60px 20px;
+
     font-size: 17px;
 }
+
 
 /* =========================================================
    MODALE
@@ -449,14 +850,22 @@ button {
 
 .modal-overlay {
     display: none;
+
     position: fixed;
+
     z-index: 100;
+
     left: 0;
     top: 0;
+
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.48);
+
+    background:
+        rgba(20,22,25,0.55);
+
     padding: 18px;
+
     overflow-y: auto;
 }
 
@@ -466,59 +875,95 @@ button {
 
 .modal {
     max-width: 600px;
-    margin: 30px auto;
+
+    margin: 25px auto;
+
     background: #ffffff;
-    border-radius: 22px;
-    padding: 22px;
+
+    border-radius: 25px;
+
+    padding: 23px;
+
+    box-shadow:
+        0 20px 50px rgba(0,0,0,0.22);
 }
 
 .modal-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
+
     gap: 10px;
-    margin-bottom: 18px;
+
+    margin-bottom: 20px;
 }
 
 .modal-title {
     margin: 0;
+
     font-size: 24px;
+
+    font-weight: 800;
 }
 
 .close-modal {
-    width: 42px;
-    height: 42px;
+    width: 44px;
+    height: 44px;
+
     border: 0;
-    border-radius: 12px;
-    background: #eeeeee;
-    font-size: 24px;
+
+    border-radius: 13px;
+
+    background: #eeeeef;
+
+    font-size: 25px;
+
+    color: #333;
 }
 
 .form-group {
-    margin-bottom: 14px;
+    margin-bottom: 15px;
 }
 
 .form-group label {
     display: block;
-    margin-bottom: 6px;
+
+    margin-bottom: 7px;
+
     font-size: 14px;
-    font-weight: 600;
-    color: #555;
+
+    font-weight: 700;
+
+    color: #5c5f64;
 }
 
 .form-group input,
 .form-group select {
     width: 100%;
-    height: 48px;
-    border: 1px solid #d4d4d4;
-    border-radius: 12px;
-    padding: 0 12px;
+
+    height: 50px;
+
+    border: 1px solid #d7d9dc;
+
+    border-radius: 13px;
+
+    padding: 0 13px;
+
     font-size: 16px;
-    background: #fff;
+
+    background: #ffffff;
+
+    outline: none;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    border-color: #96999e;
 }
 
 .form-row {
     display: flex;
+
     gap: 10px;
 }
 
@@ -528,30 +973,41 @@ button {
 
 .modal-actions {
     display: flex;
+
     gap: 10px;
-    margin-top: 20px;
+
+    margin-top: 21px;
 }
 
 .save-button,
 .delete-button {
-    min-height: 50px;
+    min-height: 51px;
+
     border: 0;
-    border-radius: 13px;
+
+    border-radius: 14px;
+
     font-size: 16px;
-    font-weight: 700;
+
+    font-weight: 800;
 }
 
 .save-button {
     flex: 1;
-    background: #222;
-    color: #fff;
+
+    background: #242629;
+
+    color: #ffffff;
 }
 
 .delete-button {
-    background: #ffe1e1;
-    color: #c62828;
+    background: #ffe3e2;
+
+    color: #c52d2d;
+
     padding: 0 18px;
 }
+
 
 /* =========================================================
    SCANNER
@@ -559,9 +1015,15 @@ button {
 
 .scanner-container {
     margin-top: 15px;
-    background: #000;
-    border-radius: 18px;
+
+    background: #050505;
+
+    border-radius: 20px;
+
     overflow: hidden;
+
+    box-shadow:
+        0 10px 25px rgba(0,0,0,0.20);
 }
 
 #reader {
@@ -569,10 +1031,15 @@ button {
 }
 
 .scanner-message {
-    margin: 12px 0 0;
-    color: #666;
+    margin: 13px 0 0;
+
+    color: #707379;
+
     font-size: 14px;
+
+    text-align: center;
 }
+
 
 /* =========================================================
    TOAST
@@ -580,51 +1047,119 @@ button {
 
 .toast {
     position: fixed;
+
     left: 50%;
     bottom: 25px;
-    transform: translateX(-50%) translateY(20px);
+
+    transform:
+        translateX(-50%)
+        translateY(20px);
+
     z-index: 200;
-    background: #222;
-    color: #fff;
-    padding: 13px 18px;
-    border-radius: 13px;
+
+    background: #242629;
+
+    color: #ffffff;
+
+    padding: 14px 19px;
+
+    border-radius: 14px;
+
     font-size: 14px;
+
+    font-weight: 600;
+
     opacity: 0;
+
     pointer-events: none;
-    transition: opacity 0.2s ease, transform 0.2s ease;
-    max-width: calc(100% - 40px);
+
+    transition:
+        opacity 0.2s ease,
+        transform 0.2s ease;
+
+    max-width:
+        calc(100% - 40px);
+
     text-align: center;
+
+    box-shadow:
+        0 8px 25px rgba(0,0,0,0.18);
 }
 
 .toast.show {
     opacity: 1;
-    transform: translateX(-50%) translateY(0);
+
+    transform:
+        translateX(-50%)
+        translateY(0);
 }
+
 
 /* =========================================================
    IPAD MINI / SCHERMI PICCOLI
    ========================================================= */
 
 @media (max-width: 600px) {
+
+    .home-header {
+        padding-top: 30px;
+    }
+
+    .home-logo {
+        width: 72px;
+        height: 72px;
+
+        font-size: 42px;
+    }
+
     .home-title {
         font-size: 29px;
     }
 
+    .home-subtitle {
+        font-size: 15px;
+    }
+
     .dispensa-grid {
-        min-height: calc(100vh - 135px);
-        padding-top: 20px;
+        min-height: calc(100vh - 160px);
+
+        gap: 45px;
+
+        padding:
+            20px 18px 45px;
     }
 
     .dispensa-card {
-        min-height: 160px;
+        min-height: 175px;
+
+        border-radius: 25px;
+
+        padding:
+            25px 65px 25px 25px;
+    }
+
+    .dispensa-card-icon {
+        width: 62px;
+        height: 62px;
+
+        font-size: 39px;
     }
 
     .dispensa-card h2 {
         font-size: 26px;
     }
 
+    .dispensa-card p {
+        font-size: 15px;
+    }
+
     .category-actions {
         flex-direction: column;
+    }
+
+    .scanner-button,
+    .add-button {
+        min-height: 58px;
     }
 
     .product-card {
@@ -634,39 +1169,105 @@ button {
     .product-image {
         width: 72px;
         height: 72px;
+
         flex-basis: 72px;
     }
+
+    .product-info {
+        padding-right: 30px;
+    }
+
 }
+
+
+/* =========================================================
+   SCHERMI MOLTO BASSI
+   ========================================================= */
+
+@media (max-height: 650px) {
+
+    .home-header {
+        padding-top: 20px;
+    }
+
+    .home-logo {
+        width: 65px;
+        height: 65px;
+
+        font-size: 38px;
+    }
+
+    .home-title {
+        margin-top: 10px;
+
+        font-size: 27px;
+    }
+
+    .dispensa-grid {
+        gap: 30px;
+    }
+
+    .dispensa-card {
+        min-height: 155px;
+    }
+
+}
+
 </style>
 </head>
 
+
 <body>
+
 
 <!-- =======================================================
      HOME
      ======================================================= -->
 
-<main id="homeScreen" class="screen active">
+<main
+    id="homeScreen"
+    class="screen active">
 
     <header class="home-header">
-        <div class="home-logo">🛒</div>
-        <h1 class="home-title">La Mia Dispensa</h1>
+
+        <div class="home-logo">
+            🛒
+        </div>
+
+        <h1 class="home-title">
+            La Mia Dispensa
+        </h1>
+
+        <p class="home-subtitle">
+            Organizza tutto ciò che hai in casa
+        </p>
+
     </header>
 
+
     <div class="dispensa-grid">
+
 
         <button
             type="button"
             class="dispensa-card casa"
             data-dispensa="casa">
 
-            <div class="dispensa-card-icon">🏠</div>
+            <div class="dispensa-card-icon">
+                🏠
+            </div>
 
-            <h2>Dispensa Casa</h2>
+            <h2>
+                Dispensa Casa
+            </h2>
 
-            <p>Cibo e prodotti bagno</p>
+            <p>
+                Cibo e prodotti bagno
+            </p>
 
-            <span class="dispensa-card-arrow">→</span>
+            <span class="dispensa-card-arrow">
+                →
+            </span>
 
         </button>
 
@@ -676,15 +1277,24 @@ button {
             class="dispensa-card cantina"
             data-dispensa="cantina">
 
-            <div class="dispensa-card-icon">🧹</div>
+            <div class="dispensa-card-icon">
+                🧹
+            </div>
 
-            <h2>Dispensa Cantina</h2>
+            <h2>
+                Dispensa Cantina
+            </h2>
 
-            <p>Prodotti di pulizia</p>
+            <p>
+                Prodotti di pulizia
+            </p>
 
-            <span class="dispensa-card-arrow">→</span>
+            <span class="dispensa-card-arrow">
+                →
+            </span>
 
         </button>
+
 
     </div>
 
@@ -695,7 +1305,9 @@ button {
      SCHERMATA DISPENSA
      ======================================================= -->
 
-<main id="dispensaScreen" class="screen">
+<main
+    id="dispensaScreen"
+    class="screen">
 
     <header class="page-header">
 
@@ -704,17 +1316,29 @@ button {
             id="dispensaBackButton"
             class="back-button"
             aria-label="Torna alla home">
+
             ←
+
         </button>
+
 
         <div class="page-header-text">
 
-            <h1 id="dispensaTitle" class="page-title">
+            <h1
+                id="dispensaTitle"
+                class="page-title">
+
                 Dispensa Casa
+
             </h1>
 
-            <p id="dispensaSubtitle" class="page-subtitle">
+
+            <p
+                id="dispensaSubtitle"
+                class="page-subtitle">
+
                 Cibo e prodotti bagno
+
             </p>
 
         </div>
@@ -738,7 +1362,9 @@ button {
      SCHERMATA CATEGORIA
      ======================================================= -->
 
-<main id="categoryScreen" class="screen">
+<main
+    id="categoryScreen"
+    class="screen">
 
     <header class="page-header">
 
@@ -747,17 +1373,29 @@ button {
             id="backButton"
             class="back-button"
             aria-label="Torna indietro">
+
             ←
+
         </button>
+
 
         <div class="page-header-text">
 
-            <h1 id="categoryTitle" class="page-title">
+            <h1
+                id="categoryTitle"
+                class="page-title">
+
                 Cibo
+
             </h1>
 
-            <p id="categorySubtitle" class="page-subtitle">
+
+            <p
+                id="categorySubtitle"
+                class="page-subtitle">
+
                 Dispensa e alimentari
+
             </p>
 
         </div>
@@ -767,21 +1405,35 @@ button {
 
     <div class="category-content">
 
+
         <div class="category-actions">
+
 
             <button
                 type="button"
                 id="addProductButton"
                 class="add-button">
+
                 ＋ Aggiungi prodotto
+
             </button>
+
 
             <button
                 type="button"
                 id="scannerButton"
                 class="scanner-button">
-                📷 Scansiona
+
+                <span class="scanner-icon">
+                    📷
+                </span>
+
+                <span class="scanner-text">
+                    Scansiona codice
+                </span>
+
             </button>
+
 
         </div>
 
@@ -796,19 +1448,26 @@ button {
 
         <div class="filter-buttons">
 
+
             <button
                 type="button"
                 class="filter-button active"
                 data-filter="all">
+
                 Tutti
+
             </button>
+
 
             <button
                 type="button"
                 class="filter-button"
                 data-filter="low">
+
                 Scorte basse
+
             </button>
+
 
         </div>
 
@@ -817,6 +1476,7 @@ button {
             id="productsList"
             class="products-list">
         </div>
+
 
     </div>
 
@@ -831,28 +1491,38 @@ button {
     id="productModal"
     class="modal-overlay">
 
+
     <div class="modal">
 
+
         <div class="modal-header">
+
 
             <h2
                 id="modalTitle"
                 class="modal-title">
+
                 Nuovo prodotto
+
             </h2>
+
 
             <button
                 type="button"
                 id="closeModalButton"
                 class="close-modal"
                 aria-label="Chiudi">
+
                 ×
+
             </button>
+
 
         </div>
 
 
         <form id="productForm">
+
 
             <div class="form-group">
 
@@ -900,6 +1570,7 @@ button {
 
             <div class="form-row">
 
+
                 <div class="form-group">
 
                     <label for="productQuantity">
@@ -931,6 +1602,7 @@ button {
 
                 </div>
 
+
             </div>
 
 
@@ -939,6 +1611,7 @@ button {
                 <label for="productCategory">
                     Categoria
                 </label>
+
 
                 <select id="productCategory">
 
@@ -990,24 +1663,34 @@ button {
 
             <div class="modal-actions">
 
+
                 <button
                     type="submit"
                     class="save-button">
+
                     Salva
+
                 </button>
+
 
                 <button
                     type="button"
                     id="deleteProductButton"
                     class="delete-button">
+
                     Elimina
+
                 </button>
+
 
             </div>
 
+
         </form>
 
+
     </div>
+
 
 </div>
 
@@ -1020,21 +1703,28 @@ button {
     id="scannerModal"
     class="modal-overlay">
 
+
     <div class="modal">
 
+
         <div class="modal-header">
+
 
             <h2 class="modal-title">
                 Scansiona codice
             </h2>
+
 
             <button
                 type="button"
                 id="closeScannerButton"
                 class="close-modal"
                 aria-label="Chiudi">
+
                 ×
+
             </button>
+
 
         </div>
 
@@ -1050,7 +1740,9 @@ button {
             Inquadra il codice a barre del prodotto.
         </p>
 
+
     </div>
+
 
 </div>
 
@@ -1061,19 +1753,17 @@ button {
 </div>
 
 
-<!-- =======================================================
-     HTML5 QR CODE
-     ======================================================= -->
-
 <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
 
 
 <script>
+
 /* =========================================================
    CONFIGURAZIONE
    ========================================================= */
 
-var STORAGE_KEY = "laMiaDispensaProdotti";
+var STORAGE_KEY =
+    "laMiaDispensaProdotti";
 
 
 var categoryData = {
@@ -1147,7 +1837,7 @@ var toastTimer = null;
 
 
 /* =========================================================
-   ELEMENTI DOM
+   DOM
    ========================================================= */
 
 var homeScreen =
@@ -1200,7 +1890,7 @@ var toast =
 
 
 /* =========================================================
-   INIZIALIZAZIONE
+   AVVIO
    ========================================================= */
 
 document.addEventListener(
@@ -1226,6 +1916,7 @@ function setupEvents() {
             ".dispensa-card"
         );
 
+
     for (
         var i = 0;
         i < dispensaButtons.length;
@@ -1236,12 +1927,11 @@ function setupEvents() {
             "click",
             function () {
 
-                var dispensa =
+                openDispensa(
                     this.getAttribute(
                         "data-dispensa"
-                    );
-
-                openDispensa(dispensa);
+                    )
+                );
 
             }
         );
@@ -1249,56 +1939,68 @@ function setupEvents() {
     }
 
 
-    document.getElementById(
-        "dispensaBackButton"
-    ).addEventListener(
-        "click",
-        goHome
-    );
+    document
+        .getElementById(
+            "dispensaBackButton"
+        )
+        .addEventListener(
+            "click",
+            goHome
+        );
 
 
-    document.getElementById(
-        "backButton"
-    ).addEventListener(
-        "click",
-        goBackFromCategory
-    );
+    document
+        .getElementById(
+            "backButton"
+        )
+        .addEventListener(
+            "click",
+            goBackFromCategory
+        );
 
 
-    document.getElementById(
-        "addProductButton"
-    ).addEventListener(
-        "click",
-        function () {
+    document
+        .getElementById(
+            "addProductButton"
+        )
+        .addEventListener(
+            "click",
+            function () {
 
-            openProductModal(null);
+                openProductModal(null);
 
-        }
-    );
-
-
-    document.getElementById(
-        "scannerButton"
-    ).addEventListener(
-        "click",
-        openScanner
-    );
+            }
+        );
 
 
-    document.getElementById(
-        "closeModalButton"
-    ).addEventListener(
-        "click",
-        closeProductModal
-    );
+    document
+        .getElementById(
+            "scannerButton"
+        )
+        .addEventListener(
+            "click",
+            openScanner
+        );
 
 
-    document.getElementById(
-        "closeScannerButton"
-    ).addEventListener(
-        "click",
-        closeScanner
-    );
+    document
+        .getElementById(
+            "closeModalButton"
+        )
+        .addEventListener(
+            "click",
+            closeProductModal
+        );
+
+
+    document
+        .getElementById(
+            "closeScannerButton"
+        )
+        .addEventListener(
+            "click",
+            closeScanner
+        );
 
 
     deleteProductButton.addEventListener(
@@ -1321,11 +2023,7 @@ function setupEvents() {
 
     searchInput.addEventListener(
         "input",
-        function () {
-
-            renderProducts();
-
-        }
+        renderProducts
     );
 
 
@@ -1395,21 +2093,15 @@ function setupEvents() {
 
             if (quantityButton) {
 
-                var id =
+                changeQuantity(
                     quantityButton.getAttribute(
                         "data-id"
-                    );
-
-                var delta =
+                    ),
                     Number(
                         quantityButton.getAttribute(
                             "data-delta"
                         )
-                    );
-
-                changeQuantity(
-                    id,
-                    delta
+                    )
                 );
 
                 return;
@@ -1425,13 +2117,10 @@ function setupEvents() {
 
             if (editButton) {
 
-                var productId =
+                openProductModal(
                     editButton.getAttribute(
                         "data-id"
-                    );
-
-                openProductModal(
-                    productId
+                    )
                 );
 
             }
@@ -1455,13 +2144,11 @@ function setupEvents() {
             }
 
 
-            var category =
+            openCategory(
                 button.getAttribute(
                     "data-category"
-                );
-
-
-            openCategory(category);
+                )
+            );
 
         }
     );
@@ -1472,7 +2159,8 @@ function setupEvents() {
         function (event) {
 
             if (
-                event.target === productModal
+                event.target ===
+                productModal
             ) {
 
                 closeProductModal();
@@ -1488,7 +2176,8 @@ function setupEvents() {
         function (event) {
 
             if (
-                event.target === scannerModal
+                event.target ===
+                scannerModal
             ) {
 
                 closeScanner();
@@ -1502,7 +2191,7 @@ function setupEvents() {
 
 
 /* =========================================================
-   LOCAL STORAGE
+   STORAGE
    ========================================================= */
 
 function loadProducts() {
@@ -1520,7 +2209,9 @@ function loadProducts() {
             products =
                 JSON.parse(saved);
 
-            if (!Array.isArray(products)) {
+            if (
+                !Array.isArray(products)
+            ) {
 
                 products = [];
 
@@ -1611,7 +2302,9 @@ function saveProducts() {
    DISPENSE
    ========================================================= */
 
-function openDispensa(dispensa) {
+function openDispensa(
+    dispensa
+) {
 
     var data =
         dispensaData[dispensa];
@@ -1676,7 +2369,8 @@ function renderDispensaCategories() {
     }
 
 
-    dispensaCategories.innerHTML = "";
+    dispensaCategories.innerHTML =
+        "";
 
 
     for (
@@ -1715,14 +2409,20 @@ function renderDispensaCategories() {
                 '</div>' +
 
                 '<h2>' +
-                    escapeHtml(info.title) +
+                    escapeHtml(
+                        info.title
+                    ) +
                 '</h2>' +
 
                 '<p>' +
-                    escapeHtml(info.subtitle) +
+                    escapeHtml(
+                        info.subtitle
+                    ) +
                 '</p>' +
 
-                '<span class="subcategory-arrow">→</span>' +
+                '<span class="subcategory-arrow">' +
+                    '→' +
+                '</span>' +
 
             '</button>';
 
@@ -1770,7 +2470,7 @@ function goHome() {
 
 
 /* =========================================================
-   INDIETRO DALLA CATEGORIA
+   INDIETRO CATEGORIA
    ========================================================= */
 
 function goBackFromCategory() {
@@ -1812,7 +2512,9 @@ function goBackFromCategory() {
    CATEGORIA
    ========================================================= */
 
-function openCategory(category) {
+function openCategory(
+    category
+) {
 
     if (!categoryData[category]) {
         return;
@@ -1853,7 +2555,8 @@ function openCategory(category) {
     );
 
 
-    searchInput.value = "";
+    searchInput.value =
+        "";
 
 
     var filterButtons =
@@ -1913,8 +2616,7 @@ function renderProducts() {
             .trim();
 
 
-    var filtered =
-        [];
+    var filtered = [];
 
 
     for (
@@ -1947,25 +2649,23 @@ function renderProducts() {
         }
 
 
-        var searchable = (
+        var searchable =
 
             String(
                 product.name || ""
             ) +
-
             " " +
-
             String(
                 product.brand || ""
             ) +
-
             " " +
-
             String(
                 product.barcode || ""
-            )
+            );
 
-        ).toLowerCase();
+
+        searchable =
+            searchable.toLowerCase();
 
 
         if (
@@ -1983,7 +2683,8 @@ function renderProducts() {
     }
 
 
-    productsList.innerHTML = "";
+    productsList.innerHTML =
+        "";
 
 
     if (filtered.length === 0) {
@@ -2016,7 +2717,9 @@ function renderProducts() {
 }
 
 
-function createProductCard(product) {
+function createProductCard(
+    product
+) {
 
     var imageHtml;
 
@@ -2038,10 +2741,13 @@ function createProductCard(product) {
     }
 
 
-    var lowStockHtml = "";
+    var lowStockHtml =
+        "";
 
 
-    if (isLowStock(product)) {
+    if (
+        isLowStock(product)
+    ) {
 
         lowStockHtml =
             '<div class="low-stock">' +
@@ -2149,11 +2855,14 @@ function createProductCard(product) {
    SCORTE
    ========================================================= */
 
-function isLowStock(product) {
+function isLowStock(
+    product
+) {
 
     return Number(
         product.quantity
-    ) < Number(
+    ) <
+    Number(
         product.minStock
     );
 
@@ -2178,16 +2887,20 @@ function changeQuantity(
         if (
             String(
                 products[i].id
-            ) === String(productId)
+            ) ===
+            String(productId)
         ) {
 
             var newQuantity =
                 Number(
                     products[i].quantity
-                ) + Number(delta);
+                ) +
+                Number(delta);
 
 
-            if (newQuantity < 0) {
+            if (
+                newQuantity < 0
+            ) {
 
                 newQuantity = 0;
 
@@ -2308,12 +3021,14 @@ function openProductModal(
 
         document.getElementById(
             "productQuantity"
-        ).value = 1;
+        ).value =
+            1;
 
 
         document.getElementById(
             "productMinStock"
-        ).value = 1;
+        ).value =
+            1;
 
 
         document.getElementById(
@@ -2338,13 +3053,14 @@ function closeProductModal() {
     );
 
 
-    editingProductId = null;
+    editingProductId =
+        null;
 
 }
 
 
 /* =========================================================
-   SALVATAGGIO PRODOTTO
+   SALVA PRODOTTO
    ========================================================= */
 
 function saveProductFromForm() {
@@ -2481,7 +3197,7 @@ function saveProductFromForm() {
 
 
 /* =========================================================
-   ELIMINA PRODOTTO
+   ELIMINA
    ========================================================= */
 
 function deleteCurrentProduct() {
@@ -2547,10 +3263,12 @@ function deleteCurrentProduct() {
 
 
 /* =========================================================
-   RICERCA PRODOTTO
+   TROVA PRODOTTO
    ========================================================= */
 
-function findProductById(id) {
+function findProductById(
+    id
+) {
 
     for (
         var i = 0;
@@ -2561,7 +3279,8 @@ function findProductById(id) {
         if (
             String(
                 products[i].id
-            ) === String(id)
+            ) ===
+            String(id)
         ) {
 
             return products[i];
@@ -2582,7 +3301,9 @@ function findProductById(id) {
 
 function openScanner() {
 
-    scannerLocked = false;
+    scannerLocked =
+        false;
+
 
     scannerModal.classList.add(
         "active"
@@ -2596,9 +3317,12 @@ function openScanner() {
 
 function closeScanner() {
 
-    scannerLocked = true;
+    scannerLocked =
+        true;
+
 
     stopScanner();
+
 
     scannerModal.classList.remove(
         "active"
@@ -2609,17 +3333,24 @@ function closeScanner() {
 
 function startScanner() {
 
-    if (scannerStarting || scannerRunning) {
+    if (
+        scannerStarting ||
+        scannerRunning
+    ) {
+
         return;
+
     }
 
 
-    scannerStarting = true;
+    scannerStarting =
+        true;
 
 
     document.getElementById(
         "reader"
-    ).innerHTML = "";
+    ).innerHTML =
+        "";
 
 
     if (
@@ -2627,11 +3358,14 @@ function startScanner() {
         "undefined"
     ) {
 
-        scannerStarting = false;
+        scannerStarting =
+            false;
+
 
         showToast(
             "Scanner non disponibile."
         );
+
 
         return;
 
@@ -2672,17 +3406,17 @@ function startScanner() {
 
         },
 
-        function () {
-            /* errori di scansione ignorati */
-        }
+        function () {}
 
     ).then(
 
         function () {
 
-            scannerStarting = false;
+            scannerStarting =
+                false;
 
-            scannerRunning = true;
+            scannerRunning =
+                true;
 
         }
 
@@ -2690,7 +3424,8 @@ function startScanner() {
 
         function () {
 
-            scannerStarting = false;
+            scannerStarting =
+                false;
 
             tryFallbackCamera();
 
@@ -2744,14 +3479,23 @@ function tryFallbackCamera() {
 
                     var label =
                         String(
-                            devices[i].label || ""
+                            devices[i].label ||
+                            ""
                         ).toLowerCase();
 
 
                     if (
-                        label.indexOf("front") !== -1 ||
-                        label.indexOf("facetime") !== -1 ||
-                        label.indexOf("user") !== -1
+                        label.indexOf(
+                            "front"
+                        ) !== -1 ||
+
+                        label.indexOf(
+                            "facetime"
+                        ) !== -1 ||
+
+                        label.indexOf(
+                            "user"
+                        ) !== -1
                     ) {
 
                         cameraId =
@@ -2782,7 +3526,9 @@ function tryFallbackCamera() {
 
                     config,
 
-                    function (decodedText) {
+                    function (
+                        decodedText
+                    ) {
 
                         handleBarcode(
                             decodedText
@@ -2796,7 +3542,8 @@ function tryFallbackCamera() {
 
                     function () {
 
-                        scannerRunning = true;
+                        scannerRunning =
+                            true;
 
                     }
 
@@ -2830,14 +3577,17 @@ function tryFallbackCamera() {
 
 function stopScanner() {
 
-    scannerLocked = true;
+    scannerLocked =
+        true;
 
 
     if (!html5QrCode) {
 
-        scannerStarting = false;
+        scannerStarting =
+            false;
 
-        scannerRunning = false;
+        scannerRunning =
+            false;
 
         return;
 
@@ -2851,14 +3601,22 @@ function stopScanner() {
             .then(
                 function () {
 
-                    scannerRunning = false;
-                    scannerStarting = false;
+                    scannerRunning =
+                        false;
+
+                    scannerStarting =
+                        false;
+
 
                     try {
+
                         html5QrCode.clear();
+
                     } catch (e) {}
 
-                    html5QrCode = null;
+
+                    html5QrCode =
+                        null;
 
                 }
             )
@@ -2866,19 +3624,28 @@ function stopScanner() {
             .catch(
                 function () {
 
-                    scannerRunning = false;
-                    scannerStarting = false;
+                    scannerRunning =
+                        false;
 
-                    html5QrCode = null;
+                    scannerStarting =
+                        false;
+
+                    html5QrCode =
+                        null;
 
                 }
             );
 
     } catch (error) {
 
-        scannerRunning = false;
-        scannerStarting = false;
-        html5QrCode = null;
+        scannerRunning =
+            false;
+
+        scannerStarting =
+            false;
+
+        html5QrCode =
+            null;
 
     }
 
@@ -2898,7 +3665,8 @@ function handleBarcode(
     }
 
 
-    scannerLocked = true;
+    scannerLocked =
+        true;
 
 
     var code =
@@ -2909,14 +3677,16 @@ function handleBarcode(
 
     if (!code) {
 
-        scannerLocked = false;
+        scannerLocked =
+            false;
 
         return;
 
     }
 
 
-    var existing = null;
+    var existing =
+        null;
 
 
     for (
@@ -2928,7 +3698,8 @@ function handleBarcode(
         if (
             String(
                 products[i].barcode || ""
-            ) === code
+            ) ===
+            code
         ) {
 
             existing =
@@ -2955,10 +3726,12 @@ function handleBarcode(
 
         closeScanner();
 
+
         showToast(
             existing.name +
             " - quantità aumentata."
         );
+
 
         return;
 
@@ -2966,6 +3739,7 @@ function handleBarcode(
 
 
     closeScanner();
+
 
     lookupOpenFoodFacts(
         code
@@ -3143,6 +3917,7 @@ function createId() {
     return String(
         new Date().getTime()
     ) +
+
     String(
         Math.floor(
             Math.random() * 10000
@@ -3158,25 +3933,30 @@ function escapeHtml(
 
     return String(
         value == null
-        ? ""
-        : value
+            ? ""
+            : value
     )
+
         .replace(
             /&/g,
             "&amp;"
         )
+
         .replace(
             /</g,
             "&lt;"
         )
+
         .replace(
             />/g,
             "&gt;"
         )
+
         .replace(
             /"/g,
             "&quot;"
         )
+
         .replace(
             /'/g,
             "&#039;"
@@ -3194,6 +3974,7 @@ function escapeAttribute(
     );
 
 }
+
 </script>
 
 </body>
