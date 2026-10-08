@@ -164,18 +164,73 @@ button {
     position: relative;
 }
 
+/* =========================
+   PULSANTE INDIETRO
+   ========================= */
+
 .back-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    min-height: 44px;
+    padding: 0 18px;
+
     border: 0;
-    background: transparent;
-    color: #0a84ff;
+    border-radius: 15px;
 
-    font-size: 17px;
-    font-weight: 500;
+    background: rgba(255, 255, 255, 0.92);
+    color: #1c1c1e;
 
-    padding: 8px 4px;
-    margin-bottom: 10px;
+    font-size: 16px;
+    font-weight: 700;
+    font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+
+    box-shadow:
+        0 4px 12px rgba(0, 0, 0, 0.10),
+        inset 0 1px 0 rgba(255, 255, 255, 0.90);
+
+    cursor: pointer;
+
+    -webkit-appearance: none;
+    appearance: none;
+
+    -webkit-tap-highlight-color: transparent;
+
+    transition:
+        transform 0.15s ease,
+        box-shadow 0.15s ease,
+        background 0.15s ease;
 }
 
+/* Freccia */
+.back-button::first-letter {
+    font-size: 21px;
+    font-weight: 800;
+}
+
+/* Effetto quando viene premuto */
+.back-button:active {
+    transform: scale(0.96);
+
+    background: rgba(245, 245, 247, 0.95);
+
+    box-shadow:
+        0 2px 6px rgba(0, 0, 0, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.80);
+}
+
+/* Effetto quando il mouse passa sopra */
+@media (hover: hover) {
+    .back-button:hover {
+        transform: translateY(-1px);
+
+        box-shadow:
+            0 6px 16px rgba(0, 0, 0, 0.13),
+            inset 0 1px 0 rgba(255, 255, 255, 0.90);
+    }
+}
 .screen-title {
     margin: 0;
     font-size: 32px;
