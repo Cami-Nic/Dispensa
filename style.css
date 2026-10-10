@@ -1402,3 +1402,53 @@ button {
         font-size: 17px;
     }
 }
+
+/* =========================================================
+   CONTROLLI QUANTITÀ PRODOTTO
+   ========================================================= */
+
+.quantity-controls {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 8px;
+}
+
+.quantity-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 38px;
+    height: 38px;
+
+    border: 0;
+    border-radius: 12px;
+
+    background: #e5e5ea;
+    color: #1c1c1e;
+
+    font-size: 23px;
+    font-weight: 600;
+    line-height: 1;
+
+    cursor: pointer;
+    touch-action: manipulation;
+}
+
+.quantity-button.plus {
+    background: #0a84ff;
+    color: #ffffff;
+}
+
+.quantity-button:active {
+    transform: scale(0.92);
+}
+
+.quantity-value {
+    min-width: 28px;
+    text-align: center;
+    font-size: 17px;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+}
