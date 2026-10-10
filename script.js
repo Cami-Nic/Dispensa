@@ -465,7 +465,25 @@ function isLowStock(
     );
 
 }
+function changeProductQuantity(productId, delta) {
+    var product = findProductById(productId);
+    if (!product) return;
 
+    var currentQuantity = Number(product.quantity) || 0;
+    var newQuantity = Math.max(0, currentQuantity + delta);
+
+    if (newQuantity === currentQuantity) return;
+
+    product.quantity = newQuantity;
+    saveProducts();
+    renderProducts();
+
+    showToast(
+        newQuantity === 0
+            ? "Quantità esaurita"
+            : "Quantità aggiornata: " + newQuantity
+    );
+}
 
 /* =========================
    PRODUCTS
@@ -760,35 +778,77 @@ if (isLowStock(product)) {
         product.format ||
         "";
 
+var bottom =
+    document.createElement("div");
 
-    var bottom =
-        document.createElement(
-            "div"
-        );
+bottom.className =
+    "product-bottom";
 
-    bottom.className =
-        "product-bottom";
+var quantityLabel =
+    document.createElement("span");
 
+quantityLabel.className =
+    "quantity";
 
-    var quantity =
-        document.createElement(
-            "span"
-        );
+quantityLabel.textContent =
+    "Quantità:";
 
-    quantity.className =
-        "quantity";
+var quantityControls =
+    document.createElement("div");
 
-    quantity.textContent =
-        "Quantità: " +
-        Number(
-            product.quantity || 0
-        );
+quantityControls.className =
+    "quantity-controls";
 
+var minusButton =
+    document.createElement("button");
 
-    bottom.appendChild(
-        quantity
-    );
+minusButton.type = "button";
+minusButton.className = "quantity-button";
+minusButton.textContent = "−";
+minusButton.setAttribute(
+    "aria-label",
+    "Diminuisci quantità"
+);
 
+minusButton.onclick = function () {
+    changeProductQuantity(product.id, -1);
+};
+
+var quantityValue =
+    document.createElement("span");
+
+quantityValue.className =
+    "quantity-value";
+
+quantityValue.textContent =
+    Number(product.quantity) || 0;
+
+quantityValue.setAttribute(
+    "aria-live",
+    "polite"
+);
+
+var plusButton =
+    document.createElement("button");
+
+plusButton.type = "button";
+plusButton.className = "quantity-button plus";
+plusButton.textContent = "+";
+plusButton.setAttribute(
+    "aria-label",
+    "Aumenta quantità"
+);
+
+plusButton.onclick = function () {
+    changeProductQuantity(product.id, 1);
+};
+
+quantityControls.appendChild(minusButton);
+quantityControls.appendChild(quantityValue);
+quantityControls.appendChild(plusButton);
+
+bottom.appendChild(quantityLabel);
+bottom.appendChild(quantityControls);
 
     if (
         isLowStock(product)
