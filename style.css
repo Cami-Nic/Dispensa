@@ -485,6 +485,11 @@ button {
         0 3px 12px rgba(0, 0, 0, 0.06);
 }
 
+.product-card-low-stock {
+    border: 3px solid #ff3b30;
+    box-sizing: border-box;
+}
+
 .product-image {
     width: 78px;
     height: 78px;
