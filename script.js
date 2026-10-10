@@ -31,24 +31,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
 /* EVENTI */
 
+
 function bindEvents() {
-    // Apertura e chiusura del modulo prodotto
     bindClick("addProductBtn", () => openProductModal());
     bindClick("addProductButton", () => openProductModal());
     bindClick("closeProductModal", closeProductModal);
     bindClick("cancelProductBtn", closeProductModal);
 
-    // Salvataggio prodotto
-    bindClick("saveProductBtn", saveProduct);
-    bindClick("productFormSubmit", saveProduct);
-
-    // Scanner
+    // Apertura scanner
     bindClick("openScannerBtn", openScanner);
     bindClick("scanBarcodeBtn", openScanner);
     bindClick("closeScannerBtn", closeScanner);
     bindClick("closeScanner", closeScanner);
 
-    // Ricerca
+    // Ricerca prodotti
     const searchInput = $("searchInput");
     if (searchInput) {
         searchInput.addEventListener("input", renderProducts);
@@ -60,14 +56,38 @@ function bindEvents() {
         categoryFilter.addEventListener("change", renderProducts);
     }
 
-    // Form: evita il ricaricamento della pagina
+    // Salvataggio: un solo gestore per evitare duplicazioni
     const form = $("productForm");
+
     if (form) {
-        form.addEventListener("submit", (event) => {
+        form.addEventListener("submit", function(event) {
             event.preventDefault();
             saveProduct();
         });
+    } else {
+        bindClick("saveProductBtn", saveProduct);
+        bindClick("productFormSubmit", saveProduct);
     }
+
+    // Chiusura modali cliccando sullo sfondo
+    const productModal = $("productModal");
+    if (productModal) {
+        productModal.addEventListener("click", function(event) {
+            if (event.target === productModal) {
+                closeProductModal();
+            }
+        });
+    }
+
+    const scannerModal = $("scannerModal");
+    if (scannerModal) {
+        scannerModal.addEventListener("click", function(event) {
+            if (event.target === scannerModal) {
+                closeScanner();
+            }
+        });
+    }
+}
 
     // Chiude i modali cliccando sullo sfondo
     const productModal = $("productModal");
