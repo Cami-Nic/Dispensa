@@ -1,0 +1,972 @@
+
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="theme-color" content="#7048e8">
+<title>La Mia Dispensa</title>
+
+<style>
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  margin: 0;
+  background: #f7f4ff;
+  color: #30264b;
+  font-family: -apple-system, BlinkMacSystemFont,
+    "Helvetica Neue", Arial, sans-serif;
+  font-size: 16px;
+}
+
+button, input, select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-appearance: none;
+}
+
+header {
+  padding: 26px 20px 38px;
+  color: white;
+  background: linear-gradient(135deg, #7048e8, #a16af5, #ff83b5);
+  border-radius: 0 0 30px 30px;
+}
+
+header .sopratitolo {
+  font-size: 12px;
+  font-weight: bold;
+  letter-spacing: 2px;
+}
+
+header h1 {
+  font-size: 30px;
+  margin: 13px 0 8px;
+}
+
+header p {
+  margin: 0;
+  font-size: 14px;
+}
+
+main {
+  width: 100%;
+  max-width: 720px;
+  margin: auto;
+  padding: 0 14px 30px;
+}
+
+.sezioni {
+  display: flex;
+  gap: 12px;
+  margin-top: -20px;
+}
+
+.sezione {
+  flex: 1;
+  min-width: 0;
+  min-height: 115px;
+  padding: 15px 12px;
+  text-align: left;
+  color: #30264b;
+  background: white;
+  border: 2px solid transparent;
+  border-radius: 20px;
+  box-shadow: 0 5px 20px #33206012;
+}
+
+.sezione.attiva {
+  border-color: #ffd45c;
+}
+
+.sezione .emoji {
+  display: block;
+  font-size: 28px;
+  margin-bottom: 8px;
+}
+
+.sezione strong {
+  display: block;
+  font-size: 14px;
+}
+
+.sezione small {
+  display: block;
+  margin-top: 4px;
+  color: #85809a;
+  font-size: 12px;
+}
+
+.intestazione {
+  margin: 25px 2px 12px;
+}
+
+.intestazione h2 {
+  margin: 0 0 5px;
+  font-size: 21px;
+}
+
+.intestazione p {
+  margin: 0;
+  color: #85809a;
+  font-size: 13px;
+}
+
+.pulsanti {
+  display: flex;
+  gap: 8px;
+  margin-top: 15px;
+}
+
+.btn {
+  flex: 1;
+  min-height: 46px;
+  padding: 11px 10px;
+  border: 0;
+  border-radius: 13px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.btn-viola {
+  color: white;
+  background: #7048e8;
+}
+
+.btn-rosa {
+  color: #a42e70;
+  background: #ffe8f3;
+}
+
+.btn-bianco {
+  color: #7048e8;
+  background: white;
+  border: 1px solid #e8e0ff;
+}
+
+.statistiche {
+  display: flex;
+  gap: 10px;
+  margin: 18px 0 14px;
+}
+
+.statistica {
+  flex: 1;
+  padding: 13px;
+  background: white;
+  border-radius: 16px;
+  border: 1px solid #eee8fa;
+}
+
+.statistica strong {
+  display: block;
+  font-size: 23px;
+}
+
+.statistica span {
+  color: #85809a;
+  font-size: 12px;
+}
+
+#ricerca {
+  width: 100%;
+  min-height: 48px;
+  margin-bottom: 12px;
+  padding: 13px;
+  background: white;
+  border: 1px solid #e8e0f5;
+  border-radius: 14px;
+  outline: none;
+}
+
+.filtri {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  margin-bottom: 14px;
+  padding-bottom: 5px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.filtro {
+  flex-shrink: 0;
+  min-height: 38px;
+  padding: 8px 13px;
+  border: 1px solid #e6def8;
+  border-radius: 30px;
+  color: #77708f;
+  background: white;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.filtro.attivo {
+  color: #7048e8;
+  background: #ede7ff;
+  border-color: #d5c8ff;
+}
+
+#lista {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.prodotto {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px;
+  background: white;
+  border: 1px solid #eee8fa;
+  border-radius: 17px;
+}
+
+.prodotto-emoji {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  background: #f0eaff;
+  border-radius: 14px;
+  font-size: 25px;
+}
+
+.prodotto-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.prodotto-nome {
+  font-weight: bold;
+  overflow-wrap: anywhere;
+}
+
+.prodotto-meta {
+  margin-top: 4px;
+  color: #85809a;
+  font-size: 12px;
+}
+
+.avviso {
+  display: inline-block;
+  margin-top: 5px;
+  padding: 3px 7px;
+  border-radius: 7px;
+  color: #a64c13;
+  background: #fff0df;
+  font-size: 10px;
+  font-weight: bold;
+}
+
+.quantita {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin-top: 9px;
+}
+
+.quantita button {
+  width: 34px;
+  height: 34px;
+  border: 0;
+  border-radius: 10px;
+  color: #7048e8;
+  background: #f0eaff;
+  font-size: 21px;
+  font-weight: bold;
+}
+
+.numero {
+  min-width: 18px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.modifica {
+  flex-shrink: 0;
+  padding: 9px;
+  border: 0;
+  border-radius: 9px;
+  color: #7048e8;
+  background: #f0eaff;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.vuoto {
+  padding: 28px 16px;
+  text-align: center;
+  background: white;
+  border: 2px dashed #ded4f7;
+  border-radius: 18px;
+  color: #85809a;
+}
+
+.vuoto strong {
+  display: block;
+  margin: 8px 0;
+  color: #30264b;
+}
+
+footer {
+  padding: 25px 5px;
+  text-align: center;
+  color: #9991b1;
+  font-size: 11px;
+}
+
+/* Finestra di inserimento */
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 10;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  overflow-y: auto;
+  padding: 14px;
+  background: rgba(35, 23, 65, .60);
+  -webkit-overflow-scrolling: touch;
+}
+
+.modal.aperta {
+  display: block;
+}
+
+.finestra {
+  width: 100%;
+  max-width: 500px;
+  margin: 18px auto;
+  padding: 20px;
+  background: white;
+  border-radius: 22px;
+}
+
+.finestra-titolo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.finestra-titolo h3 {
+  margin: 0;
+  font-size: 21px;
+}
+
+.chiudi {
+  width: 40px;
+  height: 40px;
+  border: 0;
+  border-radius: 50%;
+  color: #7048e8;
+  background: #f0eaff;
+  font-size: 24px;
+}
+
+.campo {
+  margin-bottom: 13px;
+}
+
+.campo label {
+  display: block;
+  margin-bottom: 5px;
+  color: #77708f;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.campo input,
+.campo select {
+  width: 100%;
+  min-height: 46px;
+  padding: 11px;
+  border: 1px solid #e5def3;
+  border-radius: 12px;
+  color: #30264b;
+  background: white;
+}
+
+.nota {
+  margin: 12px 0;
+  color: #85809a;
+  font-size: 12px;
+}
+
+#video {
+  display: none;
+  width: 100%;
+  max-height: 45vh;
+  background: #211b30;
+  border-radius: 15px;
+}
+
+#messaggioCamera {
+  padding: 18px 0;
+  color: #77708f;
+  font-size: 13px;
+}
+
+.nascosto {
+  display: none !important;
+}
+
+@media (max-width: 360px) {
+  header h1 { font-size: 26px; }
+  .sezione { padding: 12px 9px; }
+  .prodotto { gap: 7px; padding: 9px; }
+  .prodotto-emoji { width: 40px; height: 40px; }
+  .modifica { padding: 7px; }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="sopratitolo">🏡 LA TUA CASA, IN ORDINE</div>
+  <h1>La Mia Dispensa</h1>
+  <p>Organizza la dispensa e non dimenticare più nulla 💜</p>
+</header>
+
+<main>
+
+  <div class="sezioni">
+    <button class="sezione attiva" id="sezioneCasa"
+      type="button" onclick="cambiaSezione('casa')">
+      <span class="emoji">🏠</span>
+      <strong>Dispensa Casa</strong>
+      <small>Cibo e alimentari</small>
+    </button>
+
+    <button class="sezione" id="sezioneCantina"
+      type="button" onclick="cambiaSezione('cantina')">
+      <span class="emoji">🧹</span>
+      <strong>Dispensa Cantina</strong>
+      <small>Pulizia e casa</small>
+    </button>
+  </div>
+
+  <div class="intestazione">
+    <h2 id="titoloSezione">🍓 Cibo e alimentari</h2>
+    <p id="sottotitolo">Tutto sotto controllo, senza sprechi</p>
+
+    <div class="pulsanti">
+      <button class="btn btn-viola" type="button"
+        onclick="nuovoProdotto()">＋ Aggiungi</button>
+      <button class="btn btn-rosa" type="button"
+        onclick="apriFotocamera()">📷 Fotocamera</button>
+    </div>
+  </div>
+
+  <div class="statistiche">
+    <div class="statistica">
+      <strong id="totale">0</strong>
+      <span>Prodotti</span>
+    </div>
+    <div class="statistica">
+      <strong id="scorteBasse">0</strong>
+      <span>Da ricomprare</span>
+    </div>
+  </div>
+
+  <input id="ricerca" type="search"
+    placeholder="🔎 Cerca un prodotto..."
+    oninput="mostraProdotti()" autocomplete="off">
+
+  <div class="filtri">
+    <button class="filtro attivo" data-filtro="tutti"
+      onclick="impostaFiltro('tutti')">Tutti</button>
+    <button class="filtro" data-filtro="bassi"
+      onclick="impostaFiltro('bassi')">⚠️ Scorte basse</button>
+    <button class="filtro" data-filtro="alimentari"
+      onclick="impostaFiltro('alimentari')">🥫 Alimentari</button>
+    <button class="filtro" data-filtro="bagno"
+      onclick="impostaFiltro('bagno')">🧴 Bagno</button>
+    <button class="filtro" data-filtro="pulizia"
+      onclick="impostaFiltro('pulizia')">🧽 Pulizia</button>
+  </div>
+
+  <div id="lista"></div>
+
+  <footer>
+    I dati sono salvati nel browser di questo dispositivo ✨
+  </footer>
+</main>
+
+<!-- MODULO PRODOTTO -->
+
+<div class="modal" id="modalProdotto">
+  <div class="finestra">
+    <div class="finestra-titolo">
+      <h3 id="titoloForm">✨ Nuovo prodotto</h3>
+      <button class="chiudi" type="button"
+        onclick="chiudiModal()">×</button>
+    </div>
+
+    <form id="formProdotto" onsubmit="salvaProdotto(event)">
+      <div class="campo">
+        <label for="nome">Nome prodotto *</label>
+        <input id="nome" required placeholder="Es. Pasta, latte, detersivo">
+      </div>
+
+      <div class="campo">
+        <label for="marca">Marca</label>
+        <input id="marca" placeholder="Es. Barilla">
+      </div>
+
+      <div class="campo">
+        <label for="formato">Formato</label>
+        <input id="formato" placeholder="Es. 500 g, 1 litro">
+      </div>
+
+      <div class="campo">
+        <label for="quantita">Quantità attuale *</label>
+        <input id="quantita" type="number" min="0" step="1"
+          value="1" required>
+      </div>
+
+      <div class="campo">
+        <label for="minimo">Quantità minima da tenere</label>
+        <input id="minimo" type="number" min="0" step="1" value="1">
+      </div>
+
+      <div class="campo">
+        <label for="categoria">Categoria</label>
+        <select id="categoria">
+          <option value="alimentari">🥫 Alimentari</option>
+          <option value="bagno">🧴 Bagno</option>
+          <option value="pulizia">🧽 Pulizia</option>
+          <option value="altro">📦 Altro</option>
+        </select>
+      </div>
+
+      <div class="campo">
+        <label for="scadenza">Data di scadenza (facoltativa)</label>
+        <input id="scadenza" type="date">
+      </div>
+
+      <div class="campo">
+        <label for="codice">Codice a barre (facoltativo)</label>
+        <input id="codice" inputmode="numeric"
+          placeholder="Inserisci il codice">
+      </div>
+
+      <p class="nota">I dati vengono conservati nel browser di questo dispositivo.</p>
+
+      <div class="pulsanti">
+        <button class="btn btn-bianco" type="button"
+          onclick="chiudiModal()">Annulla</button>
+        <button class="btn btn-viola" type="submit">💾 Salva</button>
+      </div>
+
+      <button id="elimina" class="btn btn-bianco nascosto"
+        type="button" style="width:100%;margin-top:10px"
+        onclick="eliminaProdotto()">🗑 Elimina prodotto</button>
+    </form>
+  </div>
+</div>
+
+<!-- MODULO FOTOCAMERA -->
+
+<div class="modal" id="modalCamera">
+  <div class="finestra">
+    <div class="finestra-titolo">
+      <h3>📷 Fotocamera</h3>
+      <button class="chiudi" type="button"
+        onclick="chiudiFotocamera()">×</button>
+    </div>
+
+    <video id="video" autoplay playsinline muted></video>
+
+    <div id="messaggioCamera">
+      Premi il pulsante per attivare la fotocamera frontale.
+    </div>
+
+    <button class="btn btn-viola" style="width:100%"
+      type="button" onclick="attivaFotocamera()">
+      Attiva fotocamera
+    </button>
+
+    <p class="nota">
+      La fotocamera richiede HTTPS e il permesso di Safari.
+      Questo modulo mostra l'anteprima: non legge automaticamente
+      i codici a barre su iOS 12.
+    </p>
+
+    <div class="pulsanti">
+      <button class="btn btn-bianco" type="button"
+        onclick="chiudiFotocamera()">Chiudi</button>
+      <button class="btn btn-rosa" type="button"
+        onclick="prodottoDaCamera()">Inserisci prodotto</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  var CHIAVE = "laMiaDispensa_ios1258";
+  var prodotti = [];
+  var sezione = "casa";
+  var filtro = "tutti";
+  var modificaId = null;
+  var flussoCamera = null;
+
+  function carica() {
+    try {
+      var dati = localStorage.getItem(CHIAVE);
+      prodotti = dati ? JSON.parse(dati) : [];
+      if (!Array.isArray(prodotti)) prodotti = [];
+    } catch (e) {
+      prodotti = [];
+    }
+  }
+
+  function salva() {
+    try {
+      localStorage.setItem(CHIAVE, JSON.stringify(prodotti));
+    } catch (e) {
+      alert("Non è stato possibile salvare i dati nel browser.");
+    }
+  }
+
+  function testoSicuro(testo) {
+    return String(testo == null ? "" : testo)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#39;");
+  }
+
+  function emojiCategoria(categoria) {
+    var emoji = {
+      alimentari: "🥫",
+      bagno: "🧴",
+      pulizia: "🧽",
+      altro: "📦"
+    };
+    return emoji[categoria] || "📦";
+  }
+
+  function nomeCategoria(categoria) {
+    var nomi = {
+      alimentari: "Alimentari",
+      bagno: "Bagno",
+      pulizia: "Pulizia",
+      altro: "Altro"
+    };
+    return nomi[categoria] || "Altro";
+  }
+
+  function appartieneAllaSezione(p) {
+    if (sezione === "cantina") {
+      return p.categoria === "pulizia";
+    }
+    return p.categoria !== "pulizia";
+  }
+
+  window.cambiaSezione = function (nuovaSezione) {
+    sezione = nuovaSezione;
+
+    document.getElementById("sezioneCasa").className =
+      "sezione" + (sezione === "casa" ? " attiva" : "");
+
+    document.getElementById("sezioneCantina").className =
+      "sezione" + (sezione === "cantina" ? " attiva" : "");
+
+    document.getElementById("titoloSezione").textContent =
+      sezione === "casa" ? "🍓 Cibo e alimentari" : "🧹 Prodotti per la casa";
+
+    document.getElementById("sottotitolo").textContent =
+      sezione === "casa"
+        ? "Tutto sotto controllo, senza sprechi"
+        : "Pulizia, bucato e cantina";
+
+    mostraProdotti();
+  };
+
+  window.impostaFiltro = function (nuovoFiltro) {
+    filtro = nuovoFiltro;
+
+    var pulsanti = document.querySelectorAll(".filtro");
+    for (var i = 0; i < pulsanti.length; i++) {
+      pulsanti[i].className = "filtro" +
+        (pulsanti[i].getAttribute("data-filtro") === filtro
+          ? " attivo" : "");
+    }
+
+    mostraProdotti();
+  };
+
+  window.mostraProdotti = function () {
+    var ricerca = document.getElementById("ricerca").value
+      .toLowerCase().replace(/^\s+|\s+$/g, "");
+
+    var lista = [];
+    var totale = 0;
+    var bassi = 0;
+
+    for (var i = 0; i < prodotti.length; i++) {
+      var p = prodotti[i];
+
+      if (appartieneAllaSezione(p)) {
+        totale++;
+        if (Number(p.quantita) <= Number(p.minimo)) bassi++;
+      }
+
+      if (!appartieneAllaSezione(p)) continue;
+
+      var parole = (
+        p.nome + " " + p.marca + " " + p.codice
+      ).toLowerCase();
+
+      if (ricerca && parole.indexOf(ricerca) === -1) continue;
+
+      if (filtro === "bassi" &&
+          Number(p.quantita) > Number(p.minimo)) continue;
+
+      if (filtro !== "tutti" && filtro !== "bassi" &&
+          p.categoria !== filtro) continue;
+
+      lista.push(p);
+    }
+
+    document.getElementById("totale").textContent = totale;
+    document.getElementById("scorteBasse").textContent = bassi;
+
+    var contenitore = document.getElementById("lista");
+
+    if (!lista.length) {
+      contenitore.innerHTML =
+        '<div class="vuoto"><div style="font-size:36px">🪄</div>' +
+        '<strong>' +
+        (ricerca ? "Nessun prodotto trovato" :
+          "La tua dispensa è pronta!") +
+        '</strong>' +
+        (ricerca ? "Prova un altro termine di ricerca." :
+          "Premi Aggiungi per inserire il primo prodotto.") +
+        '</div>';
+      return;
+    }
+
+    var html = "";
+
+    for (var j = 0; j < lista.length; j++) {
+      var x = lista[j];
+      var basso = Number(x.quantita) <= Number(x.minimo);
+
+      html +=
+        '<article class="prodotto">' +
+          '<div class="prodotto-emoji">' +
+            emojiCategoria(x.categoria) +
+          '</div>' +
+          '<div class="prodotto-info">' +
+            '<div class="prodotto-nome">' +
+              testoSicuro(x.nome) +
+            '</div>' +
+            '<div class="prodotto-meta">' +
+              testoSicuro(nomeCategoria(x.categoria)) +
+              (x.marca ? " · " + testoSicuro(x.marca) : "") +
+              (x.formato ? " · " + testoSicuro(x.formato) : "") +
+              (x.scadenza ? " · Scad. " + testoSicuro(x.scadenza) : "") +
+            '</div>' +
+            (basso ? '<span class="avviso">⚠ SCORTA BASSA</span>' : '') +
+            '<div class="quantita">' +
+              '<button type="button" aria-label="Diminuisci" ' +
+                'onclick="cambiaQuantita(' + x.id + ',-1)">−</button>' +
+              '<span class="numero">' + Number(x.quantita) + '</span>' +
+              '<button type="button" aria-label="Aumenta" ' +
+                'onclick="cambiaQuantita(' + x.id + ',1)">+</button>' +
+            '</div>' +
+          '</div>' +
+          '<button class="modifica" type="button" ' +
+            'onclick="modificaProdotto(' + x.id + ')">✏️</button>' +
+        '</article>';
+    }
+
+    contenitore.innerHTML = html;
+  };
+
+  window.cambiaQuantita = function (id, variazione) {
+    for (var i = 0; i < prodotti.length; i++) {
+      if (prodotti[i].id === id) {
+        prodotti[i].quantita = Math.max(
+          0, Number(prodotti[i].quantita) + variazione
+        );
+        break;
+      }
+    }
+
+    salva();
+    mostraProdotti();
+  };
+
+  window.nuovoProdotto = function () {
+    modificaId = null;
+    document.getElementById("formProdotto").reset();
+    document.getElementById("quantita").value = "1";
+    document.getElementById("minimo").value = "1";
+    document.getElementById("titoloForm").textContent = "✨ Nuovo prodotto";
+    document.getElementById("elimina").className = "btn btn-bianco nascosto";
+    document.getElementById("modalProdotto").className = "modal aperta";
+  };
+
+  window.modificaProdotto = function (id) {
+    var p = null;
+
+    for (var i = 0; i < prodotti.length; i++) {
+      if (prodotti[i].id === id) p = prodotti[i];
+    }
+
+    if (!p) return;
+
+    modificaId = id;
+    document.getElementById("nome").value = p.nome || "";
+    document.getElementById("marca").value = p.marca || "";
+    document.getElementById("formato").value = p.formato || "";
+    document.getElementById("quantita").value = p.quantita;
+    document.getElementById("minimo").value = p.minimo;
+    document.getElementById("categoria").value = p.categoria;
+    document.getElementById("scadenza").value = p.scadenza || "";
+    document.getElementById("codice").value = p.codice || "";
+
+    document.getElementById("titoloForm").textContent = "✏️ Modifica prodotto";
+    document.getElementById("elimina").className = "btn btn-bianco";
+    document.getElementById("modalProdotto").className = "modal aperta";
+  };
+
+  window.salvaProdotto = function (evento) {
+    evento.preventDefault();
+
+    var p = {
+      id: modificaId || new Date().getTime(),
+      nome: document.getElementById("nome").value.replace(/^\s+|\s+$/g, ""),
+      marca: document.getElementById("marca").value.replace(/^\s+|\s+$/g, ""),
+      formato: document.getElementById("formato").value.replace(/^\s+|\s+$/g, ""),
+      quantita: Math.max(0, parseInt(document.getElementById("quantita").value, 10) || 0),
+      minimo: Math.max(0, parseInt(document.getElementById("minimo").value, 10) || 0),
+      categoria: document.getElementById("categoria").value,
+      scadenza: document.getElementById("scadenza").value,
+      codice: document.getElementById("codice").value.replace(/^\s+|\s+$/g, "")
+    };
+
+    if (modificaId !== null) {
+      for (var i = 0; i < prodotti.length; i++) {
+        if (prodotti[i].id === modificaId) {
+          prodotti[i] = p;
+          break;
+        }
+      }
+    } else {
+      prodotti.unshift(p);
+    }
+
+    salva();
+    chiudiModal();
+    mostraProdotti();
+  };
+
+  window.eliminaProdotto = function () {
+    if (modificaId === null) return;
+
+    if (confirm("Vuoi eliminare questo prodotto?")) {
+      var nuovi = [];
+
+      for (var i = 0; i < prodotti.length; i++) {
+        if (prodotti[i].id !== modificaId) nuovi.push(prodotti[i]);
+      }
+
+      prodotti = nuovi;
+      salva();
+      chiudiModal();
+      mostraProdotti();
+    }
+  };
+
+  window.chiudiModal = function () {
+    document.getElementById("modalProdotto").className = "modal";
+  };
+
+  window.apriFotocamera = function () {
+    document.getElementById("modalCamera").className = "modal aperta";
+    document.getElementById("messaggioCamera").textContent =
+      "Premi Attiva fotocamera per consentire l'accesso.";
+  };
+
+  window.attivaFotocamera = function () {
+    if (!navigator.mediaDevices ||
+        !navigator.mediaDevices.getUserMedia) {
+      document.getElementById("messaggioCamera").textContent =
+        "Fotocamera non supportata da questo browser o contesto. " +
+        "Apri la pagina tramite HTTPS e prova Safari.";
+      return;
+    }
+
+    navigator.mediaDevices.getUserMedia({
+      audio: false,
+      video: { facingMode: "user" }
+    }).then(function (stream) {
+      flussoCamera = stream;
+
+      var video = document.getElementById("video");
+      video.srcObject = stream;
+      video.style.display = "block";
+
+      document.getElementById("messaggioCamera").textContent =
+        "Fotocamera attiva. Per ora l'anteprima non legge automaticamente i codici a barre.";
+
+      var riproduzione = video.play();
+      if (riproduzione && riproduzione.catch) {
+        riproduzione.catch(function () {});
+      }
+    }).catch(function () {
+      document.getElementById("messaggioCamera").textContent =
+        "Accesso negato o fotocamera non disponibile. " +
+        "Controlla i permessi di Safari e riprova.";
+    });
+  };
+
+  window.chiudiFotocamera = function () {
+    if (flussoCamera) {
+      var tracce = flussoCamera.getTracks();
+
+      for (var i = 0; i < tracce.length; i++) {
+        tracce[i].stop();
+      }
+
+      flussoCamera = null;
+    }
+
+    var video = document.getElementById("video");
+    video.srcObject = null;
+    video.style.display = "none";
+
+    document.getElementById("modalCamera").className = "modal";
+  };
+
+  window.prodottoDaCamera = function () {
+    chiudiFotocamera();
+    nuovoProdotto();
+  };
+
+  carica();
+  mostraProdotti();
+})();
+</script>
+
+</body>
+</html>
