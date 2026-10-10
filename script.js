@@ -842,7 +842,7 @@ if (isLowStock(product)) {
         "edit-product-button";
 
     editButton.textContent =
-        "✎";
+        "✏️";
 
 
     editButton.setAttribute(
