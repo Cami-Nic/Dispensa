@@ -1436,346 +1436,132 @@ function openScanner() {
         false;
 
 
-    startScanner();
-
-}
-
 
 async function startScanner() {
+    if (scannerStarting || scannerRunning) return;
 
-    if (
-        scannerStarting ||
-        scannerRunning
-    ) {
-
-        return;
-
-    }
-
-
-    scannerStarting =
-        true;
-
+    scannerStarting = true;
 
     try {
+        // Legge soprattutto i formati usati sui prodotti.
+        var formats = [];
 
-        html5QrCode =
-            new Html5Qrcode(
-                "reader"
-            );
+        if (typeof Html5QrcodeSupportedFormats !== "undefined") {
+            var supported = Html5QrcodeSupportedFormats;
 
-
-        /*
-            Prima scelta:
-            fotocamera frontale.
-        */
-
-        try {
-
-            await html5QrCode.start(
-
-                {
-                    facingMode:
-                        "user"
-                },
-
-                {
-                    fps: 10,
-
-                    qrbox: {
-                        width: 250,
-                        height: 150
-                    }
-                },
-
-                onScanSuccess,
-
-                onScanFailure
-
-            );
-
-
-            scannerRunning =
-                true;
-
-
-            updateScannerStatus(
-                "Inquadra il codice a barre"
-            );
-
-
-            scannerStarting =
-                false;
-
-
-            return;
-
-        } catch (
-            frontError
-        ) {
-
-            console.log(
-                "Fotocamera frontale non disponibile",
-                frontError
-            );
-
+            [
+                "EAN_13",
+                "EAN_8",
+                "UPC_A",
+                "UPC_E",
+                "CODE_128",
+                "ITF"
+            ].forEach(function (format) {
+                if (supported[format] !== undefined) {
+                    formats.push(supported[format]);
+                }
+            });
         }
 
+        // Riutilizza lo scanner, evitando istanze sovrapposte.
+        if (!html5QrCode) {
+            var options = { verbose: false };
 
-        /*
-            Fallback:
-            cerca una fotocamera
-            frontale.
-        */
-
-        var cameras =
-            await Html5Qrcode
-                .getCameras();
-
-
-        if (
-            !cameras ||
-            cameras.length === 0
-        ) {
-
-            throw new Error(
-                "Nessuna fotocamera disponibile"
-            );
-
-        }
-
-
-        var selectedCamera =
-            cameras[0];
-
-
-        for (
-            var i = 0;
-            i < cameras.length;
-            i++
-        ) {
-
-            var label =
-                (
-                    cameras[i].label ||
-                    ""
-                ).toLowerCase();
-
-
-            if (
-                label.indexOf(
-                    "front"
-                ) !== -1 ||
-
-                label.indexOf(
-                    "facetime"
-                ) !== -1 ||
-
-                label.indexOf(
-                    "user"
-                ) !== -1
-            ) {
-
-                selectedCamera =
-                    cameras[i];
-
-                break;
-
+            if (formats.length) {
+                options.formatsToSupport = formats;
             }
 
+            html5QrCode = new Html5Qrcode(
+                "reader",
+                options
+            );
         }
 
+        var config = {
+            fps: 20,
 
-        await html5QrCode.start(
+            // Area larga per leggere le righe del barcode.
+            qrbox: function (width, height) {
+                var boxWidth = Math.floor(width * 0.94);
+                var boxHeight = Math.floor(height * 0.38);
 
-            selectedCamera.id,
-
-            {
-                fps: 10,
-
-                qrbox: {
-                    width: 250,
-                    height: 150
-                }
+                return {
+                    width: Math.max(200, Math.min(boxWidth, 500)),
+                    height: Math.max(90, Math.min(boxHeight, 220))
+                };
             },
 
-            onScanSuccess,
-
-            onScanFailure
-
-        );
-
-
-        scannerRunning =
-            true;
-
+            aspectRatio: 1.777,
+            disableFlip: false
+        };
 
         updateScannerStatus(
-            "Inquadra il codice a barre"
+            "Avvio fotocamera frontale..."
         );
 
+        // Solo fotocamera frontale, con risoluzione elevata
+        // quando il dispositivo la supporta.
+        await html5QrCode.start(
+            {
+                facingMode: "user",
+                width: { ideal: 1920 },
+                height: { ideal: 1080 },
+                frameRate: { ideal: 30 }
+            },
+            config,
+            onScanSuccess,
+            onScanFailure
+        );
+
+        scannerRunning = true;
+
+        // Richiede la messa a fuoco continua se disponibile.
+        // Alcuni browser o fotocamere non supportano questa opzione.
+        try {
+            if (
+                typeof html5QrCode.applyVideoConstraints ===
+                "function"
+            ) {
+                await html5QrCode.applyVideoConstraints({
+                    advanced: [
+                        { focusMode: "continuous" }
+                    ]
+                });
+            }
+        } catch (focusError) {
+            console.log(
+                "Messa a fuoco continua non supportata:",
+                focusError
+            );
+        }
+
+        updateScannerStatus(
+            "Tieni il codice ben illuminato e al centro della cornice"
+        );
 
     } catch (error) {
-
-        console.error(
-            "Errore scanner:",
-            error
-        );
-
+        console.error("Errore scanner:", error);
 
         updateScannerStatus(
-            "Impossibile avviare la fotocamera. Verifica i permessi."
+            "Impossibile avviare la fotocamera frontale. " +
+            "Controlla i permessi e riprova."
         );
 
-    }
+        // Consente di riprovare dopo un errore.
+        if (html5QrCode && !scannerRunning) {
+            try {
+                await html5QrCode.clear();
+            } catch (clearError) {
+                console.log(clearError);
+            }
 
-
-    scannerStarting =
-        false;
-
-}
-
-
-function onScanSuccess(
-    decodedText
-) {
-
-    if (scannerLocked) {
-        return;
-    }
-
-
-    scannerLocked =
-        true;
-
-
-    var barcode =
-        String(
-            decodedText || ""
-        ).trim();
-
-
-    document.getElementById(
-        "productBarcode"
-    ).value =
-        barcode;
-
-
-    updateScannerStatus(
-        "Codice trovato: " +
-        barcode
-    );
-
-
-    lookupOpenFoodFacts(
-        barcode
-    );
-
-}
-
-
-function onScanFailure(
-    errorMessage
-) {
-
-    /*
-        Errori di scansione
-        ignorati intenzionalmente.
-    */
-
-}
-
-
-function updateScannerStatus(
-    message
-) {
-
-    var status =
-        document.getElementById(
-            "scannerStatus"
-        );
-
-
-    if (status) {
-
-        status.textContent =
-            message;
-
-    }
-
-}
-
-
-async function closeScanner() {
-
-    scannerLocked =
-        true;
-
-
-    if (
-        html5QrCode &&
-        scannerRunning
-    ) {
-
-        try {
-
-            await html5QrCode.stop();
-
-        } catch (
-            error
-        ) {
-
-            console.log(
-                "Errore stop scanner",
-                error
-            );
-
+            html5QrCode = null;
         }
 
+    } finally {
+        scannerStarting = false;
     }
-
-
-    if (html5QrCode) {
-
-        try {
-
-            await html5QrCode.clear();
-
-        } catch (
-            error
-        ) {
-
-            console.log(
-                "Errore clear scanner",
-                error
-            );
-
-        }
-
-    }
-
-
-    html5QrCode =
-        null;
-
-
-    scannerRunning =
-        false;
-
-    scannerStarting =
-        false;
-
-
-    document
-        .getElementById(
-            "scannerModal"
-        )
-        .classList.remove(
-            "active"
-        );
-
 }
-
 
 /* =========================
    OPEN FOOD FACTS
@@ -1892,9 +1678,6 @@ async function lookupOpenFoodFacts(
                 function () {
 
                     closeScanner();
-
-                    openProductModal();
-
                 },
                 700
             );
@@ -1912,7 +1695,7 @@ async function lookupOpenFoodFacts(
 
                     closeScanner();
 
-                    openProductModal();
+         
 
                 },
                 900
@@ -1941,7 +1724,6 @@ async function lookupOpenFoodFacts(
 
                 closeScanner();
 
-                openProductModal();
 
             },
             900
