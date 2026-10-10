@@ -821,3 +821,22 @@ function inferCategory(product) {
 
     return "cibo";
 }
+document.addEventListener("DOMContentLoaded", function () {
+    console.log("La Mia Dispensa: JavaScript caricato");
+
+    const button = document.getElementById("addProductBtn");
+
+    console.log("Pulsante aggiungi:", button);
+
+    if (button) {
+        button.addEventListener("click", function () {
+            console.log("Pulsante Aggiungi premuto");
+
+            if (typeof openProductModal === "function") {
+                openProductModal();
+            } else {
+                alert("Errore: funzione openProductModal non disponibile.");
+            }
+        });
+    }
+});
