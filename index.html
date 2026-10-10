@@ -14,7 +14,7 @@
 
     <title>La Mia Dispensa</title>
 
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="./style.css">
 
     <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
 </head>
@@ -26,12 +26,9 @@
     ========================= -->
 
     <section id="homeScreen" class="screen active">
-
         <div class="home-container">
 
-            <h1 class="app-title">
-                La Mia Dispensa
-            </h1>
+            <h1 class="app-title">La Mia Dispensa</h1>
 
             <p class="app-subtitle">
                 Organizza tutto ciò che hai in casa
@@ -44,50 +41,29 @@
                     class="home-card casa"
                     onclick="openDispensa('casa')"
                 >
-                    <div class="home-card-icon">
-                        🏠
-                    </div>
-
-                    <div class="home-card-title">
-                        Dispensa Casa
-                    </div>
-
+                    <div class="home-card-icon">🏠</div>
+                    <div class="home-card-title">Dispensa Casa</div>
                     <div class="home-card-subtitle">
                         Cibo e prodotti bagno
                     </div>
-
-                    <div class="home-card-arrow">
-                        →
-                    </div>
+                    <div class="home-card-arrow">→</div>
                 </button>
-
 
                 <button
                     type="button"
                     class="home-card cantina"
                     onclick="openDispensa('cantina')"
                 >
-                    <div class="home-card-icon">
-                        🧹
-                    </div>
-
-                    <div class="home-card-title">
-                        Dispensa Cantina
-                    </div>
-
+                    <div class="home-card-icon">🧹</div>
+                    <div class="home-card-title">Dispensa Cantina</div>
                     <div class="home-card-subtitle">
                         Prodotti di pulizia
                     </div>
-
-                    <div class="home-card-arrow">
-                        →
-                    </div>
+                    <div class="home-card-arrow">→</div>
                 </button>
 
             </div>
-
         </div>
-
     </section>
 
 
@@ -107,29 +83,24 @@
                 ← Indietro
             </button>
 
-            <h1
-                id="dispensaTitle"
-                class="screen-title"
-            >
+            <h1 id="dispensaTitle" class="screen-title">
                 Dispensa Casa
             </h1>
 
         </div>
 
         <div class="dispensa-container">
-
             <div
                 id="categoryCards"
                 class="dispensa-cards"
             ></div>
-
         </div>
 
     </section>
 
 
     <!-- =========================
-         CATEGORY
+         CATEGORIA PRODOTTI
     ========================= -->
 
     <section id="categoryScreen" class="screen">
@@ -144,22 +115,15 @@
                 ← Indietro
             </button>
 
-            <h1
-                id="categoryTitle"
-                class="screen-title"
-            >
+            <h1 id="categoryTitle" class="screen-title">
                 Cibo
             </h1>
 
-            <p
-                id="categorySubtitle"
-                class="screen-subtitle"
-            >
+            <p id="categorySubtitle" class="screen-subtitle">
                 Dispensa e alimentari
             </p>
 
         </div>
-
 
         <div class="category-container">
 
@@ -183,7 +147,6 @@
 
             </div>
 
-
             <div class="search-wrapper">
 
                 <input
@@ -196,7 +159,6 @@
                 >
 
             </div>
-
 
             <div class="filter-buttons">
 
@@ -220,7 +182,6 @@
 
             </div>
 
-
             <div
                 id="productsList"
                 class="products-list"
@@ -232,12 +193,13 @@
 
 
     <!-- =========================
-         PRODUCT MODAL
+         FINESTRE PRODOTTO
     ========================= -->
 
     <div
         id="productModal"
         class="modal-overlay"
+        style="display: none;"
         onclick="closeModalOutside(event, 'productModal')"
     >
 
@@ -245,16 +207,14 @@
 
             <div class="modal-header">
 
-                <h2
-                    id="productModalTitle"
-                    class="modal-title"
-                >
+                <h2 id="productModalTitle" class="modal-title">
                     Nuovo prodotto
                 </h2>
 
                 <button
                     type="button"
                     class="modal-close"
+                    aria-label="Chiudi"
                     onclick="closeProductModal()"
                 >
                     ×
@@ -262,13 +222,9 @@
 
             </div>
 
-
             <div class="form-group">
 
-                <label
-                    class="form-label"
-                    for="productName"
-                >
+                <label class="form-label" for="productName">
                     Nome prodotto
                 </label>
 
@@ -281,13 +237,9 @@
 
             </div>
 
-
             <div class="form-group">
 
-                <label
-                    class="form-label"
-                    for="productBrand"
-                >
+                <label class="form-label" for="productBrand">
                     Marca
                 </label>
 
@@ -300,15 +252,11 @@
 
             </div>
 
-
             <div class="form-row">
 
                 <div class="form-group">
 
-                    <label
-                        class="form-label"
-                        for="productFormat"
-                    >
+                    <label class="form-label" for="productFormat">
                         Formato
                     </label>
 
@@ -321,13 +269,9 @@
 
                 </div>
 
-
                 <div class="form-group">
 
-                    <label
-                        class="form-label"
-                        for="productQuantity"
-                    >
+                    <label class="form-label" for="productQuantity">
                         Quantità
                     </label>
 
@@ -344,13 +288,9 @@
 
             </div>
 
-
             <div class="form-group">
 
-                <label
-                    class="form-label"
-                    for="productMinStock"
-                >
+                <label class="form-label" for="productMinStock">
                     Scorta minima
                 </label>
 
@@ -365,13 +305,9 @@
 
             </div>
 
-
             <div class="form-group">
 
-                <label
-                    class="form-label"
-                    for="productCategory"
-                >
+                <label class="form-label" for="productCategory">
                     Categoria
                 </label>
 
@@ -379,28 +315,16 @@
                     id="productCategory"
                     class="form-select"
                 >
-                    <option value="cibo">
-                        Cibo
-                    </option>
-
-                    <option value="bagno">
-                        Prodotti bagno
-                    </option>
-
-                    <option value="pulizia">
-                        Prodotti pulizia
-                    </option>
+                    <option value="cibo">Cibo</option>
+                    <option value="bagno">Prodotti bagno</option>
+                    <option value="pulizia">Prodotti pulizia</option>
                 </select>
 
             </div>
 
-
             <div class="form-group">
 
-                <label
-                    class="form-label"
-                    for="productBarcode"
-                >
+                <label class="form-label" for="productBarcode">
                     Codice a barre
                 </label>
 
@@ -413,13 +337,9 @@
 
             </div>
 
-
             <div class="form-group">
 
-                <label
-                    class="form-label"
-                    for="productImage"
-                >
+                <label class="form-label" for="productImage">
                     URL immagine
                 </label>
 
@@ -431,7 +351,6 @@
                 >
 
             </div>
-
 
             <div class="modal-actions">
 
@@ -453,13 +372,12 @@
 
             </div>
 
-
             <button
                 id="deleteProductButton"
                 type="button"
                 class="delete-button"
+                style="display: none;"
                 onclick="deleteProduct()"
-                style="display:none;"
             >
                 Elimina prodotto
             </button>
@@ -470,12 +388,13 @@
 
 
     <!-- =========================
-         SCANNER MODAL
+         SCANNER CODICE A BARRE
     ========================= -->
 
     <div
         id="scannerModal"
         class="modal-overlay"
+        style="display: none;"
         onclick="closeModalOutside(event, 'scannerModal')"
     >
 
@@ -490,6 +409,7 @@
                 <button
                     type="button"
                     class="modal-close"
+                    aria-label="Chiudi scanner"
                     onclick="closeScanner()"
                 >
                     ×
@@ -497,9 +417,7 @@
 
             </div>
 
-
             <div id="reader"></div>
-
 
             <div
                 id="scannerStatus"
@@ -507,7 +425,6 @@
             >
                 Avvio fotocamera...
             </div>
-
 
             <button
                 type="button"
@@ -523,16 +440,22 @@
 
 
     <!-- =========================
-         TOAST
+         MESSAGGI
     ========================= -->
 
     <div
         id="toast"
         class="toast"
+        role="status"
+        aria-live="polite"
     ></div>
 
 
-    <script src="script.js"></script>
+    <!-- =========================
+         JAVASCRIPT
+    ========================= -->
+
+    <script src="./script.js"></script>
 
 </body>
 </html>
