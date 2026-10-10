@@ -627,10 +627,15 @@ button {
    MODAL
    ========================================================= */
 
+
 .modal-overlay {
     position: fixed;
 
-    inset: 0;
+    /* Compatibilità con Safari su iOS 12 */
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
 
     background: rgba(0, 0, 0, 0.42);
 
@@ -639,6 +644,8 @@ button {
     justify-content: center;
 
     z-index: 1000;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
 }
 
 .modal-overlay.active {
