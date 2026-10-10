@@ -622,9 +622,11 @@ function createProductCard(
             "div"
         );
 
-    card.className =
-        "product-card";
+   card.className = "product-card";
 
+if (isLowStock(product)) {
+    card.classList.add("product-card-low-stock");
+}
 
     var imageContainer =
         document.createElement(
