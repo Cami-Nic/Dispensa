@@ -45,63 +45,6 @@ var categoryData = {
 
 
 /* =========================
-   INITIAL DATA
-========================= */
-
-var seedProducts = [
-
-    {
-        id: "seed-1",
-        name: "Pasta",
-        brand: "Barilla",
-        format: "500 g",
-        quantity: 3,
-        minStock: 2,
-        category: "cibo",
-        barcode: "",
-        image: ""
-    },
-
-    {
-        id: "seed-2",
-        name: "Latte",
-        brand: "Parmalat",
-        format: "1 L",
-        quantity: 1,
-        minStock: 2,
-        category: "cibo",
-        barcode: "",
-        image: ""
-    },
-
-    {
-        id: "seed-3",
-        name: "Shampoo",
-        brand: "Pantene",
-        format: "250 ml",
-        quantity: 2,
-        minStock: 1,
-        category: "bagno",
-        barcode: "",
-        image: ""
-    },
-
-    {
-        id: "seed-4",
-        name: "Detersivo piatti",
-        brand: "Nelsen",
-        format: "900 ml",
-        quantity: 1,
-        minStock: 1,
-        category: "pulizia",
-        barcode: "",
-        image: ""
-    }
-
-];
-
-
-/* =========================
    INIT
 ========================= */
 
