@@ -75,9 +75,19 @@ h1{font-size:27px;margin:0 0 5px}
 }
 @media(min-width:651px){.modal{align-items:center}}
  /* Centra la finestra dello scanner anche su iPad */
+
+/* Centra la finestra di lettura barcode */
 #scannerModal {
   align-items: center;
+  justify-content: center;
 }
+
+#scannerModal .modal-content {
+  margin: auto;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
 @media(max-width:390px){
  .product{gap:7px;padding:9px}
  .product-icon,.product-image{width:44px;height:44px}
