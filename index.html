@@ -74,17 +74,20 @@ h1{font-size:27px;margin:0 0 5px}
  .modal{align-items:flex-end}
 }
 @media(min-width:651px){.modal{align-items:center}}
- /* Centra la finestra dello scanner anche su iPad */
 
-/* Centra la finestra di lettura barcode */
-#scannerModal {
-  align-items: center;
-  justify-content: center;
+/* Finestra scanner centrata su PC e iPad */
+#scannerModal.modal {
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 12px !important;
 }
 
 #scannerModal .modal-content {
-  margin: auto;
+  width: 100%;
+  max-width: 600px;
   max-height: 90vh;
+  max-height: 90dvh;
+  margin: 0 auto !important;
   overflow-y: auto;
 }
 
