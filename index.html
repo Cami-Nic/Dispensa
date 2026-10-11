@@ -572,8 +572,9 @@ h1{font-size:27px;margin:0 0 5px}
         ];
       }
 
-scanner.start(
-  { facingMode: { ideal: "user" } },
+
+ scanner.start(
+  { facingMode: "user" },
   config,
   function (code) {
     handleBarcode(code);
