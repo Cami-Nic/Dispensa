@@ -572,24 +572,14 @@ h1{font-size:27px;margin:0 0 5px}
         ];
       }
 
-     scanner.start(
-  { facingMode: "user" },
-        function () {}
-      ).then(function () {
-        scannerStarting = false;
-      }).catch(function (e) {
-        console.error(e);
-        scannerStarting = false;
-        alert("Fotocamera non disponibile. Controlla i permessi del browser.");
-        closeScan();
-      });
-    } catch (e) {
-      console.error(e);
-      scannerStarting = false;
-      alert("Impossibile avviare lo scanner su questo browser.");
-      closeScan();
-    }
-  }
+scanner.start(
+  { facingMode: { ideal: "user" } },
+  config,
+  function (code) {
+    handleBarcode(code);
+  },
+  function () {}
+)
 
   function stopScan(callback) {
     var s = scanner;
