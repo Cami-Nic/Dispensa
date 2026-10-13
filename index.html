@@ -8,6 +8,16 @@
 <title>La Mia Dispensa</title>
 
 <style>
+  
+/* Quantità uguale alla scorta minima */
+.product-card.stock-minimum {
+    border: 3px solid #D97706 !important;
+}
+
+/* Quantità inferiore alla scorta minima */
+.product-card.stock-critical {
+    border: 4px solid #DC2626 !important;
+}
 *{box-sizing:border-box}
 :root{font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;color:#26342b;background:#f5f7f4}
 body{margin:0;padding-top:6px;min-height:100vh}
