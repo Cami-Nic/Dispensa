@@ -825,6 +825,17 @@ h1{font-size:27px;margin:0 0 5px}
   load();
   render();
 }());
+
+const quantity = Number(product.quantity);
+const minimum = Number(product.lowStock);
+
+card.classList.remove("stock-minimum", "stock-critical");
+
+if (quantity < minimum) {
+    card.classList.add("stock-critical");
+} else if (quantity === minimum) {
+    card.classList.add("stock-minimum");
+}
 </script>
 </body>
 </html>
