@@ -1399,5 +1399,32 @@ function isLow(p) {
   render();
 }());
 </script>
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+  import {
+    getAuth,
+    onAuthStateChanged
+  } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyA4qwXRAB6RE9TGWwhgPmmpfFBDUgbLd28",
+  authDomain: "dispensa-casa-83598.firebaseapp.com",
+  projectId: "dispensa-casa-83598",
+  storageBucket: "dispensa-casa-83598.firebasestorage.app",
+  messagingSenderId: "945972399095",
+  appId: "1:945972399095:web:0dba137acf1d466c607cf2"
+};
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      console.log("Utente autenticato:", user.uid);
+    } else {
+      console.log("Nessun utente autenticato.");
+    }
+  });
+</script>
 </body>
 </html>
