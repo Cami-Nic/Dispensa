@@ -691,6 +691,69 @@ button:active {
 }
 
 </style>
+<style>
+  #login-screen {
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    background: #f5f5f0;
+    font-family: Arial, sans-serif;
+  }
+
+  #login-screen .login-card {
+    width: 100%;
+    max-width: 360px;
+    padding: 28px;
+    border-radius: 16px;
+    background: white;
+    box-shadow: 0 4px 24px rgba(0,0,0,.1);
+  }
+
+  #login-screen h1 {
+    margin-top: 0;
+    color: #284b36;
+    font-size: 25px;
+  }
+
+  #login-screen input,
+  #login-screen button {
+    box-sizing: border-box;
+    width: 100%;
+    margin-top: 12px;
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 16px;
+  }
+
+  #login-screen input {
+    border: 1px solid #ccc;
+  }
+
+  #login-screen button {
+    border: 0;
+    background: #284b36;
+    color: white;
+    cursor: pointer;
+  }
+
+  #login-error {
+    color: #b42318;
+    font-size: 14px;
+  }
+
+  body.auth-pending #app,
+  body.auth-pending main,
+  body.auth-pending header,
+  body.auth-pending .container,
+  body.auth-pending #login-screen {
+    visibility: hidden;
+  }
+</style>
+
 </head>
 <body>
 <div class="topbar"></div>
@@ -1401,30 +1464,92 @@ function isLow(p) {
 </script>
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+
   import {
     getAuth,
-    onAuthStateChanged
+    onAuthStateChanged,
+    signInWithEmailAndPassword
   } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
 
-const firebaseConfig = {
-  apiKey: "AIzaSyA4qwXRAB6RE9TGWwhgPmmpfFBDUgbLd28",
-  authDomain: "dispensa-casa-83598.firebaseapp.com",
-  projectId: "dispensa-casa-83598",
-  storageBucket: "dispensa-casa-83598.firebasestorage.app",
-  messagingSenderId: "945972399095",
-  appId: "1:945972399095:web:0dba137acf1d466c607cf2"
-};
+  const firebaseConfig = {
+    apiKey: "AIzaSyA4qwXRAB6RE9TGWwhGpmmpfFBDUgbLd28",
+    authDomain: "dispensa-casa-83598.firebaseapp.com",
+    projectId: "dispensa-casa-83598",
+    storageBucket: "dispensa-casa-83598.firebasestorage.app",
+    messagingSenderId: "945972399095",
+    appId: "1:945972399095:web:0dba137acf1d466c607cf2"
+  };
 
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
 
+  const loginScreen = document.getElementById("login-screen");
+  const loginForm = document.getElementById("login-form");
+  const emailInput = document.getElementById("login-email");
+  const passwordInput = document.getElementById("login-password");
+  const loginButton = document.getElementById("login-button");
+  const loginError = document.getElementById("login-error");
+
+  loginForm.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    loginError.textContent = "";
+    loginButton.disabled = true;
+    loginButton.textContent = "Accesso in corso…";
+
+    try {
+      await signInWithEmailAndPassword(
+        auth,
+        emailInput.value.trim(),
+        passwordInput.value
+      );
+    } catch (error) {
+      loginError.textContent =
+        error.code === "auth/invalid-credential"
+          ? "Email o password non corretti."
+          : "Accesso non riuscito. Riprova.";
+    } finally {
+      loginButton.disabled = false;
+      loginButton.textContent = "Accedi";
+    }
+  });
+
   onAuthStateChanged(auth, (user) => {
     if (user) {
-      console.log("Utente autenticato:", user.uid);
+      loginScreen.style.display = "none";
+      console.log("Utente autenticato.");
     } else {
+      loginScreen.style.display = "flex";
       console.log("Nessun utente autenticato.");
     }
   });
 </script>
+<div id="login-screen">
+  <div class="login-card">
+    <h1>La Mia Dispensa</h1>
+    <p>Accedi per visualizzare la tua dispensa.</p>
+
+    <form id="login-form">
+      <input
+        id="login-email"
+        type="email"
+        placeholder="Indirizzo email"
+        autocomplete="username"
+        required
+      >
+
+      <input
+        id="login-password"
+        type="password"
+        placeholder="Password"
+        autocomplete="current-password"
+        required
+      >
+
+      <button id="login-button" type="submit">Accedi</button>
+      <p id="login-error" role="alert"></p>
+    </form>
+  </div>
+</div>
 </body>
 </html>
