@@ -1527,25 +1527,15 @@ function isLow(p) {
 <div id="login-screen">
   <div class="login-card">
     <h1>La Mia Dispensa</h1>
-    <p>Accedi per visualizzare la tua dispensa.</p>
+    <p>Accedi con il tuo account Google per continuare.</p>
 
-    <form id="login-form">
-      <input
-        id="login-email"
-        type="email"
-        placeholder="Indirizzo email"
-        autocomplete="username"
-        required
-      >
+    <button id="google-login-button" type="button">
+      Accedi con Google
+    </button>
 
-      <input
-        id="login-password"
-        type="password"
-        placeholder="Password"
-        autocomplete="current-password"
-        required
-      >
-
+    <p id="login-error" role="alert"></p>
+  </div>
+</div
       <button id="login-button" type="submit">Accedi</button>
       <p id="login-error" role="alert"></p>
     </form>
