@@ -1463,13 +1463,22 @@ function isLow(p) {
 }());
 </script>
 <script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+  import { initializeApp, getApp }
+    from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
 
   import {
     getAuth,
     onAuthStateChanged,
-    signInWithEmailAndPassword
+    GoogleAuthProvider,
+    signInWithPopup,
+    signOut
   } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
+
+  import {
+    getFirestore,
+    doc,
+    getDoc
+  } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
 
   const firebaseConfig = {
     apiKey: "AIzaSyA4qwXRAB6RE9TGWwhGpmmpfFBDUgbLd28",
@@ -1482,48 +1491,91 @@ function isLow(p) {
 
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
+  const db = getFirestore(app);
+  const provider = new GoogleAuthProvider();
 
   const loginScreen = document.getElementById("login-screen");
-  const loginForm = document.getElementById("login-form");
-  const emailInput = document.getElementById("login-email");
-  const passwordInput = document.getElementById("login-password");
-  const loginButton = document.getElementById("login-button");
+  const loginButton = document.getElementById("google-login-button");
   const loginError = document.getElementById("login-error");
 
-  loginForm.addEventListener("submit", async (event) => {
-    event.preventDefault();
+  // La dispensa resta nascosta finché non verifichiamo l'utente.
+  document.querySelectorAll("body > main").forEach((element) => {
+    element.style.visibility = "hidden";
+  });
 
+  loginButton.addEventListener("click", async () => {
     loginError.textContent = "";
     loginButton.disabled = true;
     loginButton.textContent = "Accesso in corso…";
 
     try {
-      await signInWithEmailAndPassword(
-        auth,
-        emailInput.value.trim(),
-        passwordInput.value
-      );
+      await signInWithPopup(auth, provider);
     } catch (error) {
+      console.error("Errore accesso Google:", error);
       loginError.textContent =
-        error.code === "auth/invalid-credential"
-          ? "Email o password non corretti."
-          : "Accesso non riuscito. Riprova.";
+        "Accesso Google non riuscito. Riprova.";
     } finally {
       loginButton.disabled = false;
-      loginButton.textContent = "Accedi";
+      loginButton.textContent = "Accedi con Google";
     }
   });
 
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
+  onAuthStateChanged(auth, async (user) => {
+    loginScreen.style.display = "flex";
+
+    document.querySelectorAll("body > main").forEach((element) => {
+      element.style.visibility = "hidden";
+    });
+
+    if (!user) {
+      return;
+    }
+
+    try {
+      if (!user.email) {
+        throw new Error("Account senza email verificabile.");
+      }
+
+      const email = user.email.trim().toLowerCase();
+
+      // Ogni invitato deve avere un documento in questa raccolta.
+      // L'ID del documento deve essere la sua email minuscola.
+      const invitationRef = doc(db, "utenti_autorizzati", email);
+      const invitationSnap = await getDoc(invitationRef);
+
+      if (
+        !invitationSnap.exists() ||
+        invitationSnap.data().autorizzato !== true
+      ) {
+        await signOut(auth);
+        loginError.textContent =
+          "Questo account non è autorizzato. Contatta chi gestisce la dispensa.";
+        return;
+      }
+
+      loginError.textContent = "";
       loginScreen.style.display = "none";
-      console.log("Utente autenticato.");
-    } else {
+
+      document.querySelectorAll("body > main").forEach((element) => {
+        element.style.visibility = "";
+      });
+
+      console.log("Utente autorizzato:", email);
+
+    } catch (error) {
+      console.error("Verifica accesso non riuscita:", error);
+
+      if (auth.currentUser) {
+        await signOut(auth);
+      }
+
       loginScreen.style.display = "flex";
-      console.log("Nessun utente autenticato.");
+      loginError.textContent =
+        "Impossibile verificare l'invito. Controlla la configurazione di Firestore.";
     }
   });
 </script>
+
 <div id="login-screen">
   <div class="login-card">
     <h1>La Mia Dispensa</h1>
@@ -1534,11 +1586,6 @@ function isLow(p) {
     </button>
 
     <p id="login-error" role="alert"></p>
-  </div>
-</div
-      <button id="login-button" type="submit">Accedi</button>
-      <p id="login-error" role="alert"></p>
-    </form>
   </div>
 </div>
 </body>
