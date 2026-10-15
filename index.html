@@ -550,7 +550,7 @@ function openScan() {
   scanner = new Html5Qrcode("reader");
 
   scanner.start(
-    { facingMode: "user" },
+    { facingMode: "environment" },
     {
       fps: 15,
       qrbox: { width: 280, height: 160 },
