@@ -1543,15 +1543,17 @@ function isLow(p) {
       const invitationRef = doc(db, "utenti_autorizzati", email);
       const invitationSnap = await getDoc(invitationRef);
 
-      if (
-        !invitationSnap.exists() ||
-        invitationSnap.data().autorizzato !== true
-      ) {
-        await signOut(auth);
-        loginError.textContent =
-          "Questo account non è autorizzato. Contatta chi gestisce la dispensa.";
-        return;
-      }
+     
+if (
+  !invitationSnap.exists() ||
+  invitationSnap.data().attivo !== true
+) {
+  await signOut(auth);
+  loginError.textContent =
+    "Questo account non è autorizzato. Contatta chi gestisce la dispensa.";
+  return;
+}
+
 
       loginError.textContent = "";
       loginScreen.style.display = "none";
