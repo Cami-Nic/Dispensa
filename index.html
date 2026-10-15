@@ -210,6 +210,92 @@ input,select{width:100%;padding:12px;border:1px solid #dce4dc;border-radius:12px
  .controls{gap:2px}
  .controls button{padding:7px}
 }
+  
+/* CORREZIONE SAFARI iPad: scanner sempre in alto */
+#scannerModal {
+  position: fixed !important;
+  top: 0 !important;
+  right: 0 !important;
+  bottom: auto !important;
+  left: 0 !important;
+
+  height: 100vh !important;
+  height: -webkit-fill-available !important;
+
+  padding: 0 !important;
+  margin: 0 !important;
+
+  display: block !important;
+  overflow-y: auto !important;
+  -webkit-overflow-scrolling: touch;
+  box-sizing: border-box !important;
+}
+
+#scannerModal.hidden {
+  display: none !important;
+}
+
+#scannerModal .scanner-dialog {
+  position: relative !important;
+  top: 0 !important;
+  left: 0 !important;
+  transform: none !important;
+
+  width: 100% !important;
+  max-width: 100% !important;
+
+  height: auto !important;
+  max-height: none !important;
+  min-height: 0 !important;
+
+  margin: 0 auto !important;
+  padding: 8px !important;
+  border-radius: 0 0 14px 14px !important;
+
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: flex-start !important;
+  align-items: stretch !important;
+
+  overflow: visible !important;
+  box-sizing: border-box !important;
+}
+
+#scannerModal .dialoghead {
+  flex: 0 0 auto !important;
+  margin: 0 0 6px !important;
+  padding: 0 !important;
+}
+
+#scannerModal #reader {
+  position: relative !important;
+  top: 0 !important;
+  flex: 0 0 auto !important;
+  width: 100% !important;
+  height: auto !important;
+  min-height: 0 !important;
+  margin: 0 auto 8px !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+}
+
+#scannerModal #reader video {
+  display: block !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  height: auto !important;
+  object-fit: contain !important;
+}
+
+#scannerModal .scanner-help {
+  margin: 4px 0 8px !important;
+}
+
+#scannerModal .scanner-close {
+  width: 100% !important;
+  margin: 0 !important;
+}
+
 </style>
 </head>
 <body>
@@ -293,19 +379,18 @@ input,select{width:100%;padding:12px;border:1px solid #dce4dc;border-radius:12px
 </div>
 
 
+
 <div id="scannerModal" class="modal hidden" role="dialog" aria-modal="true">
   <div class="dialog scanner-dialog">
     <div class="dialoghead">
       <h2>Scansiona barcode</h2>
-      <button data-action="closeScan" aria-label="Chiudi scanner">✕</button>
+      <button data-action="closeScan">✕</button>
     </div>
 
     <div id="reader"></div>
 
     <p class="muted scanner-help">
-      Inquadra il codice a barre al centro.
-      Se la fotocamera fatica a mettere a fuoco,
-      allontana leggermente il prodotto e mantieni ferma la fotocamera.
+      Consenti l'accesso alla fotocamera quando richiesto.
     </p>
 
     <button class="secondary scanner-close" data-action="closeScan">
@@ -313,6 +398,7 @@ input,select{width:100%;padding:12px;border:1px solid #dce4dc;border-radius:12px
     </button>
   </div>
 </div>
+
 
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
