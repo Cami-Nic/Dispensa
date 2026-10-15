@@ -60,175 +60,18 @@ input,select{width:100%;padding:12px;border:1px solid #dce4dc;border-radius:12px
 .two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .actions{display:flex;gap:8px;margin-top:16px}
 .actions button{flex:1}
-
-/* Scanner grande e centrato su iPad */
-#scannerModal {
-  padding: 8px;
-}
-
-#scannerModal .scanner-dialog {
-  width: 100%;
-  max-width: 1000px;
-  height: 94vh;
-  max-height: 94vh;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  padding: 16px;
-  margin: auto;
-}
-
-#scannerModal .dialoghead {
-  flex: 0 0 auto;
-  margin-bottom: 10px;
-}
-
-#reader {
-  width: 100%;
-  flex: 1 1 auto;
-  min-height: 0;
-  margin: 0 auto 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-}
-
-#reader video {
-  max-width: 100% !important;
-  object-fit: contain !important;
-}
-
-#reader__scan_region {
-  width: 100% !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-}
-
-#reader__dashboard {
-  flex: 0 0 auto;
-  width: 100%;
-}
-
-#scannerModal .scanner-help {
-  flex: 0 0 auto;
-  margin: 4px 0 10px;
-}
-
-#scannerModal .scanner-close {
-  flex: 0 0 auto;
-  width: 100%;
-}
-
-@media (max-width: 1024px) {
-  #scannerModal .scanner-dialog {
-    width: 100%;
-    max-width: none;
-    height: 96vh;
-    max-height: 96vh;
-    padding: 12px;
-  }
-}
-
-
-/* Scanner spostato verso l'alto su iPad */
-#scannerModal {
-  align-items: flex-start !important;
-  justify-content: center !important;
-  padding: 4px !important;
-}
-
-#scannerModal .scanner-dialog {
-  width: 100% !important;
-  max-width: 1000px !important;
-  height: 94vh !important;
-  max-height: 94vh !important;
-  margin: 0 auto !important;
-  padding: 10px !important;
-  overflow-y: auto !important;
-  display: flex;
-  flex-direction: column;
-}
-
-#scannerModal .dialoghead {
-  flex: 0 0 auto;
-  margin-bottom: 4px;
-}
-
-#reader {
-  width: 100% !important;
-  flex: 0 0 auto;
-  margin: 0 auto 8px !important;
-  min-height: 320px;
-  overflow: hidden;
-}
-
-#reader video {
-  width: 100% !important;
-  max-width: 100% !important;
-  height: auto !important;
-  object-fit: contain !important;
-}
-
-#reader__scan_region {
-  width: 100% !important;
-  min-height: 280px;
-}
-
-#scannerModal .scanner-help {
-  flex: 0 0 auto;
-  margin: 4px 0 8px;
-}
-
-#scannerModal .scanner-close {
-  flex: 0 0 auto;
-  margin-bottom: 4px;
-}
-
-@media (orientation: landscape) and (max-width: 1024px) {
-  #scannerModal .scanner-dialog {
-    height: 98vh !important;
-    max-height: 98vh !important;
-  }
-
-  #reader {
-    min-height: 220px;
-  }
-
-  #reader__scan_region {
-    min-height: 200px;
-  }
-}
-
-@media(max-width:600px){
- .categories{grid-template-columns:1fr}
- .category{min-height:85px;flex-direction:row;justify-content:flex-start;padding:14px 22px}
- .category span{font-size:30px}
- .product{gap:7px;padding:9px}
- .product img,.emoji{width:42px;height:42px}
- .controls{gap:2px}
- .controls button{padding:7px}
-}
   
-/* CORREZIONE SAFARI iPad: scanner sempre in alto */
+/* Scanner: pannello in alto, video ampio */
 #scannerModal {
   position: fixed !important;
-  top: 0 !important;
-  right: 0 !important;
-  bottom: auto !important;
-  left: 0 !important;
-
-  height: 100vh !important;
-  height: -webkit-fill-available !important;
-
+  inset: 0 !important;
+  display: flex;
+  align-items: flex-start !important;
+  justify-content: center !important;
   padding: 0 !important;
-  margin: 0 !important;
-
-  display: block !important;
   overflow-y: auto !important;
   -webkit-overflow-scrolling: touch;
-  box-sizing: border-box !important;
+  z-index: 99999 !important;
 }
 
 #scannerModal.hidden {
@@ -237,49 +80,33 @@ input,select{width:100%;padding:12px;border:1px solid #dce4dc;border-radius:12px
 
 #scannerModal .scanner-dialog {
   position: relative !important;
-  top: 0 !important;
-  left: 0 !important;
-  transform: none !important;
-
   width: 100% !important;
-  max-width: 100% !important;
-
+  max-width: 900px !important;
   height: auto !important;
   max-height: none !important;
-  min-height: 0 !important;
-
-  margin: 0 auto !important;
-  padding: 8px !important;
+  margin: 0 !important;
+  padding: 10px !important;
   border-radius: 0 0 14px 14px !important;
-
-  display: flex !important;
-  flex-direction: column !important;
-  justify-content: flex-start !important;
-  align-items: stretch !important;
-
   overflow: visible !important;
   box-sizing: border-box !important;
+  transform: none !important;
 }
 
 #scannerModal .dialoghead {
-  flex: 0 0 auto !important;
-  margin: 0 0 6px !important;
-  padding: 0 !important;
+  margin: 0 0 8px !important;
 }
 
-#scannerModal #reader {
-  position: relative !important;
-  top: 0 !important;
-  flex: 0 0 auto !important;
+#reader {
+  display: block !important;
   width: 100% !important;
-  height: auto !important;
   min-height: 0 !important;
-  margin: 0 auto 8px !important;
+  height: auto !important;
+  margin: 0 0 8px !important;
   padding: 0 !important;
   overflow: hidden !important;
 }
 
-#scannerModal #reader video {
+#reader video {
   display: block !important;
   width: 100% !important;
   max-width: 100% !important;
@@ -293,9 +120,51 @@ input,select{width:100%;padding:12px;border:1px solid #dce4dc;border-radius:12px
 
 #scannerModal .scanner-close {
   width: 100% !important;
-  margin: 0 !important;
 }
 
+#reader__dashboard {
+  display: block !important;
+  flex: 0 0 auto !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 8px auto 0 !important;
+  padding: 8px 0 !important;
+  box-sizing: border-box !important;
+  text-align: center !important;
+}
+
+#reader__dashboard button,
+#reader__dashboard select {
+  max-width: 100% !important;
+  margin: 4px auto !important;
+}
+
+#reader__dashboard_section {
+  width: 100% !important;
+}
+
+#reader__dashboard_section_csr {
+  width: 100% !important;
+  text-align: center !important;
+}
+
+@media (orientation: landscape) {
+  #scannerModal .scanner-dialog {
+    max-width: 1100px !important;
+  }
+}
+
+
+@media(max-width:600px){
+ .categories{grid-template-columns:1fr}
+ .category{min-height:85px;flex-direction:row;justify-content:flex-start;padding:14px 22px}
+ .category span{font-size:30px}
+ .product{gap:7px;padding:9px}
+ .product img,.emoji{width:42px;height:42px}
+ .controls{gap:2px}
+ .controls button{padding:7px}
+}
+  
 </style>
 </head>
 <body>
@@ -775,63 +644,97 @@ input,select{width:100%;padding:12px;border:1px solid #dce4dc;border-radius:12px
 function openScan() {
   if (!user) return;
 
-  if (location.protocol !== "https:" &&
-      location.hostname !== "localhost") {
+  if (
+    location.protocol !== "https:" &&
+    location.hostname !== "localhost"
+  ) {
     alert("La fotocamera richiede HTTPS.");
     return;
   }
 
   if (typeof Html5Qrcode === "undefined") {
-    alert("Lo scanner non è disponibile. Ricarica la pagina.");
+    alert("Scanner non disponibile. Ricarica la pagina.");
     return;
   }
 
-  $("scannerModal").classList.remove("hidden");
-  $("reader").innerHTML = "";
+  // Non avviare un secondo scanner se uno è già attivo.
+  if (scanner) return;
 
-  scanner = new Html5Qrcode("reader");
+  var modal = $("scannerModal");
+  var reader = $("reader");
 
-  // Dimensioni ampie per codici a barre lineari.
-  var readerWidth = $("reader").clientWidth || window.innerWidth;
-  var readerHeight = $("reader").clientHeight ||
-    Math.round(window.innerHeight * 0.60);
+  modal.classList.remove("hidden");
+  reader.innerHTML = "";
+  modal.scrollTop = 0;
 
-  var qrWidth = Math.min(
-    Math.floor(readerWidth * 0.94),
-    900
-  );
+  var formats = [
+    Html5QrcodeSupportedFormats.EAN_13,
+    Html5QrcodeSupportedFormats.EAN_8,
+    Html5QrcodeSupportedFormats.UPC_A,
+    Html5QrcodeSupportedFormats.UPC_E,
+    Html5QrcodeSupportedFormats.CODE_128,
+    Html5QrcodeSupportedFormats.CODE_39
+  ];
 
-  var qrHeight = Math.min(
-    Math.floor(readerHeight * 0.45),
-    260
-  );
+  var currentScanner = new Html5Qrcode("reader", {
+    formatsToSupport: formats,
+    verbose: false
+  });
 
-  // Evita dimensioni troppo piccole su schermi stretti.
-  qrWidth = Math.max(250, qrWidth);
-  qrHeight = Math.max(100, qrHeight);
+  scanner = currentScanner;
 
-  scanner.start(
-    { facingMode: "environment" },
-    {
+  requestAnimationFrame(function () {
+    // Se lo scanner è stato chiuso nel frattempo, non avviarlo.
+    if (scanner !== currentScanner) return;
+
+    var config = {
       fps: 10,
-      qrbox: {
-        width: qrWidth,
-        height: qrHeight
+      qrbox: function (width, height) {
+        var boxWidth = Math.floor(width * 0.92);
+        var boxHeight = Math.min(
+          150,
+          Math.floor(height * 0.45)
+        );
+
+        return {
+          width: Math.max(150, boxWidth),
+          height: Math.max(60, boxHeight)
+        };
       },
-      aspectRatio: 1.777,
       disableFlip: true
-    },
-    function(code) {
-      scanBarcode(code);
-    },
-    function() {}
-  ).catch(function(error) {
-    console.error("Errore fotocamera:", error);
-    alert(
-      "Impossibile avviare la fotocamera. " +
-      "Controlla i permessi di Safari e che il sito sia aperto tramite HTTPS."
-    );
-    closeScan();
+    };
+
+    currentScanner.start(
+      { facingMode: "environment" },
+      config,
+      function (code) {
+        if (!code || scanner !== currentScanner) return;
+
+        // Gestisce il codice riconosciuto dalla funzione esistente.
+        scanBarcode(code);
+      },
+      function () {
+        // Normale: alcuni fotogrammi non contengono un codice leggibile.
+      }
+    ).catch(function (error) {
+      console.error("Errore avvio scanner:", error);
+
+      if (scanner === currentScanner) {
+        scanner = null;
+
+        try {
+          currentScanner.clear();
+        } catch (e) {}
+
+        reader.innerHTML = "";
+        modal.classList.add("hidden");
+
+        alert(
+          "Impossibile avviare la fotocamera. " +
+          "Controlla i permessi di Safari e la connessione HTTPS."
+        );
+      }
+    });
   });
 }
 
