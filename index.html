@@ -132,7 +132,7 @@ input,select{width:100%;padding:12px;border:1px solid #dce4dc;border-radius:12px
       </div>
       <div class="two">
         <div class="field"><label for="pQty">Quantità</label><input id="pQty" type="number" min="0" step="1" value="1"></div>
-        <div class="field"><label for="pMin">Scorta minima</label><input id="pMin" type="number" min="0" step="1" value="0"></div>
+        <div class="field"><label for="pMin">Scorta minima</label><input id="pMin" type="number" min="0" step="1" value="" placeholder="Lascia vuoto se non serve"></div>
       </div>
       <div class="field"><label for="pCat">Categoria</label>
         <select id="pCat">
@@ -267,7 +267,7 @@ input,select{width:100%;padding:12px;border:1px solid #dce4dc;border-radius:12px
 
     $("products").innerHTML = list.map(function(p) {
       var picture = p.image && /^https?:\/\//i.test(p.image)
-        ? '<img src="' + escapeHTML(p.image) + '" alt="">'
+        ? '<img src="' + escapeHTML(p.image) + '" alt="Foto di ' + escapeHTML(p.name) + '" loading="lazy" referrerpolicy="no-referrer">'
         : '<div class="emoji">' + categories[p.category].icon + '</div>';
       return '<article class="product ' + (low(p) ? 'low' : '') + '">' +
         picture + '<div class="info">' +
@@ -352,7 +352,7 @@ input,select{width:100%;padding:12px;border:1px solid #dce4dc;border-radius:12px
     $("pBrand").value = p ? p.brand : "";
     $("pFormat").value = p ? p.format : "";
     $("pQty").value = p ? num(p.quantity) : 1;
-    $("pMin").value = p ? num(p.minStock) : 0;
+    $("pMin").value = p ? num(p.minStock) : "";
     $("pCat").value = p ? p.category : category;
     $("pBarcode").value = p ? p.barcode : "";
     $("pImage").value = p ? p.image : "";
@@ -459,29 +459,75 @@ input,select{width:100%;padding:12px;border:1px solid #dce4dc;border-radius:12px
 
   function scanBarcode(code) {
     closeScan();
-    var existing = products.find(function(p) { return p.barcode === code; });
+
+    // Se il prodotto è già presente nella dispensa, incrementa la quantità.
+    var existing = products.find(function(p) {
+      return String(p.barcode || "") === String(code);
+    });
     if (existing) {
       changeQuantity(existing.id, 1);
       return;
     }
 
+    // Apri subito il modulo: il barcode resta disponibile anche se OFF non risponde.
     openForm(null);
     $("pBarcode").value = code;
-    fetch("https://world.openfoodfacts.org/api/v2/product/" + encodeURIComponent(code) + ".json")
-      .then(function(r) { if (!r.ok) throw new Error("Rete non disponibile"); return r.json(); })
+    $("pName").value = "";
+    $("pBrand").value = "";
+    $("pFormat").value = "";
+    $("pImage").value = "";
+
+    var url = "https://world.openfoodfacts.org/api/v2/product/" +
+      encodeURIComponent(code) +
+      ".json?fields=code,status,product_name,product_name_it,generic_name,generic_name_it,brands,quantity,image_front_url,image_front_small_url,image_url,selected_images";
+
+    fetch(url, { headers: { "Accept": "application/json" } })
+      .then(function(r) {
+        if (!r.ok) throw new Error("HTTP " + r.status);
+        return r.json();
+      })
       .then(function(data) {
-        if (!data.product || data.status !== 1) {
-          alert("Prodotto non trovato online. Puoi inserire i dati manualmente.");
+        if (!data || data.status !== 1 || !data.product) {
+          alert("Prodotto non trovato su Open Food Facts. Il barcode è stato mantenuto: puoi compilare i dati manualmente.");
           return;
         }
+
         var p = data.product;
-        $("pName").value = p.product_name_it || p.product_name || "";
-        $("pBrand").value = p.brands || "";
-        $("pFormat").value = p.quantity || "";
-        $("pImage").value = p.image_front_url || p.image_url || "";
+
+        // Usa il primo nome non vuoto disponibile, senza sovrascrivere con stringhe vuote.
+        var name = p.product_name_it || p.product_name ||
+          p.generic_name_it || p.generic_name || "";
+        var brand = p.brands || "";
+        var format = p.quantity || "";
+
+        // Preferisci la foto frontale; prova poi gli altri campi immagine disponibili.
+        var image = p.image_front_url ||
+          p.image_front_small_url ||
+          p.image_url ||
+          (p.selected_images && p.selected_images.front &&
+            p.selected_images.front.display &&
+            (p.selected_images.front.display.it ||
+             p.selected_images.front.display.en ||
+             Object.values(p.selected_images.front.display)[0])) ||
+          "";
+
+        if (name) $("pName").value = name;
+        if (brand) $("pBrand").value = brand;
+        if (format) $("pFormat").value = format;
+
+        if (typeof image === "string" && /^https?:\/\//i.test(image)) {
+          $("pImage").value = image;
+        }
+
+        if (!name && !image) {
+          alert("Open Food Facts ha trovato il codice, ma non ha restituito nome o immagine. Puoi completare i campi manualmente.");
+        } else if (!image) {
+          alert("Prodotto trovato su Open Food Facts, ma non è disponibile una foto. Puoi aggiungere un URL immagine manualmente.");
+        }
       })
-      .catch(function() {
-        alert("Non riesco a recuperare il prodotto online. Puoi inserire i dati manualmente.");
+      .catch(function(error) {
+        console.error("Open Food Facts:", error);
+        alert("Non riesco a recuperare il prodotto online. Il barcode è stato mantenuto: controlla la connessione e inserisci i dati manualmente.");
       });
   }
 
@@ -520,7 +566,7 @@ function openScan() {
     function() {}
   ).catch(function(error) {
     console.error("Errore fotocamera:", error);
-    alert("Impossibile avviare la fotocamera frontale. Controlla i permessi di Safari.");
+    alert("Impossibile avviare la fotocamera frontale. Controlla i permessi di Safari e che il sito sia aperto tramite HTTPS.");
     closeScan();
   });
 }
