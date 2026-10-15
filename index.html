@@ -549,17 +549,19 @@ function openScan() {
   $("scannerModal").classList.remove("hidden");
   scanner = new Html5Qrcode("reader");
 
-  scanner.start(
-    { facingMode: "environment" },
-    {
-      fps: 15,
-      qrbox: { width: 280, height: 160 },
-      videoConstraints: {
-        facingMode: { ideal: "user" },
-        width: { ideal: 1920 },
-        height: { ideal: 1080 }
-      }
-    },
+
+scanner.start(
+  { facingMode: "environment" },
+  {
+    fps: 15,
+    qrbox: { width: 350, height: 140 },
+    videoConstraints: {
+      facingMode: { ideal: "environment" },
+      width: { ideal: 1920 },
+      height: { ideal: 1080 }
+    }
+  },
+
     function(code) {
       scanBarcode(code);
     },
