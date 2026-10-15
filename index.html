@@ -131,10 +131,73 @@ input,select{width:100%;padding:12px;border:1px solid #dce4dc;border-radius:12px
   }
 }
 
+
+/* Scanner spostato verso l'alto su iPad */
+#scannerModal {
+  align-items: flex-start !important;
+  justify-content: center !important;
+  padding: 4px !important;
+}
+
+#scannerModal .scanner-dialog {
+  width: 100% !important;
+  max-width: 1000px !important;
+  height: 94vh !important;
+  max-height: 94vh !important;
+  margin: 0 auto !important;
+  padding: 10px !important;
+  overflow-y: auto !important;
+  display: flex;
+  flex-direction: column;
+}
+
+#scannerModal .dialoghead {
+  flex: 0 0 auto;
+  margin-bottom: 4px;
+}
+
+#reader {
+  width: 100% !important;
+  flex: 0 0 auto;
+  margin: 0 auto 8px !important;
+  min-height: 320px;
+  overflow: hidden;
+}
+
+#reader video {
+  width: 100% !important;
+  max-width: 100% !important;
+  height: auto !important;
+  object-fit: contain !important;
+}
+
+#reader__scan_region {
+  width: 100% !important;
+  min-height: 280px;
+}
+
+#scannerModal .scanner-help {
+  flex: 0 0 auto;
+  margin: 4px 0 8px;
+}
+
+#scannerModal .scanner-close {
+  flex: 0 0 auto;
+  margin-bottom: 4px;
+}
+
 @media (orientation: landscape) and (max-width: 1024px) {
   #scannerModal .scanner-dialog {
-    height: 96vh;
-    max-height: 96vh;
+    height: 98vh !important;
+    max-height: 98vh !important;
+  }
+
+  #reader {
+    min-height: 220px;
+  }
+
+  #reader__scan_region {
+    min-height: 200px;
   }
 }
 
