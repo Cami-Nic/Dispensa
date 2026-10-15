@@ -60,7 +60,84 @@ input,select{width:100%;padding:12px;border:1px solid #dce4dc;border-radius:12px
 .two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .actions{display:flex;gap:8px;margin-top:16px}
 .actions button{flex:1}
-#reader{width:100%;margin-top:12px}
+
+/* Scanner grande e centrato su iPad */
+#scannerModal {
+  padding: 8px;
+}
+
+#scannerModal .scanner-dialog {
+  width: 100%;
+  max-width: 1000px;
+  height: 94vh;
+  max-height: 94vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding: 16px;
+  margin: auto;
+}
+
+#scannerModal .dialoghead {
+  flex: 0 0 auto;
+  margin-bottom: 10px;
+}
+
+#reader {
+  width: 100%;
+  flex: 1 1 auto;
+  min-height: 0;
+  margin: 0 auto 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+#reader video {
+  max-width: 100% !important;
+  object-fit: contain !important;
+}
+
+#reader__scan_region {
+  width: 100% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+#reader__dashboard {
+  flex: 0 0 auto;
+  width: 100%;
+}
+
+#scannerModal .scanner-help {
+  flex: 0 0 auto;
+  margin: 4px 0 10px;
+}
+
+#scannerModal .scanner-close {
+  flex: 0 0 auto;
+  width: 100%;
+}
+
+@media (max-width: 1024px) {
+  #scannerModal .scanner-dialog {
+    width: 100%;
+    max-width: none;
+    height: 96vh;
+    max-height: 96vh;
+    padding: 12px;
+  }
+}
+
+@media (orientation: landscape) and (max-width: 1024px) {
+  #scannerModal .scanner-dialog {
+    height: 96vh;
+    max-height: 96vh;
+  }
+}
+
 @media(max-width:600px){
  .categories{grid-template-columns:1fr}
  .category{min-height:85px;flex-direction:row;justify-content:flex-start;padding:14px 22px}
@@ -152,12 +229,25 @@ input,select{width:100%;padding:12px;border:1px solid #dce4dc;border-radius:12px
   </div>
 </div>
 
+
 <div id="scannerModal" class="modal hidden" role="dialog" aria-modal="true">
-  <div class="dialog">
-    <div class="dialoghead"><h2>Scansiona barcode</h2><button data-action="closeScan">✕</button></div>
+  <div class="dialog scanner-dialog">
+    <div class="dialoghead">
+      <h2>Scansiona barcode</h2>
+      <button data-action="closeScan" aria-label="Chiudi scanner">✕</button>
+    </div>
+
     <div id="reader"></div>
-    <p class="muted">Consenti l'accesso alla fotocamera quando richiesto.</p>
-    <button class="secondary" data-action="closeScan">Chiudi scanner</button>
+
+    <p class="muted scanner-help">
+      Inquadra il codice a barre al centro.
+      Se la fotocamera fatica a mettere a fuoco,
+      allontana leggermente il prodotto e mantieni ferma la fotocamera.
+    </p>
+
+    <button class="secondary scanner-close" data-action="closeScan">
+      Chiudi scanner
+    </button>
   </div>
 </div>
 
@@ -532,6 +622,7 @@ input,select{width:100%;padding:12px;border:1px solid #dce4dc;border-radius:12px
   }
 
 
+
 function openScan() {
   if (!user) return;
 
@@ -547,31 +638,54 @@ function openScan() {
   }
 
   $("scannerModal").classList.remove("hidden");
+  $("reader").innerHTML = "";
+
   scanner = new Html5Qrcode("reader");
 
+  // Dimensioni ampie per codici a barre lineari.
+  var readerWidth = $("reader").clientWidth || window.innerWidth;
+  var readerHeight = $("reader").clientHeight ||
+    Math.round(window.innerHeight * 0.60);
 
-scanner.start(
-  { facingMode: "environment" },
-  {
-    fps: 15,
-    qrbox: { width: 350, height: 140 },
-    videoConstraints: {
-      facingMode: { ideal: "environment" },
-      width: { ideal: 1920 },
-      height: { ideal: 1080 }
-    }
-  },
+  var qrWidth = Math.min(
+    Math.floor(readerWidth * 0.94),
+    900
+  );
 
+  var qrHeight = Math.min(
+    Math.floor(readerHeight * 0.45),
+    260
+  );
+
+  // Evita dimensioni troppo piccole su schermi stretti.
+  qrWidth = Math.max(250, qrWidth);
+  qrHeight = Math.max(100, qrHeight);
+
+  scanner.start(
+    { facingMode: "environment" },
+    {
+      fps: 10,
+      qrbox: {
+        width: qrWidth,
+        height: qrHeight
+      },
+      aspectRatio: 1.777,
+      disableFlip: true
+    },
     function(code) {
       scanBarcode(code);
     },
     function() {}
   ).catch(function(error) {
     console.error("Errore fotocamera:", error);
-    alert("Impossibile avviare la fotocamera frontale. Controlla i permessi di Safari e che il sito sia aperto tramite HTTPS.");
+    alert(
+      "Impossibile avviare la fotocamera. " +
+      "Controlla i permessi di Safari e che il sito sia aperto tramite HTTPS."
+    );
     closeScan();
   });
 }
+
 
   document.addEventListener("click", function(event) {
     var el = event.target.closest("[data-action]");
