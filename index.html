@@ -687,62 +687,61 @@ function openScan() {
     Html5QrcodeSupportedFormats.CODE_39
   ];
 
-  var currentScanner = new Html5Qrcode("reader", {
-    formatsToSupport: formats,
-    verbose: false
-  });
+ 
+var currentScanner = new Html5Qrcode("reader", {
+  formatsToSupport: formats,
+  verbose: false,
+  useBarCodeDetectorIfSupported: true
+});
+
 
   scanner = currentScanner;
 
   requestAnimationFrame(function () {
     if (scanner !== currentScanner) return;
 
-    var config = {
-      fps: 15,
+  
+var config = {
+  fps: 15,
+  aspectRatio: 4 / 3,
 
-      qrbox: function (width, height) {
-        // Mantiene la zona di lettura entro i limiti del video.
-        var boxWidth = Math.max(
-          1,
-          Math.min(width, Math.floor(width * 0.92))
-        );
+  qrbox: function (width, height) {
+    // Zona larga per leggere i barcode EAN orizzontali.
+    var boxWidth = Math.max(
+      1,
+      Math.min(width, Math.floor(width * 0.90))
+    );
 
-        var boxHeight = Math.max(
-          1,
-          Math.min(height, Math.floor(height * 0.45), 150)
-        );
+    var boxHeight = Math.max(
+      1,
+      Math.min(height, 140)
+    );
 
-        return {
-          width: boxWidth,
-          height: boxHeight
-        };
-      },
-
-      disableFlip: true
+    return {
+      width: boxWidth,
+      height: boxHeight
     };
+  },
 
-    currentScanner.start(
-      { facingMode: "environment" },
-      config,
+  disableFlip: true
+};
 
-      function (code) {
-        // Accetta una sola lettura per sessione.
-        if (
-          !code ||
-          scanner !== currentScanner ||
-          scanLocked
-        ) {
-          return;
-        }
 
-        scanLocked = true;
-        scanBarcode(code);
-      },
-
-      function () {
-        // I fotogrammi senza codici leggibili sono normali.
-      }
-    ).catch(function (error) {
+ 
+currentScanner.start(
+  {
+    facingMode: "environment",
+    width: { ideal: 1280 },
+    height: { ideal: 720 }
+  },
+  config,
+  function (code) {
+    if (!code || scanner !== currentScanner) return;
+    scanBarcode(code);
+  },
+  function () {}
+)
+.catch(function (error) {
       console.error("Errore avvio scanner:", error);
 
       if (scanner === currentScanner) {
