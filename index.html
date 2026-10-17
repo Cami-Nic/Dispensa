@@ -297,9 +297,8 @@ input,select{width:100%;padding:12px;border:1px solid #dce4dc;border-radius:12px
   var category = "cibo";
   var filter = "all";
   var editingId = null;
-var busy = false;
-var scanner = null;
-var scanLocked = false;
+  var busy = false;
+  var scanner = null;
   var categories = {
     cibo: {name:"Cibo", icon:"🍎"},
     bagno: {name:"Prodotti bagno", icon:"🧴"},
@@ -590,18 +589,7 @@ var scanLocked = false;
       encodeURIComponent(code) +
       ".json?fields=code,status,product_name,product_name_it,generic_name,generic_name_it,brands,quantity,image_front_url,image_front_small_url,image_url,selected_images";
 
- var controller = new AbortController();
-var timeoutId = setTimeout(function () {
-  controller.abort();
-}, 8000);
-
-fetch(url, {
-  headers: { "Accept": "application/json" },
-  signal: controller.signal
-})
-  .finally(function () {
-    clearTimeout(timeoutId);
-  })
+    fetch(url, { headers: { "Accept": "application/json" } })
       .then(function(r) {
         if (!r.ok) throw new Error("HTTP " + r.status);
         return r.json();
@@ -653,9 +641,8 @@ fetch(url, {
 
 
 
-
 function openScan() {
-  if (!user || scanner) return;
+  if (!user) return;
 
   if (
     location.protocol !== "https:" &&
@@ -670,10 +657,12 @@ function openScan() {
     return;
   }
 
+  // Non avviare un secondo scanner se uno è già attivo.
+  if (scanner) return;
+
   var modal = $("scannerModal");
   var reader = $("reader");
 
-  scanLocked = false;
   modal.classList.remove("hidden");
   reader.innerHTML = "";
   modal.scrollTop = 0;
@@ -687,66 +676,51 @@ function openScan() {
     Html5QrcodeSupportedFormats.CODE_39
   ];
 
- 
-var currentScanner = new Html5Qrcode("reader", {
-  formatsToSupport: formats,
-  verbose: false,
-  useBarCodeDetectorIfSupported: true
-});
-
+  var currentScanner = new Html5Qrcode("reader", {
+    formatsToSupport: formats,
+    verbose: false
+  });
 
   scanner = currentScanner;
 
   requestAnimationFrame(function () {
+    // Se lo scanner è stato chiuso nel frattempo, non avviarlo.
     if (scanner !== currentScanner) return;
 
-  
-var config = {
-  fps: 15,
-  aspectRatio: 4 / 3,
+    var config = {
+      fps: 10,
+      qrbox: function (width, height) {
+        var boxWidth = Math.floor(width * 0.92);
+        var boxHeight = Math.min(
+          150,
+          Math.floor(height * 0.45)
+        );
 
-  qrbox: function (width, height) {
-    // Zona larga per leggere i barcode EAN orizzontali.
-    var boxWidth = Math.max(
-      1,
-      Math.min(width, Math.floor(width * 0.90))
-    );
-
-    var boxHeight = Math.max(
-      1,
-      Math.min(height, 140)
-    );
-
-    return {
-      width: boxWidth,
-      height: boxHeight
+        return {
+          width: Math.max(150, boxWidth),
+          height: Math.max(60, boxHeight)
+        };
+      },
+      disableFlip: true
     };
-  },
 
-  disableFlip: true
-};
+    currentScanner.start(
+      { facingMode: "environment" },
+      config,
+      function (code) {
+        if (!code || scanner !== currentScanner) return;
 
-
- 
-currentScanner.start(
-  {
-    facingMode: "environment",
-    width: { ideal: 1280 },
-    height: { ideal: 720 }
-  },
-  config,
-  function (code) {
-    if (!code || scanner !== currentScanner) return;
-    scanBarcode(code);
-  },
-  function () {}
-)
-.catch(function (error) {
+        // Gestisce il codice riconosciuto dalla funzione esistente.
+        scanBarcode(code);
+      },
+      function () {
+        // Normale: alcuni fotogrammi non contengono un codice leggibile.
+      }
+    ).catch(function (error) {
       console.error("Errore avvio scanner:", error);
 
       if (scanner === currentScanner) {
         scanner = null;
-        scanLocked = false;
 
         try {
           currentScanner.clear();
