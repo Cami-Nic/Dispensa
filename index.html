@@ -1,16 +1,16 @@
-
 <!DOCTYPE html>
 <html lang="it">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#7bbf6a">
+<meta name="theme-color" content="#D4E8DC">
 <title>La Mia Dispensa</title>
+
 <style>
 *{box-sizing:border-box}
 body{margin:0;background:#f5f7f4;color:#29372d;font-family:system-ui,-apple-system,sans-serif}
 button,input,select{font:inherit}
-button{cursor:pointer}
+button{cursor:pointer;border:0;border-radius:12px;padding:11px 15px}
 main{max-width:850px;margin:auto;padding:20px 16px}
 .hidden{display:none!important}
 h1{font-size:27px;margin:0 0 5px}
@@ -19,28 +19,48 @@ h2{margin:0;font-size:23px}
 .top{display:flex;align-items:center;gap:12px;margin:12px 0 25px}
 .logo{font-size:35px;background:white;border-radius:17px;padding:10px}
 .top button{margin-left:auto}
-button{border:0;border-radius:12px;padding:11px 15px}
 .primary,.add{background:#7bbf6a;color:white;font-weight:700}
 .secondary{background:#edf2eb;color:#425343}
 .danger{background:#fff0ee;color:#b64238}
-.categories{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-.category{background:white;border-radius:20px;min-height:135px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;font-weight:700}
+
+.categories{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.category{
+  border-radius:20px;
+  min-height:135px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  font-weight:700;
+  transition:transform .15s ease;
+}
+.category:active{transform:scale(.98)}
 .category span{font-size:37px}
+
+.environment-casa{background:#D4E8DC;color:#285C48}
+.environment-cantina{background:#EADCF5;color:#684783}
+.category-cibo{background:#FFE2A8;color:#855A17}
+.category-bagno{background:#CDE8FA;color:#285F83}
+.category-pulizia{background:#F8D8D0;color:#914F43}
+.category-freezer{background:#C9EDF0;color:#22666D}
+
 .header{display:flex;align-items:center;gap:12px;margin:8px 0 18px}
-.header button{font-size:22px;background:white}
+.header button{font-size:22px;background:white;min-width:46px}
 .toolbar{display:flex;gap:8px;margin-bottom:12px}
 input,select{width:100%;padding:12px;border:1px solid #dce4dc;border-radius:12px;background:white;color:#29372d}
 .toolbar input{flex:1;min-width:0}
-.filters{display:flex;gap:8px;margin:12px 0}
+.filters{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+.filter{background:#edf2eb;color:#425343}
 .filter.active{background:#e3f2dd;color:#356c2e}
 .products{display:grid;gap:10px}
 .product{display:flex;align-items:center;gap:10px;background:white;border-radius:16px;padding:12px}
 .product.low{outline:2px solid #e57368}
-.product.empty-stock {
-  outline: 2px solid #b64238;
-  background: #fff8f7;
+.product.empty-stock{outline:2px solid #b64238;background:#fff8f7}
+.product img,.emoji{
+  width:52px;height:52px;border-radius:12px;object-fit:cover;
+  display:grid;place-items:center;background:#f0f4ee;font-size:28px;flex-shrink:0
 }
-.product img,.emoji{width:52px;height:52px;border-radius:12px;object-fit:cover;display:grid;place-items:center;background:#f0f4ee;font-size:28px;flex-shrink:0}
 .info{flex:1;min-width:0}
 .name{font-weight:700;overflow-wrap:anywhere}
 .small{font-size:12px;color:#78857d}
@@ -64,115 +84,57 @@ input,select{width:100%;padding:12px;border:1px solid #dce4dc;border-radius:12px
 .two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .actions{display:flex;gap:8px;margin-top:16px}
 .actions button{flex:1}
-  
-/* Scanner: pannello in alto, video ampio */
-#scannerModal {
-  position: fixed !important;
-  inset: 0 !important;
-  display: flex;
-  align-items: flex-start !important;
-  justify-content: center !important;
-  padding: 0 !important;
-  overflow-y: auto !important;
-  -webkit-overflow-scrolling: touch;
-  z-index: 99999 !important;
+
+/* Scanner */
+#scannerModal{
+  position:fixed!important;inset:0!important;display:flex;
+  align-items:flex-start!important;justify-content:center!important;
+  padding:0!important;overflow-y:auto!important;
+  -webkit-overflow-scrolling:touch;z-index:99999!important
 }
-
-#scannerModal.hidden {
-  display: none !important;
+#scannerModal.hidden{display:none!important}
+#scannerModal .scanner-dialog{
+  position:relative!important;width:100%!important;max-width:900px!important;
+  height:auto!important;max-height:none!important;margin:0!important;
+  padding:10px!important;border-radius:0 0 14px 14px!important;
+  overflow:visible!important;box-sizing:border-box!important
 }
-
-#scannerModal .scanner-dialog {
-  position: relative !important;
-  width: 100% !important;
-  max-width: 900px !important;
-  height: auto !important;
-  max-height: none !important;
-  margin: 0 !important;
-  padding: 10px !important;
-  border-radius: 0 0 14px 14px !important;
-  overflow: visible !important;
-  box-sizing: border-box !important;
-  transform: none !important;
+#scannerModal .dialoghead{margin:0 0 8px!important}
+#reader{
+  display:block!important;width:100%!important;min-height:0!important;
+  height:auto!important;margin:0 0 8px!important;padding:0!important;overflow:hidden!important
 }
-
-#scannerModal .dialoghead {
-  margin: 0 0 8px !important;
+#reader video{display:block!important;width:100%!important;max-width:100%!important;height:auto!important;object-fit:contain!important}
+#scannerModal .scanner-help{margin:4px 0 8px!important}
+#scannerModal .scanner-close{width:100%!important}
+#reader__dashboard{
+  display:block!important;flex:0 0 auto!important;width:100%!important;
+  max-width:100%!important;margin:8px auto 0!important;padding:8px 0!important;
+  box-sizing:border-box!important;text-align:center!important
 }
+#reader__dashboard button,#reader__dashboard select{max-width:100%!important;margin:4px auto!important}
+#reader__dashboard_section,#reader__dashboard_section_csr{width:100%!important;text-align:center!important}
 
-#reader {
-  display: block !important;
-  width: 100% !important;
-  min-height: 0 !important;
-  height: auto !important;
-  margin: 0 0 8px !important;
-  padding: 0 !important;
-  overflow: hidden !important;
+@media(orientation:landscape){
+  #scannerModal .scanner-dialog{max-width:1100px!important}
 }
-
-#reader video {
-  display: block !important;
-  width: 100% !important;
-  max-width: 100% !important;
-  height: auto !important;
-  object-fit: contain !important;
-}
-
-#scannerModal .scanner-help {
-  margin: 4px 0 8px !important;
-}
-
-#scannerModal .scanner-close {
-  width: 100% !important;
-}
-
-#reader__dashboard {
-  display: block !important;
-  flex: 0 0 auto !important;
-  width: 100% !important;
-  max-width: 100% !important;
-  margin: 8px auto 0 !important;
-  padding: 8px 0 !important;
-  box-sizing: border-box !important;
-  text-align: center !important;
-}
-
-#reader__dashboard button,
-#reader__dashboard select {
-  max-width: 100% !important;
-  margin: 4px auto !important;
-}
-
-#reader__dashboard_section {
-  width: 100% !important;
-}
-
-#reader__dashboard_section_csr {
-  width: 100% !important;
-  text-align: center !important;
-}
-
-@media (orientation: landscape) {
-  #scannerModal .scanner-dialog {
-    max-width: 1100px !important;
-  }
-}
-
-
 @media(max-width:600px){
- .categories{grid-template-columns:1fr}
- .category{min-height:85px;flex-direction:row;justify-content:flex-start;padding:14px 22px}
- .category span{font-size:30px}
- .product{gap:7px;padding:9px}
- .product img,.emoji{width:42px;height:42px}
- .controls{gap:2px}
- .controls button{padding:7px}
+  .categories{grid-template-columns:1fr}
+  .category{min-height:85px;flex-direction:row;justify-content:flex-start;padding:14px 22px}
+  .category span{font-size:30px}
+  .product{gap:7px;padding:9px}
+  .product img,.emoji{width:42px;height:42px}
+  .controls{gap:2px}
+  .controls button{padding:7px}
+  .filters button{padding:9px 11px}
+  .actions{flex-wrap:wrap}
 }
-  
 </style>
 </head>
+
 <body>
 
+<!-- ACCESSO -->
 <main id="loginScreen">
   <div class="card">
     <div class="logo" style="display:inline-block">🛒</div>
@@ -190,61 +152,144 @@ input,select{width:100%;padding:12px;border:1px solid #dce4dc;border-radius:12px
   </div>
 </main>
 
+<!-- HOME: SCELTA AMBIENTE -->
 <main id="home" class="hidden">
   <div class="top">
     <div class="logo">🛒</div>
-    <div><h1>La Mia Dispensa</h1><div class="muted">Scegli una categoria</div></div>
+    <div>
+      <h1>La Mia Dispensa</h1>
+      <div class="muted">Scegli un ambiente</div>
+    </div>
     <button class="secondary" id="logout">Esci</button>
   </div>
+
   <div class="categories">
-    <button class="category" data-action="category" data-cat="cibo"><span>🍎</span>Cibo</button>
-    <button class="category" data-action="category" data-cat="bagno"><span>🧴</span>Prodotti bagno</button>
-    <button class="category" data-action="category" data-cat="pulizia"><span>🧹</span>Prodotti pulizia</button>
+    <button class="category environment-casa"
+            data-action="environment" data-env="casa">
+      <span>🏠</span>Casa
+    </button>
+
+    <button class="category environment-cantina"
+            data-action="environment" data-env="cantina">
+      <span>🪜</span>Cantina
+    </button>
   </div>
 </main>
 
+<!-- SCELTA CATEGORIA DELL'AMBIENTE -->
+<main id="environmentScreen" class="hidden">
+  <div class="header">
+    <button data-action="home" aria-label="Torna alla home">←</button>
+    <div>
+      <h2 id="environmentTitle">Casa</h2>
+      <div class="muted">Scegli una categoria</div>
+    </div>
+  </div>
+
+  <div class="categories">
+    <button class="category category-cibo"
+            data-action="category" data-cat="cibo" data-env="casa">
+      <span>🍎</span>Cibo
+    </button>
+
+    <button class="category category-bagno"
+            data-action="category" data-cat="bagno" data-env="casa">
+      <span>🛁</span>Bagno
+    </button>
+
+    <button class="category category-pulizia"
+            data-action="category" data-cat="pulizia" data-env="cantina">
+      <span>🧴</span>Pulizia
+    </button>
+
+    <button class="category category-freezer"
+            data-action="category" data-cat="freezer" data-env="cantina">
+      <span>🧊</span>Freezer
+    </button>
+  </div>
+</main>
+
+<!-- ELENCO PRODOTTI -->
 <main id="categoryScreen" class="hidden">
   <div class="header">
-    <button data-action="home" aria-label="Indietro">←</button>
-    <div><h2 id="categoryTitle">Cibo</h2><div class="muted">I tuoi prodotti</div></div>
+    <button data-action="backEnvironment" aria-label="Torna alle categorie">←</button>
+    <div>
+      <h2 id="categoryTitle">Cibo</h2>
+      <div class="muted">I tuoi prodotti</div>
+    </div>
   </div>
+
   <div class="toolbar">
     <input id="search" type="search" placeholder="Cerca prodotto...">
     <button class="secondary" data-action="scan" aria-label="Scansiona barcode">📷</button>
   </div>
 
-<div class="filters">
-  <button id="allFilter" class="filter active" data-action="filter" data-filter="all">Tutti</button>
-  <button id="lowFilter" class="filter" data-action="filter" data-filter="low">🟠 Scorte basse</button>
-  <button id="emptyFilter" class="filter" data-action="filter" data-filter="empty">🔴 Terminati</button>
-</div>
+  <div class="filters">
+    <button id="allFilter" class="filter active" data-action="filter" data-filter="all">Tutti</button>
+    <button id="lowFilter" class="filter" data-action="filter" data-filter="low">🟠 Scorte basse</button>
+    <button id="emptyFilter" class="filter" data-action="filter" data-filter="empty">🔴 Terminati</button>
+  </div>
 
   <div id="products" class="products"></div>
   <button class="add" data-action="new">＋ Aggiungi prodotto</button>
 </main>
 
+<!-- MODULO PRODOTTO -->
 <div id="productModal" class="modal hidden" role="dialog" aria-modal="true">
   <div class="dialog">
-    <div class="dialoghead"><h2 id="formTitle">Aggiungi prodotto</h2><button data-action="closeForm">✕</button></div>
+    <div class="dialoghead">
+      <h2 id="formTitle">Aggiungi prodotto</h2>
+      <button data-action="closeForm" aria-label="Chiudi">✕</button>
+    </div>
+
     <form id="productForm">
-      <div class="field"><label for="pName">Nome prodotto *</label><input id="pName" required></div>
-      <div class="two">
-        <div class="field"><label for="pBrand">Marca</label><input id="pBrand"></div>
-        <div class="field"><label for="pFormat">Formato</label><input id="pFormat" placeholder="Es. 450 g"></div>
+      <div class="field">
+        <label for="pName">Nome prodotto *</label>
+        <input id="pName" required>
       </div>
+
       <div class="two">
-        <div class="field"><label for="pQty">Quantità</label><input id="pQty" type="number" min="0" step="1" value="1"></div>
-        <div class="field"><label for="pMin">Scorta minima</label><input id="pMin" type="number" min="0" step="1" value="" placeholder="Lascia vuoto se non serve"></div>
+        <div class="field">
+          <label for="pBrand">Marca</label>
+          <input id="pBrand">
+        </div>
+        <div class="field">
+          <label for="pFormat">Formato</label>
+          <input id="pFormat" placeholder="Es. 450 g">
+        </div>
       </div>
-      <div class="field"><label for="pCat">Categoria</label>
+
+      <div class="two">
+        <div class="field">
+          <label for="pQty">Quantità</label>
+          <input id="pQty" type="number" min="0" step="1" value="1">
+        </div>
+        <div class="field">
+          <label for="pMin">Scorta minima</label>
+          <input id="pMin" type="number" min="0" step="1" value="" placeholder="Facoltativa">
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="pCat">Categoria</label>
         <select id="pCat">
-          <option value="cibo">Cibo</option>
-          <option value="bagno">Prodotti bagno</option>
-          <option value="pulizia">Prodotti pulizia</option>
+          <option value="cibo">🍎 Cibo</option>
+          <option value="bagno">🛁 Bagno</option>
+          <option value="pulizia">🧴 Pulizia</option>
+          <option value="freezer">🧊 Freezer</option>
         </select>
       </div>
-      <div class="field"><label for="pBarcode">Barcode</label><input id="pBarcode" inputmode="numeric"></div>
-      <div class="field"><label for="pImage">URL immagine</label><input id="pImage" type="url" placeholder="https://..."></div>
+
+      <div class="field">
+        <label for="pBarcode">Barcode</label>
+        <input id="pBarcode" inputmode="numeric">
+      </div>
+
+      <div class="field">
+        <label for="pImage">URL immagine</label>
+        <input id="pImage" type="url" placeholder="https://...">
+      </div>
+
       <div class="actions">
         <button type="button" class="danger hidden" id="deleteProduct">Elimina</button>
         <button type="button" class="secondary" data-action="closeForm">Annulla</button>
@@ -254,27 +299,18 @@ input,select{width:100%;padding:12px;border:1px solid #dce4dc;border-radius:12px
   </div>
 </div>
 
-
-
+<!-- SCANNER BARCODE -->
 <div id="scannerModal" class="modal hidden" role="dialog" aria-modal="true">
   <div class="dialog scanner-dialog">
     <div class="dialoghead">
       <h2>Scansiona barcode</h2>
-      <button data-action="closeScan">✕</button>
+      <button data-action="closeScan" aria-label="Chiudi scanner">✕</button>
     </div>
-
     <div id="reader"></div>
-
-    <p class="muted scanner-help">
-      Consenti l'accesso alla fotocamera quando richiesto.
-    </p>
-
-    <button class="secondary scanner-close" data-action="closeScan">
-      Chiudi scanner
-    </button>
+    <p class="muted scanner-help">Consenti l'accesso alla fotocamera quando richiesto.</p>
+    <button class="secondary scanner-close" data-action="closeScan">Chiudi scanner</button>
   </div>
 </div>
-
 
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
@@ -295,6 +331,7 @@ input,select{width:100%;padding:12px;border:1px solid #dce4dc;border-radius:12px
   };
 
   firebase.initializeApp(firebaseConfig);
+
   var auth = firebase.auth();
   var db = firebase.firestore();
 
@@ -302,134 +339,218 @@ input,select{width:100%;padding:12px;border:1px solid #dce4dc;border-radius:12px
   var inventoryRef = null;
   var products = [];
   var category = "cibo";
+  var currentEnvironment = "casa";
   var filter = "all";
   var editingId = null;
   var busy = false;
   var scanner = null;
+
   var categories = {
-    cibo: {name:"Cibo", icon:"🍎"},
-    bagno: {name:"Prodotti bagno", icon:"🧴"},
-    pulizia: {name:"Prodotti pulizia", icon:"🧹"}
+    cibo: {
+      name: "Cibo",
+      icon: "🍎",
+      environment: "casa"
+    },
+    bagno: {
+      name: "Bagno",
+      icon: "🛁",
+      environment: "casa"
+    },
+    pulizia: {
+      name: "Pulizia",
+      icon: "🧴",
+      environment: "cantina"
+    },
+    freezer: {
+      name: "Freezer",
+      icon: "🧊",
+      environment: "cantina"
+    }
   };
 
-  function $(id) { return document.getElementById(id); }
+  function $(id) {
+    return document.getElementById(id);
+  }
+
   function escapeHTML(s) {
     return String(s == null ? "" : s).replace(/[&<>"']/g, function(c) {
-      return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];
+      return {
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;"
+      }[c];
     });
   }
+
   function num(v) {
     var n = Number(v);
     return isFinite(n) && n > 0 ? Math.floor(n) : 0;
   }
+
   function newId() {
-    return "p-" + Date.now() + "-" + Math.floor(Math.random()*1000000);
+    return "p-" + Date.now() + "-" + Math.floor(Math.random() * 1000000);
   }
-  function low(p) { return num(p.quantity) < num(p.minStock); }
+
+  function low(p) {
+    return num(p.quantity) < num(p.minStock);
+  }
+
   function setScreen(id) {
-    ["loginScreen","home","categoryScreen"].forEach(function(k) {
+    ["loginScreen", "home", "environmentScreen", "categoryScreen"].forEach(function(k) {
       $(k).classList.toggle("hidden", k !== id);
     });
   }
-  function showError(message) { $("loginError").textContent = message || ""; }
+
+  function showError(message) {
+    $("loginError").textContent = message || "";
+  }
 
   function cleanProduct(p) {
     return {
-      id:String(p.id || newId()),
-      name:String(p.name || ""),
-      brand:String(p.brand || ""),
-      format:String(p.format || ""),
-      quantity:num(p.quantity),
-      minStock:num(p.minStock),
-      category:categories[p.category] ? p.category : "cibo",
-      barcode:String(p.barcode || ""),
-      image:String(p.image || "")
+      id: String(p.id || newId()),
+      name: String(p.name || ""),
+      brand: String(p.brand || ""),
+      format: String(p.format || ""),
+      quantity: num(p.quantity),
+      minStock: num(p.minStock),
+      category: categories[p.category] ? p.category : "cibo",
+      barcode: String(p.barcode || ""),
+      image: String(p.image || "")
     };
   }
 
   function findProduct(id) {
-    return products.find(function(p) { return p.id === id; });
+    return products.find(function(p) {
+      return p.id === id;
+    });
+  }
+
+  /* Navigazione ambienti */
+  function openEnvironment(env) {
+    if (!user || (env !== "casa" && env !== "cantina")) return;
+
+    currentEnvironment = env;
+
+    $("environmentTitle").textContent =
+      env === "casa" ? "Casa 🏠" : "Cantina 🪜";
+
+    Array.prototype.forEach.call(
+      $("environmentScreen").querySelectorAll("[data-env]"),
+      function(button) {
+        button.classList.toggle("hidden", button.dataset.env !== env);
+      }
+    );
+
+    setScreen("environmentScreen");
+  }
+
+  function backToEnvironment() {
+    openEnvironment(currentEnvironment);
   }
 
   function openCategory(cat) {
     if (!user || !categories[cat]) return;
+
     category = cat;
+    currentEnvironment = categories[cat].environment;
     filter = "all";
+
     $("categoryTitle").textContent = categories[cat].name;
     $("search").value = "";
+
     updateFilters();
     setScreen("categoryScreen");
     render();
   }
 
+  function updateFilters() {
+    $("allFilter").classList.toggle("active", filter === "all");
+    $("lowFilter").classList.toggle("active", filter === "low");
+    $("emptyFilter").classList.toggle("active", filter === "empty");
+  }
 
-function updateFilters() {
-  $("allFilter").classList.toggle("active", filter === "all");
-  $("lowFilter").classList.toggle("active", filter === "low");
-  $("emptyFilter").classList.toggle("active", filter === "empty");
-}
-
-
+  /* Visualizzazione prodotti */
   function render() {
     if (!user) return;
-    var q = $("search").value.trim().toLowerCase();
-    var list = products.filter(function(p) {
-      var match = (p.name + " " + p.brand + " " + p.format + " " + p.barcode).toLowerCase().indexOf(q) !== -1;
-    
-return p.category === category &&
-  match &&
-  (
-    filter === "all" ||
-    (filter === "low" && low(p) && num(p.quantity) > 0) ||
-    (filter === "empty" && num(p.quantity) === 0)
-  );
 
-    }).sort(function(a,b) { return a.name.localeCompare(b.name); });
+    var q = $("search").value.trim().toLowerCase();
+
+    var list = products.filter(function(p) {
+      var match = (
+        p.name + " " + p.brand + " " + p.format + " " + p.barcode
+      ).toLowerCase().indexOf(q) !== -1;
+
+      return p.category === category &&
+        match &&
+        (
+          filter === "all" ||
+          (filter === "low" && low(p) && num(p.quantity) > 0) ||
+          (filter === "empty" && num(p.quantity) === 0)
+        );
+    }).sort(function(a, b) {
+      return a.name.localeCompare(b.name);
+    });
 
     if (!list.length) {
-      $("products").innerHTML = '<div class="empty">📦<br><br>Nessun prodotto trovato.<br>Puoi aggiungerne uno con il pulsante qui sotto.</div>';
+      $("products").innerHTML =
+        '<div class="empty">📦<br><br>Nessun prodotto trovato.' +
+        '<br>Puoi aggiungerne uno con il pulsante qui sotto.</div>';
       return;
     }
 
     $("products").innerHTML = list.map(function(p) {
       var picture = p.image && /^https?:\/\//i.test(p.image)
-        ? '<img src="' + escapeHTML(p.image) + '" alt="Foto di ' + escapeHTML(p.name) + '" loading="lazy" referrerpolicy="no-referrer">'
+        ? '<img src="' + escapeHTML(p.image) +
+          '" alt="Foto di ' + escapeHTML(p.name) +
+          '" loading="lazy" referrerpolicy="no-referrer">'
         : '<div class="emoji">' + categories[p.category].icon + '</div>';
-     return '<article class="product ' +
-  (num(p.quantity) === 0 ? 'empty-stock' : (low(p) ? 'low' : '')) +
-  '">' +
-        picture + '<div class="info">' +
+
+      return '<article class="product ' +
+        (num(p.quantity) === 0 ? 'empty-stock' : (low(p) ? 'low' : '')) +
+        '">' +
+        picture +
+        '<div class="info">' +
         (p.brand ? '<div class="small">' + escapeHTML(p.brand) + '</div>' : '') +
         '<div class="name">' + escapeHTML(p.name) + '</div>' +
         (p.format ? '<div class="small">' + escapeHTML(p.format) + '</div>' : '') +
         (low(p) ? '<div class="lowlabel">🔴 Scorta bassa</div>' : '') +
-        '</div><div class="controls">' +
-        '<button data-action="qty" data-id="' + escapeHTML(p.id) + '" data-delta="-1" aria-label="Diminuisci">−</button>' +
+        '</div>' +
+        '<div class="controls">' +
+        '<button data-action="qty" data-id="' + escapeHTML(p.id) +
+          '" data-delta="-1" aria-label="Diminuisci quantità">−</button>' +
         '<span class="qty">' + num(p.quantity) + '</span>' +
-        '<button data-action="qty" data-id="' + escapeHTML(p.id) + '" data-delta="1" aria-label="Aumenta">＋</button>' +
-        '<button data-action="edit" data-id="' + escapeHTML(p.id) + '" aria-label="Modifica">✏️</button>' +
+        '<button data-action="qty" data-id="' + escapeHTML(p.id) +
+          '" data-delta="1" aria-label="Aumenta quantità">＋</button>' +
+        '<button data-action="edit" data-id="' + escapeHTML(p.id) +
+          '" aria-label="Modifica prodotto">✏️</button>' +
         '</div></article>';
     }).join("");
 
     Array.prototype.forEach.call($("products").querySelectorAll("img"), function(img) {
       img.onerror = function() {
         var el = document.createElement("div");
-        el.className = "emoji"; el.textContent = "📦";
+        el.className = "emoji";
+        el.textContent = "📦";
         img.parentNode.replaceChild(el, img);
       };
     });
   }
 
-  // Un singolo documento per utente. Non legge né scrive localStorage.
+  /* Salvataggio Firestore */
   function saveInventory(nextProducts) {
     if (!user || !inventoryRef) {
       return Promise.reject(new Error("Non sei autenticata."));
     }
+
     if (busy) {
       return Promise.reject(new Error("Attendi che termini il salvataggio precedente."));
     }
+
     busy = true;
     var safe = nextProducts.map(cleanProduct);
+
     return inventoryRef.set({
       products: safe,
       updatedAt: firebase.firestore.FieldValue.serverTimestamp()
@@ -438,7 +559,10 @@ return p.category === category &&
       render();
     }).catch(function(error) {
       console.error("Firestore:", error);
-      alert("Salvataggio non riuscito (" + error.code + "). Controlla la connessione e le regole Firestore.");
+      alert(
+        "Salvataggio non riuscito (" + (error.code || "errore") +
+        "). Controlla la connessione e le regole Firestore."
+      );
       throw error;
     }).finally(function() {
       busy = false;
@@ -452,38 +576,58 @@ return p.category === category &&
 
     inventoryRef.get().then(function(doc) {
       if (!user) return;
+
       products = doc.exists && Array.isArray(doc.data().products)
-        ? doc.data().products.map(cleanProduct) : [];
+        ? doc.data().products.map(cleanProduct)
+        : [];
+
       render();
     }).catch(function(error) {
       console.error("Lettura Firestore:", error);
-      $("products").innerHTML = '<div class="empty">Impossibile caricare la dispensa. Controlla le regole Firestore.</div>';
-      alert("Errore di caricamento (" + error.code + "). Verifica che l'UID nelle regole Firestore corrisponda al tuo account.");
+      $("products").innerHTML =
+        '<div class="empty">Impossibile caricare la dispensa. Controlla le regole Firestore.</div>';
+
+      alert(
+        "Errore di caricamento (" + (error.code || "errore") +
+        "). Verifica le regole Firestore."
+      );
     });
   }
 
   function changeQuantity(id, delta) {
     if (busy) return;
+
     var p = findProduct(id);
     if (!p) return;
-    var next = products.map(function(item) { return Object.assign({}, item); });
-    var target = next.find(function(item) { return item.id === id; });
+
+    var next = products.map(function(item) {
+      return Object.assign({}, item);
+    });
+
+    var target = next.find(function(item) {
+      return item.id === id;
+    });
+
     target.quantity = Math.max(0, num(target.quantity) + delta);
-    saveInventory(next).catch(function(){});
+    saveInventory(next).catch(function() {});
   }
 
+  /* Modulo aggiunta e modifica */
   function openForm(p) {
     if (!user) return;
+
     editingId = p ? p.id : null;
+
     $("formTitle").textContent = p ? "Modifica prodotto" : "Aggiungi prodotto";
     $("pName").value = p ? p.name : "";
     $("pBrand").value = p ? p.brand : "";
     $("pFormat").value = p ? p.format : "";
     $("pQty").value = p ? num(p.quantity) : 1;
-    $("pMin").value = p ? num(p.minStock) : "";
+    $("pMin").value = p && num(p.minStock) > 0 ? num(p.minStock) : "";
     $("pCat").value = p ? p.category : category;
     $("pBarcode").value = p ? p.barcode : "";
     $("pImage").value = p ? p.image : "";
+
     $("deleteProduct").classList.toggle("hidden", !p);
     $("productModal").classList.remove("hidden");
   }
@@ -496,42 +640,53 @@ return p.category === category &&
   $("productForm").addEventListener("submit", function(event) {
     event.preventDefault();
     if (!user || busy) return;
+
     var name = $("pName").value.trim();
-    if (!name) { alert("Inserisci il nome del prodotto."); return; }
+
+    if (!name) {
+      alert("Inserisci il nome del prodotto.");
+      return;
+    }
 
     var image = $("pImage").value.trim();
+
     if (image && !/^https?:\/\//i.test(image)) {
       alert("L'URL dell'immagine deve iniziare con https:// o http://.");
       return;
     }
 
     var p = cleanProduct({
-      id:editingId || newId(),
-      name:name,
-      brand:$("pBrand").value.trim(),
-      format:$("pFormat").value.trim(),
-      quantity:$("pQty").value,
-      minStock:$("pMin").value,
-      category:$("pCat").value,
-      barcode:$("pBarcode").value.trim(),
-      image:image
+      id: editingId || newId(),
+      name: name,
+      brand: $("pBrand").value.trim(),
+      format: $("pFormat").value.trim(),
+      quantity: $("pQty").value,
+      minStock: $("pMin").value,
+      category: $("pCat").value,
+      barcode: $("pBarcode").value.trim(),
+      image: image
     });
 
-    var next = products.filter(function(item) { return item.id !== p.id; });
+    var next = products.filter(function(item) {
+      return item.id !== p.id;
+    });
+
     next.push(p);
     $("saveButton").disabled = true;
 
     saveInventory(next).then(function() {
       category = p.category;
+      currentEnvironment = categories[category].environment;
       filter = "all";
       $("search").value = "";
       $("categoryTitle").textContent = categories[category].name;
+
       updateFilters();
       closeForm();
       setScreen("categoryScreen");
       render();
     }).catch(function() {
-      // Il prodotto non viene presentato come salvato se Firestore rifiuta la scrittura.
+      // Il prodotto non viene presentato come salvato se la scrittura fallisce.
     }).finally(function() {
       $("saveButton").disabled = false;
     });
@@ -539,26 +694,37 @@ return p.category === category &&
 
   $("deleteProduct").addEventListener("click", function() {
     if (!editingId || busy) return;
+
     var p = findProduct(editingId);
     if (!p || !confirm('Eliminare "' + p.name + '"?')) return;
-    var next = products.filter(function(item) { return item.id !== editingId; });
-    saveInventory(next).then(closeForm).catch(function(){});
+
+    var next = products.filter(function(item) {
+      return item.id !== editingId;
+    });
+
+    saveInventory(next).then(closeForm).catch(function() {});
   });
 
+  /* Accesso */
   $("loginForm").addEventListener("submit", function(event) {
     event.preventDefault();
     showError("");
+
     $("loginButton").disabled = true;
     $("loginButton").textContent = "Accesso in corso…";
-    auth.signInWithEmailAndPassword($("email").value.trim(), $("password").value)
-      .catch(function(error) {
-        console.error("Login:", error);
-        showError("Accesso non riuscito. Controlla email e password e verifica che Email/Password sia abilitato in Firebase.");
-      })
-      .finally(function() {
-        $("loginButton").disabled = false;
-        $("loginButton").textContent = "Accedi";
-      });
+
+    auth.signInWithEmailAndPassword(
+      $("email").value.trim(),
+      $("password").value
+    ).catch(function(error) {
+      console.error("Login:", error);
+      showError(
+        "Accesso non riuscito. Controlla email e password e verifica che Email/Password sia abilitato in Firebase."
+      );
+    }).finally(function() {
+      $("loginButton").disabled = false;
+      $("loginButton").textContent = "Accedi";
+    });
   });
 
   $("logout").addEventListener("click", function() {
@@ -569,13 +735,18 @@ return p.category === category &&
 
   $("search").addEventListener("input", render);
 
-  // Scanner barcode
+  /* Scanner barcode */
   function stopScanner() {
     var s = scanner;
     scanner = null;
+
     if (!s) return Promise.resolve();
-    return (s.stop().catch(function(){})).then(function() {
-      try { s.clear(); } catch(e) {}
+
+    return s.stop().catch(function() {}).then(function() {
+      try {
+        s.clear();
+      } catch(e) {}
+
       $("reader").innerHTML = "";
     });
   }
@@ -588,211 +759,223 @@ return p.category === category &&
   function scanBarcode(code) {
     closeScan();
 
-    // Se il prodotto è già presente nella dispensa, incrementa la quantità.
+    // Se esiste già un prodotto con questo barcode, aumenta la quantità.
     var existing = products.find(function(p) {
       return String(p.barcode || "") === String(code);
     });
+
     if (existing) {
       changeQuantity(existing.id, 1);
       return;
     }
 
-    // Apri subito il modulo: il barcode resta disponibile anche se OFF non risponde.
     openForm(null);
+
     $("pBarcode").value = code;
     $("pName").value = "";
     $("pBrand").value = "";
     $("pFormat").value = "";
     $("pImage").value = "";
 
-    var url = "https://world.openfoodfacts.org/api/v2/product/" +
+    var url =
+      "https://world.openfoodfacts.org/api/v2/product/" +
       encodeURIComponent(code) +
       ".json?fields=code,status,product_name,product_name_it,generic_name,generic_name_it,brands,quantity,image_front_url,image_front_small_url,image_url,selected_images";
 
-    fetch(url, { headers: { "Accept": "application/json" } })
-      .then(function(r) {
-        if (!r.ok) throw new Error("HTTP " + r.status);
-        return r.json();
-      })
-      .then(function(data) {
-        if (!data || data.status !== 1 || !data.product) {
-          alert("Prodotto non trovato su Open Food Facts. Il barcode è stato mantenuto: puoi compilare i dati manualmente.");
-          return;
-        }
-
-        var p = data.product;
-
-        // Usa il primo nome non vuoto disponibile, senza sovrascrivere con stringhe vuote.
-        var name = p.product_name_it || p.product_name ||
-          p.generic_name_it || p.generic_name || "";
-        var brand = p.brands || "";
-        var format = p.quantity || "";
-
-        // Preferisci la foto frontale; prova poi gli altri campi immagine disponibili.
-        var image = p.image_front_url ||
-          p.image_front_small_url ||
-          p.image_url ||
-          (p.selected_images && p.selected_images.front &&
-            p.selected_images.front.display &&
-            (p.selected_images.front.display.it ||
-             p.selected_images.front.display.en ||
-             Object.values(p.selected_images.front.display)[0])) ||
-          "";
-
-        if (name) $("pName").value = name;
-        if (brand) $("pBrand").value = brand;
-        if (format) $("pFormat").value = format;
-
-        if (typeof image === "string" && /^https?:\/\//i.test(image)) {
-          $("pImage").value = image;
-        }
-
-        if (!name && !image) {
-          alert("Open Food Facts ha trovato il codice, ma non ha restituito nome o immagine. Puoi completare i campi manualmente.");
-        } else if (!image) {
-          alert("Prodotto trovato su Open Food Facts, ma non è disponibile una foto. Puoi aggiungere un URL immagine manualmente.");
-        }
-      })
-      .catch(function(error) {
-        console.error("Open Food Facts:", error);
-        alert("Non riesco a recuperare il prodotto online. Il barcode è stato mantenuto: controlla la connessione e inserisci i dati manualmente.");
-      });
-  }
-
-
-
-function openScan() {
-  if (!user) return;
-
-  if (
-    location.protocol !== "https:" &&
-    location.hostname !== "localhost"
-  ) {
-    alert("La fotocamera richiede HTTPS.");
-    return;
-  }
-
-  if (typeof Html5Qrcode === "undefined") {
-    alert("Scanner non disponibile. Ricarica la pagina.");
-    return;
-  }
-
-  // Non avviare un secondo scanner se uno è già attivo.
-  if (scanner) return;
-
-  var modal = $("scannerModal");
-  var reader = $("reader");
-
-  modal.classList.remove("hidden");
-  reader.innerHTML = "";
-  modal.scrollTop = 0;
-
-  var formats = [
-    Html5QrcodeSupportedFormats.EAN_13,
-    Html5QrcodeSupportedFormats.EAN_8,
-    Html5QrcodeSupportedFormats.UPC_A,
-    Html5QrcodeSupportedFormats.UPC_E,
-    Html5QrcodeSupportedFormats.CODE_128,
-    Html5QrcodeSupportedFormats.CODE_39
-  ];
-
-  var currentScanner = new Html5Qrcode("reader", {
-    formatsToSupport: formats,
-    verbose: false
-  });
-
-  scanner = currentScanner;
-
-  requestAnimationFrame(function () {
-    // Se lo scanner è stato chiuso nel frattempo, non avviarlo.
-    if (scanner !== currentScanner) return;
-
-    var config = {
-      fps: 10,
-      qrbox: function (width, height) {
-        var boxWidth = Math.floor(width * 0.92);
-        var boxHeight = Math.min(
-          150,
-          Math.floor(height * 0.45)
-        );
-
-        return {
-          width: Math.max(150, boxWidth),
-          height: Math.max(60, boxHeight)
-        };
-      },
-      disableFlip: true
-    };
-
-    currentScanner.start(
-      { facingMode: "environment" },
-      config,
-      function (code) {
-        if (!code || scanner !== currentScanner) return;
-
-        // Gestisce il codice riconosciuto dalla funzione esistente.
-        scanBarcode(code);
-      },
-      function () {
-        // Normale: alcuni fotogrammi non contengono un codice leggibile.
-      }
-    ).catch(function (error) {
-      console.error("Errore avvio scanner:", error);
-
-      if (scanner === currentScanner) {
-        scanner = null;
-
-        try {
-          currentScanner.clear();
-        } catch (e) {}
-
-        reader.innerHTML = "";
-        modal.classList.add("hidden");
-
+    fetch(url, {
+      headers: {"Accept": "application/json"}
+    }).then(function(r) {
+      if (!r.ok) throw new Error("HTTP " + r.status);
+      return r.json();
+    }).then(function(data) {
+      if (!data || data.status !== 1 || !data.product) {
         alert(
-          "Impossibile avviare la fotocamera. " +
-          "Controlla i permessi di Safari e la connessione HTTPS."
+          "Prodotto non trovato su Open Food Facts. Il barcode è stato mantenuto: puoi compilare i dati manualmente."
+        );
+        return;
+      }
+
+      var p = data.product;
+
+      var name = p.product_name_it || p.product_name ||
+        p.generic_name_it || p.generic_name || "";
+
+      var brand = p.brands || "";
+      var format = p.quantity || "";
+
+      var imageUrl = p.image_front_url ||
+        p.image_front_small_url ||
+        p.image_url ||
+        (p.selected_images && p.selected_images.front &&
+          p.selected_images.front.display &&
+          (p.selected_images.front.display.it ||
+           p.selected_images.front.display.en ||
+           Object.values(p.selected_images.front.display)[0])) ||
+        "";
+
+      if (name) $("pName").value = name;
+      if (brand) $("pBrand").value = brand;
+      if (format) $("pFormat").value = format;
+
+      if (typeof imageUrl === "string" && /^https?:\/\//i.test(imageUrl)) {
+        $("pImage").value = imageUrl;
+      }
+
+      if (!name && !imageUrl) {
+        alert(
+          "Open Food Facts ha trovato il codice, ma non ha restituito nome o immagine. Puoi completare i campi manualmente."
+        );
+      } else if (!imageUrl) {
+        alert(
+          "Prodotto trovato su Open Food Facts, ma non è disponibile una foto."
         );
       }
+    }).catch(function(error) {
+      console.error("Open Food Facts:", error);
+      alert(
+        "Non riesco a recuperare il prodotto online. Il barcode è stato mantenuto: controlla la connessione e inserisci i dati manualmente."
+      );
     });
-  });
-}
+  }
 
+  function openScan() {
+    if (!user) return;
 
+    if (location.protocol !== "https:" && location.hostname !== "localhost") {
+      alert("La fotocamera richiede HTTPS.");
+      return;
+    }
+
+    if (typeof Html5Qrcode === "undefined") {
+      alert("Scanner non disponibile. Ricarica la pagina.");
+      return;
+    }
+
+    if (scanner) return;
+
+    var modal = $("scannerModal");
+    var reader = $("reader");
+
+    modal.classList.remove("hidden");
+    reader.innerHTML = "";
+    modal.scrollTop = 0;
+
+    var formats = [
+      Html5QrcodeSupportedFormats.EAN_13,
+      Html5QrcodeSupportedFormats.EAN_8,
+      Html5QrcodeSupportedFormats.UPC_A,
+      Html5QrcodeSupportedFormats.UPC_E,
+      Html5QrcodeSupportedFormats.CODE_128,
+      Html5QrcodeSupportedFormats.CODE_39
+    ];
+
+    var currentScanner = new Html5Qrcode("reader", {
+      formatsToSupport: formats,
+      verbose: false
+    });
+
+    scanner = currentScanner;
+
+    requestAnimationFrame(function() {
+      if (scanner !== currentScanner) return;
+
+      var config = {
+        fps: 10,
+        qrbox: function(width, height) {
+          var boxWidth = Math.min(width, Math.floor(width * 0.92));
+          var boxHeight = Math.min(150, Math.floor(height * 0.45));
+
+          return {
+            width: Math.max(150, boxWidth),
+            height: Math.max(60, boxHeight)
+          };
+        },
+        disableFlip: true
+      };
+
+      currentScanner.start(
+        {facingMode: "environment"},
+        config,
+        function(code) {
+          if (!code || scanner !== currentScanner) return;
+          scanBarcode(code);
+        },
+        function() {
+          // Fotogramma senza barcode leggibile.
+        }
+      ).catch(function(error) {
+        console.error("Errore avvio scanner:", error);
+
+        if (scanner === currentScanner) {
+          scanner = null;
+
+          try {
+            currentScanner.clear();
+          } catch(e) {}
+
+          reader.innerHTML = "";
+          modal.classList.add("hidden");
+
+          alert(
+            "Impossibile avviare la fotocamera. Controlla i permessi del browser e la connessione HTTPS."
+          );
+        }
+      });
+    });
+  }
+
+  /* Eventi pulsanti */
   document.addEventListener("click", function(event) {
     var el = event.target.closest("[data-action]");
     if (!el) return;
+
     var action = el.dataset.action;
+
+    if (action === "environment") openEnvironment(el.dataset.env);
     if (action === "category") openCategory(el.dataset.cat);
     if (action === "home") setScreen("home");
+    if (action === "backEnvironment") backToEnvironment();
     if (action === "new") openForm(null);
     if (action === "edit") openForm(findProduct(el.dataset.id));
     if (action === "closeForm") closeForm();
     if (action === "scan") openScan();
     if (action === "closeScan") closeScan();
+
     if (action === "filter") {
       filter = el.dataset.filter;
       updateFilters();
       render();
     }
-    if (action === "qty") changeQuantity(el.dataset.id, Number(el.dataset.delta));
+
+    if (action === "qty") {
+      changeQuantity(el.dataset.id, Number(el.dataset.delta));
+    }
   });
 
   $("productModal").addEventListener("click", function(event) {
     if (event.target === $("productModal")) closeForm();
   });
+
   $("scannerModal").addEventListener("click", function(event) {
     if (event.target === $("scannerModal")) closeScan();
   });
+
   document.addEventListener("keydown", function(event) {
-    if (event.key === "Escape") { closeForm(); closeScan(); }
+    if (event.key === "Escape") {
+      closeForm();
+      closeScan();
+    }
   });
+
   window.addEventListener("pagehide", closeScan);
 
+  /* Stato autenticazione Firebase */
   auth.onAuthStateChanged(function(authUser) {
     user = authUser;
     products = [];
+
     inventoryRef = null;
+
     if (user) {
       showError("");
       setScreen("home");
@@ -803,6 +986,7 @@ function openScan() {
       setScreen("loginScreen");
     }
   });
+
 }());
 </script>
 </body>
