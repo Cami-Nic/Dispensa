@@ -297,8 +297,9 @@ input,select{width:100%;padding:12px;border:1px solid #dce4dc;border-radius:12px
   var category = "cibo";
   var filter = "all";
   var editingId = null;
-  var busy = false;
-  var scanner = null;
+var busy = false;
+var scanner = null;
+var scanLocked = false;
   var categories = {
     cibo: {name:"Cibo", icon:"🍎"},
     bagno: {name:"Prodotti bagno", icon:"🧴"},
@@ -589,7 +590,18 @@ input,select{width:100%;padding:12px;border:1px solid #dce4dc;border-radius:12px
       encodeURIComponent(code) +
       ".json?fields=code,status,product_name,product_name_it,generic_name,generic_name_it,brands,quantity,image_front_url,image_front_small_url,image_url,selected_images";
 
-    fetch(url, { headers: { "Accept": "application/json" } })
+ var controller = new AbortController();
+var timeoutId = setTimeout(function () {
+  controller.abort();
+}, 8000);
+
+fetch(url, {
+  headers: { "Accept": "application/json" },
+  signal: controller.signal
+})
+  .finally(function () {
+    clearTimeout(timeoutId);
+  })
       .then(function(r) {
         if (!r.ok) throw new Error("HTTP " + r.status);
         return r.json();
@@ -641,8 +653,9 @@ input,select{width:100%;padding:12px;border:1px solid #dce4dc;border-radius:12px
 
 
 
+
 function openScan() {
-  if (!user) return;
+  if (!user || scanner) return;
 
   if (
     location.protocol !== "https:" &&
@@ -657,12 +670,10 @@ function openScan() {
     return;
   }
 
-  // Non avviare un secondo scanner se uno è già attivo.
-  if (scanner) return;
-
   var modal = $("scannerModal");
   var reader = $("reader");
 
+  scanLocked = false;
   modal.classList.remove("hidden");
   reader.innerHTML = "";
   modal.scrollTop = 0;
@@ -684,43 +695,59 @@ function openScan() {
   scanner = currentScanner;
 
   requestAnimationFrame(function () {
-    // Se lo scanner è stato chiuso nel frattempo, non avviarlo.
     if (scanner !== currentScanner) return;
 
     var config = {
-      fps: 10,
+      fps: 15,
+
       qrbox: function (width, height) {
-        var boxWidth = Math.floor(width * 0.92);
-        var boxHeight = Math.min(
-          150,
-          Math.floor(height * 0.45)
+        // Mantiene la zona di lettura entro i limiti del video.
+        var boxWidth = Math.max(
+          1,
+          Math.min(width, Math.floor(width * 0.92))
+        );
+
+        var boxHeight = Math.max(
+          1,
+          Math.min(height, Math.floor(height * 0.45), 150)
         );
 
         return {
-          width: Math.max(150, boxWidth),
-          height: Math.max(60, boxHeight)
+          width: boxWidth,
+          height: boxHeight
         };
       },
+
       disableFlip: true
     };
 
     currentScanner.start(
       { facingMode: "environment" },
       config,
-      function (code) {
-        if (!code || scanner !== currentScanner) return;
 
-        // Gestisce il codice riconosciuto dalla funzione esistente.
+      function (code) {
+        // Accetta una sola lettura per sessione.
+        if (
+          !code ||
+          scanner !== currentScanner ||
+          scanLocked
+        ) {
+          return;
+        }
+
+        scanLocked = true;
         scanBarcode(code);
       },
+
       function () {
-        // Normale: alcuni fotogrammi non contengono un codice leggibile.
+        // I fotogrammi senza codici leggibili sono normali.
       }
     ).catch(function (error) {
       console.error("Errore avvio scanner:", error);
 
       if (scanner === currentScanner) {
         scanner = null;
+        scanLocked = false;
 
         try {
           currentScanner.clear();
