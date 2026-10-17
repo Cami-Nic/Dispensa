@@ -36,6 +36,10 @@ input,select{width:100%;padding:12px;border:1px solid #dce4dc;border-radius:12px
 .products{display:grid;gap:10px}
 .product{display:flex;align-items:center;gap:10px;background:white;border-radius:16px;padding:12px}
 .product.low{outline:2px solid #e57368}
+.product.empty-stock {
+  outline: 2px solid #b64238;
+  background: #fff8f7;
+}
 .product img,.emoji{width:52px;height:52px;border-radius:12px;object-fit:cover;display:grid;place-items:center;background:#f0f4ee;font-size:28px;flex-shrink:0}
 .info{flex:1;min-width:0}
 .name{font-weight:700;overflow-wrap:anywhere}
@@ -208,10 +212,13 @@ input,select{width:100%;padding:12px;border:1px solid #dce4dc;border-radius:12px
     <input id="search" type="search" placeholder="Cerca prodotto...">
     <button class="secondary" data-action="scan" aria-label="Scansiona barcode">📷</button>
   </div>
-  <div class="filters">
-    <button id="allFilter" class="filter active" data-action="filter" data-filter="all">Tutti</button>
-    <button id="lowFilter" class="filter" data-action="filter" data-filter="low">🔴 Scorte basse</button>
-  </div>
+
+<div class="filters">
+  <button id="allFilter" class="filter active" data-action="filter" data-filter="all">Tutti</button>
+  <button id="lowFilter" class="filter" data-action="filter" data-filter="low">🟠 Scorte basse</button>
+  <button id="emptyFilter" class="filter" data-action="filter" data-filter="empty">🔴 Terminati</button>
+</div>
+
   <div id="products" class="products"></div>
   <button class="add" data-action="new">＋ Aggiungi prodotto</button>
 </main>
@@ -355,17 +362,28 @@ input,select{width:100%;padding:12px;border:1px solid #dce4dc;border-radius:12px
     render();
   }
 
-  function updateFilters() {
-    $("allFilter").classList.toggle("active", filter === "all");
-    $("lowFilter").classList.toggle("active", filter === "low");
-  }
+
+function updateFilters() {
+  $("allFilter").classList.toggle("active", filter === "all");
+  $("lowFilter").classList.toggle("active", filter === "low");
+  $("emptyFilter").classList.toggle("active", filter === "empty");
+}
+
 
   function render() {
     if (!user) return;
     var q = $("search").value.trim().toLowerCase();
     var list = products.filter(function(p) {
       var match = (p.name + " " + p.brand + " " + p.format + " " + p.barcode).toLowerCase().indexOf(q) !== -1;
-      return p.category === category && match && (filter !== "low" || low(p));
+    
+return p.category === category &&
+  match &&
+  (
+    filter === "all" ||
+    (filter === "low" && low(p) && num(p.quantity) > 0) ||
+    (filter === "empty" && num(p.quantity) === 0)
+  );
+
     }).sort(function(a,b) { return a.name.localeCompare(b.name); });
 
     if (!list.length) {
@@ -377,7 +395,9 @@ input,select{width:100%;padding:12px;border:1px solid #dce4dc;border-radius:12px
       var picture = p.image && /^https?:\/\//i.test(p.image)
         ? '<img src="' + escapeHTML(p.image) + '" alt="Foto di ' + escapeHTML(p.name) + '" loading="lazy" referrerpolicy="no-referrer">'
         : '<div class="emoji">' + categories[p.category].icon + '</div>';
-      return '<article class="product ' + (low(p) ? 'low' : '') + '">' +
+     return '<article class="product ' +
+  (num(p.quantity) === 0 ? 'empty-stock' : (low(p) ? 'low' : '')) +
+  '">' +
         picture + '<div class="info">' +
         (p.brand ? '<div class="small">' + escapeHTML(p.brand) + '</div>' : '') +
         '<div class="name">' + escapeHTML(p.name) + '</div>' +
