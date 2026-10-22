@@ -797,6 +797,57 @@ h2 {
   }
 }
 
+/* PULSANTI PRINCIPALI PIÙ GRANDI */
+button.primary,
+button.add,
+.top button,
+.header button,
+.toolbar button,
+.product .controls button {
+  min-height: 56px;
+  padding: 14px 20px;
+  font-size: 1.15rem;
+  border-radius: 16px;
+}
+
+/* Pulsante per aggiungere un prodotto */
+button.add {
+  min-height: 70px;
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+/* Controlli quantità e matita */
+.product .controls button {
+  min-width: 46px;
+  min-height: 48px;
+  padding: 8px;
+  font-size: 1.2rem;
+}
+
+/* Smartphone */
+@media (max-width: 600px) {
+  button.primary,
+  button.add,
+  .top button,
+  .header button,
+  .toolbar button {
+    min-height: 58px;
+    padding: 14px 16px;
+  }
+
+  button.add {
+    min-height: 72px;
+    font-size: 1.2rem;
+  }
+
+  .product .controls button {
+    min-width: 38px;
+    min-height: 44px;
+    padding: 5px;
+  }
+}
+
 </style>
 </head>
 <body>
