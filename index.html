@@ -111,6 +111,37 @@ input,select{width:100%;min-width:0;min-height:54px;padding:14px 16px;border:1px
 #reader__dashboard button,#reader__dashboard select{max-width:100%!important;margin:4px auto!important;min-height:44px}
 #reader__dashboard_section,#reader__dashboard_section_csr{width:100%!important;text-align:center!important}
 @media(max-width:600px){
+  
+  /* Informazioni prodotto più orizzontali su smartphone */
+  .product .info {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: wrap;
+    column-gap: 8px;
+    row-gap: 3px;
+  }
+
+  .product .info .name {
+    flex-basis: 100%;
+    order: 1;
+  }
+
+  .product .info > .small:first-child {
+    order: 0;
+  }
+
+  .product .info > .small:not(:first-child) {
+    order: 2;
+  }
+
+  .product .info .lowlabel {
+    order: 3;
+    margin-top: 4px;
+    padding-top: 0;
+    white-space: nowrap;
+  }
+
   html{font-size:17px}
   main{padding:20px 16px}
   .top{gap:12px;margin:14px 0 26px}
