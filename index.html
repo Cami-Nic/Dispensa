@@ -48,6 +48,15 @@ p{margin:12px 0}
 input,select{width:100%;min-width:0;min-height:54px;padding:14px 16px;border:1px solid #dce4dc;border-radius:15px;background:white;color:var(--text)}
 .toolbar input{flex:1}
 .toolbar button{min-width:58px}
+  
+/* Ingrandisce il pulsante e l'icona della fotocamera */
+.toolbar button[data-action="scan"] {
+  font-size: 2.5rem;
+  min-width: 76px;
+  min-height: 70px;
+  padding: 8px;
+}
+
 .filters{display:flex;flex-wrap:wrap;gap:10px;margin:16px 0 22px}
 .filter{background:var(--pale);color:#425343}
 .filter.active{background:#e3f2dd;color:#356c2e}
