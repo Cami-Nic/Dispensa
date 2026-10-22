@@ -399,6 +399,99 @@ input, select { font-size: 1rem; min-height: 56px; padding: 15px 17px; border-ra
   #scannerModal .dialoghead h2 { font-size: 1.35rem; }
 }
 
+/* DISPOSIZIONE PRODOTTI — SMARTPHONE, IPAD E PC */
+.product {
+  min-height: 170px;
+  align-items: stretch;
+}
+
+.product .info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+}
+
+.product .info .name {
+  order: 1;
+  overflow-wrap: anywhere;
+}
+
+.product .info > .small {
+  order: 2;
+}
+
+.product .info .lowlabel {
+  order: 3;
+  margin-top: auto;
+  padding-top: 12px;
+  white-space: nowrap;
+}
+
+.product .controls {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+  align-self: flex-end;
+  flex-shrink: 0;
+}
+
+.product .controls button {
+  min-width: 40px;
+  min-height: 42px;
+  padding: 6px;
+}
+
+/* Smartphone */
+@media (max-width: 600px) {
+  .product {
+    min-height: 175px;
+    gap: 10px;
+    padding: 14px;
+  }
+
+  .product img,
+  .product .emoji {
+    width: 52px;
+    height: 52px;
+  }
+
+  .product .controls {
+    gap: 4px;
+  }
+
+  .product .controls button {
+    min-width: 34px;
+    min-height: 40px;
+    padding: 5px;
+  }
+}
+
+/* IPAD */
+@media (min-width: 601px) and (max-width: 1024px) {
+  .product {
+    min-height: 180px;
+    padding: 14px;
+    gap: 10px;
+  }
+
+  .product .controls button {
+    min-width: 36px;
+  }
+}
+
+/* PC */
+@media (min-width: 1025px) {
+  .product {
+    min-height: 185px;
+  }
+}
+
 </style>
 </head>
 <body>
