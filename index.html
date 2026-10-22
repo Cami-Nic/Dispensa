@@ -68,7 +68,17 @@ input,select{width:100%;min-width:0;min-height:54px;padding:14px 16px;border:1px
 .info{flex:1;min-width:0}
 .name{font-weight:700;overflow-wrap:anywhere;line-height:1.3}
 .small{color:var(--muted);overflow-wrap:anywhere}
-.lowlabel{color:#c34c42;font-weight:700}
+
+.lowlabel {
+  color: #c34c42;
+  font-weight: 700;
+  white-space: nowrap;
+  display: block;
+  margin-top: 8px;
+  font-size: 0.78rem;
+  line-height: 1.2;
+}
+
 .controls{display:flex;align-items:center;gap:4px;flex-shrink:0}
 .controls button{min-width:38px;min-height:42px;padding:6px;background:var(--pale);border-radius:11px}
 .qty{min-width:22px;text-align:center;font-weight:700}
@@ -150,6 +160,32 @@ input,select{width:100%;min-width:0;min-height:54px;padding:14px 16px;border:1px
     min-width: 28px;
     font-size: 1.1rem;
   }
+}
+
+/* Allineamento in basso delle scorte e dei pulsanti */
+.product {
+  align-items: stretch;
+}
+
+.product .info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-width: 0;
+}
+
+.product .lowlabel {
+  margin-top: auto;
+  padding-top: 10px;
+  white-space: nowrap;
+  line-height: 1.2;
+}
+
+.product .controls {
+  align-self: stretch;
+  align-items: flex-end;
+  padding-bottom: 0;
+  margin-bottom: 0;
 }
 
 </style>
@@ -441,11 +477,13 @@ input,select{width:100%;min-width:0;min-height:54px;padding:14px 16px;border:1px
         (num(p.quantity) === 0 ? "empty-stock" : (low(p) ? "low" : "")) + '">' +
         picture +
         '<div class="info">' +
-        (p.brand ? '<div class="small">' + escapeHTML(p.brand) + '</div>' : "") +
-        '<div class="name">' + escapeHTML(p.name) + '</div>' +
-        (p.format ? '<div class="small">' + escapeHTML(p.format) + '</div>' : "") +
-        (low(p) ? '<div class="lowlabel">🔴 Scorta bassa</div>' : "") +
-        '</div><div class="controls">' +
+
+(p.brand ? '<div class="small">' + escapeHTML(p.brand) + '</div>' : "") +
+'<div class="name">' + escapeHTML(p.name) + '</div>' +
+(p.format ? '<div class="small">' + escapeHTML(p.format) + '</div>' : "") +
+(low(p) ? '<div class="lowlabel">🔴 Scorta bassa</div>' : "") +
+'</div><div class="controls">' +
+
         '<button data-action="qty" data-id="' + escapeHTML(p.id) +
         '" data-delta="-1" aria-label="Diminuisci quantità">−</button>' +
         '<span class="qty">' + num(p.quantity) + '</span>' +
