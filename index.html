@@ -5,9 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#D4E8DC">
 <title>La Mia Dispensa</title>
-
 <style>
-
 /* =========================================
    LA MIA DISPENSA — CSS COMPLETO
    Smartphone, iPad e PC
@@ -108,7 +106,9 @@ h2 {
   line-height: 1.5;
 }
 
-/* Pulsanti */
+/* =========================================
+   PULSANTI
+   ========================================= */
 
 .primary,
 .add {
@@ -130,7 +130,30 @@ h2 {
   color: var(--danger);
 }
 
-/* Barra superiore */
+button.primary,
+.top button,
+.header button,
+.toolbar button {
+  min-height: 56px;
+  padding: 14px 16px;
+  font-size: 1.1rem;
+  border-radius: 16px;
+}
+
+button.add,
+.add {
+  width: 100%;
+  min-height: 70px;
+  margin-top: 20px;
+  padding: 16px;
+  border-radius: 16px;
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+/* =========================================
+   BARRA SUPERIORE
+   ========================================= */
 
 .top {
   display: flex;
@@ -165,7 +188,9 @@ h2 {
   background: white;
 }
 
-/* Categorie */
+/* =========================================
+   CATEGORIE
+   ========================================= */
 
 .categories {
   display: grid;
@@ -227,7 +252,9 @@ h2 {
   color: #22666D;
 }
 
-/* Ricerca e strumenti */
+/* =========================================
+   RICERCA E FILTRI
+   ========================================= */
 
 .toolbar {
   display: flex;
@@ -243,7 +270,6 @@ h2 {
 
 .toolbar button {
   min-width: 52px;
-  font-size: 1.2rem;
 }
 
 .filters {
@@ -263,7 +289,9 @@ h2 {
   color: var(--green-dark);
 }
 
-/* Elenco prodotti */
+/* =========================================
+   ELENCO E SCHEDE PRODOTTO
+   ========================================= */
 
 .products {
   display: grid;
@@ -275,9 +303,9 @@ h2 {
 .product {
   display: flex;
   align-items: stretch;
-  gap: 12px;
+  gap: 10px;
   min-width: 0;
-  min-height: 180px;
+  min-height: 185px;
   padding: 16px;
   background: white;
   border-radius: 20px;
@@ -295,17 +323,19 @@ h2 {
 
 .product img,
 .product .emoji {
-  flex-shrink: 0;
   display: grid;
   place-items: center;
-  width: 64px;
-  height: 64px;
+  flex-shrink: 0;
+  width: 56px;
+  height: 56px;
   max-width: 30%;
   border-radius: 14px;
   object-fit: cover;
   background: #f0f4ee;
-  font-size: 32px;
+  font-size: 30px;
 }
+
+/* Informazioni prodotto */
 
 .product .info {
   display: flex;
@@ -326,12 +356,15 @@ h2 {
 }
 
 .product .info > .small {
-  max-width: 100%;
   order: 2;
+  max-width: 100%;
   color: var(--muted);
   font-size: 0.85rem;
+  line-height: 1.35;
   overflow-wrap: anywhere;
 }
+
+/* Avviso scorta bassa */
 
 .product .lowlabel {
   order: 3;
@@ -341,10 +374,11 @@ h2 {
   font-size: 0.85rem;
   font-weight: 700;
   line-height: 1.25;
-  white-space: nowrap;
+  white-space: normal;
+  overflow-wrap: anywhere;
 }
 
-/* Pulsanti nella parte inferiore destra */
+/* Controlli quantità e modifica */
 
 .product .controls {
   display: flex;
@@ -358,7 +392,8 @@ h2 {
 }
 
 .product .controls button {
-  min-width: 38px;
+  flex-shrink: 0;
+  min-width: 40px;
   min-height: 42px;
   padding: 6px;
   border-radius: 12px;
@@ -372,14 +407,6 @@ h2 {
   font-weight: 700;
 }
 
-.add {
-  width: 100%;
-  min-height: 58px;
-  margin-top: 20px;
-  padding: 16px;
-  border-radius: 16px;
-}
-
 .empty {
   padding: 36px 18px;
   background: white;
@@ -388,7 +415,9 @@ h2 {
   color: var(--muted);
 }
 
-/* Login e schede */
+/* =========================================
+   LOGIN E SCHEDE
+   ========================================= */
 
 .card {
   width: 100%;
@@ -426,7 +455,9 @@ h2 {
   font-size: 0.85rem;
 }
 
-/* Finestre modali */
+/* =========================================
+   FINESTRE MODALI
+   ========================================= */
 
 .modal {
   position: fixed;
@@ -483,7 +514,9 @@ h2 {
   flex: 1;
 }
 
-/* Scanner barcode */
+/* =========================================
+   SCANNER BARCODE
+   ========================================= */
 
 #scannerModal {
   position: fixed !important;
@@ -590,15 +623,15 @@ h2 {
   }
 
   .product {
-    min-height: 185px;
+    min-height: 180px;
     padding: 14px;
     gap: 10px;
   }
 
   .product img,
   .product .emoji {
-    width: 56px;
-    height: 56px;
+    width: 48px;
+    height: 48px;
   }
 
   .product .controls {
@@ -606,7 +639,8 @@ h2 {
   }
 
   .product .controls button {
-    min-width: 34px;
+    min-width: 36px;
+    min-height: 42px;
     padding: 5px;
   }
 
@@ -670,6 +704,7 @@ h2 {
 
   .toolbar button {
     min-width: 46px;
+    min-height: 50px;
     padding: 8px;
   }
 
@@ -698,17 +733,17 @@ h2 {
 
   .product {
     min-height: 175px;
-    gap: 9px;
+    gap: 8px;
     padding: 12px;
     border-radius: 18px;
   }
 
   .product img,
   .product .emoji {
-    width: 48px;
-    height: 48px;
-    font-size: 27px;
-    border-radius: 12px;
+    width: 42px;
+    height: 42px;
+    font-size: 25px;
+    border-radius: 10px;
   }
 
   .product .name {
@@ -730,7 +765,7 @@ h2 {
 
   .product .controls button {
     min-width: 32px;
-    min-height: 38px;
+    min-height: 40px;
     padding: 4px;
     border-radius: 10px;
     font-size: 0.9rem;
@@ -775,6 +810,19 @@ h2 {
     width: 100%;
   }
 
+  button.primary,
+  .top button,
+  .header button {
+    min-height: 52px;
+    padding: 12px;
+  }
+
+  button.add,
+  .add {
+    min-height: 64px;
+    font-size: 1.1rem;
+  }
+
   #scannerModal .scanner-dialog {
     padding: 12px !important;
   }
@@ -784,7 +832,9 @@ h2 {
   }
 }
 
-/* Accessibilità: riduce le animazioni se richiesto dal dispositivo */
+/* =========================================
+   ACCESSIBILITÀ
+   ========================================= */
 
 @media (prefers-reduced-motion: reduce) {
   *,
@@ -796,58 +846,6 @@ h2 {
     animation-iteration-count: 1 !important;
   }
 }
-
-/* PULSANTI PRINCIPALI PIÙ GRANDI */
-button.primary,
-button.add,
-.top button,
-.header button,
-.toolbar button,
-.product .controls button {
-  min-height: 56px;
-  padding: 14px 20px;
-  font-size: 1.15rem;
-  border-radius: 16px;
-}
-
-/* Pulsante per aggiungere un prodotto */
-button.add {
-  min-height: 70px;
-  font-size: 1.25rem;
-  font-weight: 700;
-}
-
-/* Controlli quantità e matita */
-.product .controls button {
-  min-width: 46px;
-  min-height: 48px;
-  padding: 8px;
-  font-size: 1.2rem;
-}
-
-/* Smartphone */
-@media (max-width: 600px) {
-  button.primary,
-  button.add,
-  .top button,
-  .header button,
-  .toolbar button {
-    min-height: 58px;
-    padding: 14px 16px;
-  }
-
-  button.add {
-    min-height: 72px;
-    font-size: 1.2rem;
-  }
-
-  .product .controls button {
-    min-width: 38px;
-    min-height: 44px;
-    padding: 5px;
-  }
-}
-
 </style>
 </head>
 <body>
