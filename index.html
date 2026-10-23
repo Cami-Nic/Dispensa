@@ -1712,17 +1712,26 @@ button.add,
       if (scanner !== currentScanner) return;
 
       var config = {
-        fps: 10,
+        // Più tentativi di lettura al secondo, utile per codici a barre
+        // sia orizzontali sia verticali.
+        fps: 15,
+
+        // Area di scansione più ampia: evita di tagliare codici alti
+        // o disposti verticalmente. I limiti impediscono di superare
+        // le dimensioni effettive del fotogramma.
         qrbox: function(width, height) {
           var boxWidth = Math.min(width, Math.floor(width * 0.92));
-          var boxHeight = Math.min(150, Math.floor(height * 0.45));
+          var boxHeight = Math.min(height, Math.floor(height * 0.80));
 
           return {
             width: Math.max(150, boxWidth),
-            height: Math.max(60, boxHeight)
+            height: Math.max(150, boxHeight)
           };
         },
-        disableFlip: true
+
+        // Consente anche i tentativi con immagine specchiata.
+        // Non equivale a una rotazione automatica di 90 gradi.
+        disableFlip: false
       };
 
       currentScanner.start(
