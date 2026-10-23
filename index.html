@@ -874,7 +874,93 @@ button.add,
     font-size: 1.1rem;
   }
 }
+/* =========================================
+   PULSANTI PIÙ GRANDI E FACILI DA TOCCARE
+   ========================================= */
 
+/* Pulsanti principali */
+button.primary,
+.top button,
+.header button,
+.toolbar button {
+  min-height: 64px;
+  padding: 16px 22px;
+  font-size: 1.2rem;
+  border-radius: 18px;
+}
+
+/* Aggiungi prodotto */
+button.add,
+.add {
+  min-height: 82px;
+  padding: 20px;
+  font-size: 1.35rem;
+  font-weight: 800;
+  border-radius: 20px;
+}
+
+/* Quantità, meno, più e matita */
+.product .controls {
+  gap: 7px;
+}
+
+.product .controls button {
+  min-width: 52px;
+  min-height: 56px;
+  padding: 8px;
+  font-size: 1.3rem;
+  font-weight: 700;
+  border-radius: 14px;
+}
+
+/* Numero della quantità */
+.product .controls .qty {
+  min-width: 30px;
+  font-size: 1.2rem;
+  font-weight: 800;
+}
+
+/* iPad */
+@media (min-width: 601px) and (max-width: 1024px) {
+  .product .controls button {
+    min-width: 46px;
+    min-height: 52px;
+  }
+}
+
+/* Smartphone */
+@media (max-width: 600px) {
+  button.primary,
+  .top button,
+  .header button,
+  .toolbar button {
+    min-height: 58px;
+    padding: 12px;
+    font-size: 1.1rem;
+  }
+
+  button.add,
+  .add {
+    min-height: 76px;
+    font-size: 1.2rem;
+  }
+
+  .product .controls {
+    gap: 4px;
+  }
+
+  .product .controls button {
+    min-width: 44px;
+    min-height: 48px;
+    padding: 5px;
+    font-size: 1.15rem;
+  }
+
+  .product .controls .qty {
+    min-width: 24px;
+    font-size: 1.05rem;
+  }
+}
 </style>
 </head>
 <body>
